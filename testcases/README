@@ -1,0 +1,17 @@
+holdsThisIssue_cases.txt contains the input and date-range output from 201601
+    A special version of was used to extract this data. Since the actual requests 
+    from 201601 were sent through PIR, the authenication was unilaterally bypassed. 
+    The holdings parser was changed to parse the whole enumChron string even if the 
+    test date was less than the earliest date in the string. 
+    Comments: 
+	Open ended ranges get a second date of '-'. E.g., 
+            "v.8-(2000/2001-)" 	[2000, -]
+        Some strings get no dates. E.g., 
+           "v.8-17, 24-25, 29, 31, 33"  
+        Some 90 date ranges have the ending date before the starting date. E.g., 
+           "1(1972)-17(1928); index: 1-40" [1972, 1928] 
+        Some 2622 strings contain '|' and might be better parsed substring by substring. E.g., 
+           "(1961)-(1983); v.140(1984)-|Missing: v.177:no.10(2002);v.186:no.2(2007); v.202:no.7(2015);"
+           would be really:  "(1961)-(1983); v.140(1984)-" and 
+                             "Missing: v.177:no.10(2002);v.186:no.2(2007); v.202:no.7(2015);"
+
