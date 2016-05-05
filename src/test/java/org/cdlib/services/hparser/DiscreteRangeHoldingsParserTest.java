@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.List;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 /**
@@ -29,6 +30,14 @@ public class DiscreteRangeHoldingsParserTest {
     Integer[] expectArray = new Integer[]{1990, 1995, 1997, 2001};
     List<Integer> expectList = Arrays.asList(expectArray);
     assertEquals(expectList, resultList);
+  }
+  
+  @Test
+  public void testGetYearsInRange() {
+    String holdings = "(2005-2004)";
+    DiscreteRangeHoldingsParser hp = new DiscreteRangeHoldingsParser(holdings);
+    List<Integer> resultList = hp.getYearsInRange(2005, 2004);
+    assertTrue(resultList.isEmpty());
   }
 
   /*
@@ -211,17 +220,6 @@ public class DiscreteRangeHoldingsParserTest {
     years = hp.getYears();
     years.addAll(hp.getYearRanges(Holdings.NORMAL_RANGE));
     expectArray = new Integer[]{1996};
-    expectList = Arrays.asList(expectArray);
-    years = hp.removeDuplicateYears(years);
-    //System.out.println("For holdings = " + holdings + " Expecting " + expectList + "; got " + years);
-    assertEquals(expectList, years);
-
-    // if the years are reversed, use individual years, but not the range
-    holdings = "  1(1934)-17(1928) ";
-    hp = new DiscreteRangeHoldingsParser(holdings);
-    years = hp.getYears();
-    years.addAll(hp.getYearRanges(Holdings.RANGE_WITH_ITEM_INFO));
-    expectArray = new Integer[]{1934, 1928};
     expectList = Arrays.asList(expectArray);
     years = hp.removeDuplicateYears(years);
     //System.out.println("For holdings = " + holdings + " Expecting " + expectList + "; got " + years);

@@ -106,11 +106,22 @@ public class Holdings {
      */
     static final String NORMAL_RANGE = String.format("%s(%s)-(%s)%s", LBOUND, BASE_YEAR, BASE_YEAR, RBOUND);
     /**
+     * Match expression when there is space after the hyphen.
+     * These need to be recognized so that they can be closed up during preprocessing.
+     */
+    static final String NORMAL_RANGE_W_WHITESPACE = String.format("(%s%s-)(\\s)(%s%s)", LBOUND, BASE_YEAR, BASE_YEAR, RBOUND);
+    
+    /**
      * Normal range with a 2-digit end year.
      * 
      * example: 1990-95
      */
     static final String NORMAL_2D_YEAR_RANGE = String.format("%s(%s)-(%s)%s", LBOUND, BASE_YEAR, TWO_DIGIT_YEAR, RBOUND);
+    /**
+     * Normal 2-digit range with a space after the hyphen.
+     * These need to be caught and closed up during preprocessing.
+     */
+    static final String NORMAL_2D_YEAR_RANGE_W_WHITESPACE = String.format("(%s%s-)(\\s)(%s%s)", LBOUND, BASE_YEAR, TWO_DIGIT_YEAR, RBOUND);
     /**
      * A more liberal range match expression permits more characters in the range,
      * as long as it is bound in parentheses.
