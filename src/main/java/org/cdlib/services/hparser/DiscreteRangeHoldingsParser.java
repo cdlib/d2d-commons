@@ -24,7 +24,7 @@ import org.apache.log4j.Logger;
 public class DiscreteRangeHoldingsParser implements HoldingsParser {
 
   private final List<Integer> yearsHeld = new ArrayList<>();
-  private final Logger logger;
+  private static final Logger logger = Logger.getLogger(DiscreteRangeHoldingsParser.class);
   private final String holdings;
 
   /**
@@ -36,7 +36,6 @@ public class DiscreteRangeHoldingsParser implements HoldingsParser {
    * @param holdings
    */
   DiscreteRangeHoldingsParser(String holdings) {
-    logger = Logger.getLogger(DiscreteRangeHoldingsParser.class);
     this.holdings = prepareString(holdings);
     parse();
   }
@@ -47,16 +46,23 @@ public class DiscreteRangeHoldingsParser implements HoldingsParser {
    * @param holdings
    * @return
    */
-  private String prepareString(String holdings) {
+  static String prepareString(String holdings) {
     logger.debug("prepareString is pre-processing " + holdings);
-        // pad the holdings to make it easier for the regular
+    holdings = closeSpaces(holdings);
+    holdings = truncateAddenda(holdings);
+    logger.debug("prepareString returned " + holdings);
+    return holdings;
+  }
+
+  static private String closeSpaces(String holdings) {
+    // pad the holdings to make it easier for the regular
     // expressions: they don't need to account for the range expression
     // at the beginning or end of the line
     holdings = " " + holdings + " ";
 
     // close up expressions like No. 1111 -- see Redmine #5539
     String matchExp = VOL_OR_N_W_WHITESPACE;
-        // this works using back references to two capture groups in the match expression
+    // this works using back references to two capture groups in the match expression
     // the middle capture group (\\s+) is not included in the replace expression, removing the whitespace
     holdings = Pattern.compile(matchExp, Pattern.CASE_INSENSITIVE).matcher(holdings).replaceAll("$1$3");
 
@@ -67,9 +73,19 @@ public class DiscreteRangeHoldingsParser implements HoldingsParser {
     // close up expression like (1998- 09) -- see Planio #8462
     matchExp = NORMAL_2D_YEAR_RANGE_W_WHITESPACE;
     holdings = Pattern.compile(matchExp, Pattern.CASE_INSENSITIVE).matcher(holdings).replaceAll("$1$3");
+    return holdings;
+  }
 
-    logger.debug("prepareString returned " + holdings);
-
+  static private String truncateAddenda(String holdings) {
+    // remove the end of string if it does not express holdings of issues
+    for (String s : STOP_WORDS) {
+      String upperS = s.toUpperCase();
+      String upperHoldings = holdings.toUpperCase();
+      int pos = upperHoldings.indexOf(upperS);
+      if (pos >= 0) {
+        holdings = holdings.substring(0, pos);
+      }
+    }
     return holdings;
   }
 
@@ -176,8 +192,7 @@ public class DiscreteRangeHoldingsParser implements HoldingsParser {
   List<Integer> getYearRanges(String matchExp) {
     logger.debug(String.format("\nStarting HoldingsParser addYearRanges: match exp=%s, holdings=%s", matchExp, holdings));
     Pattern pattern = Pattern.compile(matchExp, Pattern.CASE_INSENSITIVE);
-    String localHoldings = holdings;
-    Matcher matcher = pattern.matcher(localHoldings);
+    Matcher matcher = pattern.matcher(holdings);
     ArrayList<Integer> list = new ArrayList<>();
 
     // This should not happen but the following code depends on it, so let's check
@@ -316,7 +331,7 @@ public class DiscreteRangeHoldingsParser implements HoldingsParser {
     if (lastYearString.length() > 2) {
       throw new IllegalArgumentException("Second argument must be a two-digit integer.");
     }
-        // The toString method returns "1" when we want the string "01", so we will pad it with a zero
+    // The toString method returns "1" when we want the string "01", so we will pad it with a zero
     // to get our two-digit year -- also possible to handle this with String.format method I think
     if (lastYearString.length() == 1) {
       lastYearString = "0" + lastYearString;
@@ -327,11 +342,11 @@ public class DiscreteRangeHoldingsParser implements HoldingsParser {
       firstYearString = "0" + firstYearString;
     }
 
-        // get the first two digits from the previous year
+    // get the first two digits from the previous year
     // and prepend them to the last year
     String fourDLastYearString = firstYearString.substring(0, 2) + lastYearString;
 
-        // if by some chance the last year is smaller than the first year
+    // if by some chance the last year is smaller than the first year
     // then it is probably something like 1999/01, so we adjust it up 100 years
     if (Integer.parseInt(fourDLastYearString) < Integer.parseInt(firstYearString)) {
       Integer fourDLastYear = Integer.parseInt(fourDLastYearString) + 100;
@@ -364,13 +379,13 @@ public class DiscreteRangeHoldingsParser implements HoldingsParser {
   private List<Integer> replaceTwoDigitYears(List<Integer> mixedList) {
     List<Integer> fourDigitYearList = new ArrayList<>();
     int previousYear = 0;
-        // A two-digit year will always be on the right side of a range expression
+    // A two-digit year will always be on the right side of a range expression
     // so there logically must be a date that precedes it
     if (mixedList.get(0) < 100) {
       throw new IllegalStateException("First year in list cannot have two digits.");
     }
     for (int year : mixedList) {
-            // if this is a two-digit year
+      // if this is a two-digit year
       // replace it with four digit year
       // by prepending the first two digits from the previous year
       if (year < 100) {

@@ -281,6 +281,9 @@ public class Holdings {
      * These need to be closed up in the holdings string before looking for expressions.
      */
     static final String VOL_OR_N_W_WHITESPACE = "(no\\.|nos\\.|v\\.|vol\\.)(\\s+)([\\d+])";
+    
+    
+    static final String[] STOP_WORDS = {"INDEX"};
 
     /*
      * Prevents instantiation of this class, which is intended to be static only.

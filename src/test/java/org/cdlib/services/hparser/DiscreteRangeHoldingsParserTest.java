@@ -18,6 +18,14 @@ public class DiscreteRangeHoldingsParserTest {
 
   public DiscreteRangeHoldingsParserTest() {
   }
+  
+  @Test 
+ public void testPrepareString() {
+    String testExp = "(2012- 2013) vol. 1234 index some stuff";
+    testExp = DiscreteRangeHoldingsParser.prepareString(testExp);
+    System.out. println(testExp);
+    assertEquals(" (2012-2013) vol.1234 ", testExp);
+  }
 
   /**
    * Test of getYearRange method.
