@@ -73,6 +73,7 @@ public class DiscreteRangeHoldingsParser implements HoldingsParser {
     // close up expression like (1998- 09) -- see Planio #8462
     matchExp = NORMAL_2D_YEAR_RANGE_W_WHITESPACE;
     holdings = Pattern.compile(matchExp, Pattern.CASE_INSENSITIVE).matcher(holdings).replaceAll("$1$3");
+
     return holdings;
   }
 
@@ -126,8 +127,11 @@ public class DiscreteRangeHoldingsParser implements HoldingsParser {
   
   private void calculate() {
     String lHoldings = holdings;
-    lHoldings = calculateRanges(lHoldings);
+    
+    // calculate these first to avoid false to-current expressions created 
+    // by removing expressions following hyphens
     lHoldings = calculateToCurrentRanges(lHoldings);
+    lHoldings = calculateRanges(lHoldings);
     calculateSingleYears(lHoldings);
   }
   
@@ -135,7 +139,8 @@ public class DiscreteRangeHoldingsParser implements HoldingsParser {
     for (Pattern pattern : RANGES) {
       Matcher matcher = pattern.matcher(lHoldings);
       yearsHeld.addAll(getYearRanges(matcher));
-      //lHoldings = matcher.replaceAll(" ");
+      lHoldings = matcher.replaceAll(" ");
+      logger.debug(" After replace " + "of " + pattern + " holdings are: " + lHoldings);
     }
     return lHoldings;
   }
@@ -144,7 +149,7 @@ public class DiscreteRangeHoldingsParser implements HoldingsParser {
     for (Pattern pattern : TO_CURRENT_RANGES) {
       Matcher matcher = pattern.matcher(lHoldings);
       yearsHeld.addAll(getToCurrentYearRanges(matcher));
-      //lHoldings = matcher.replaceAll(" ");
+      lHoldings = matcher.replaceAll(" ");
     }
     return lHoldings;
   }
@@ -153,7 +158,7 @@ public class DiscreteRangeHoldingsParser implements HoldingsParser {
     for (Pattern pattern : SINGLE_YEARS) {
       Matcher matcher = pattern.matcher(lHoldings);
       yearsHeld.addAll(getSingleYears(matcher));
-      //lHoldings = matcher.replaceAll(" ");
+      lHoldings = matcher.replaceAll(" ");
     }
     return lHoldings;
   }
@@ -165,6 +170,7 @@ public class DiscreteRangeHoldingsParser implements HoldingsParser {
 
   @Override
   public List<Integer> getYearsHeld() throws HoldingsParserException {
+    Collections.sort(yearsHeld);
     return removeDuplicateYears(yearsHeld);
   }
 

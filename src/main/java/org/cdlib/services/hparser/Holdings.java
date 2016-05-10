@@ -93,7 +93,7 @@ public class Holdings {
      * 1899/
      *
      */
-    static final String SINGLE_YEAR = String.format("%s(%s)(?!\\d|/)", LBOUND, BASE_YEAR);
+    static final String SINGLE_YEAR = String.format("%s(%s)", LBOUND, BASE_YEAR, RBOUND);
     static final Pattern SINGLE_YEAR_PAT = Pattern.compile(SINGLE_YEAR, Pattern.CASE_INSENSITIVE);
     
     /**
@@ -332,7 +332,6 @@ public class Holdings {
      */
     static final String RANGE_WITH_ITEM_INFO = String.format("%s\\S+\\((%s)\\)-\\S+\\((%s)\\)%s", LBOUND, BASE_YEAR, BASE_YEAR, RBOUND);
     static final Pattern RANGE_WITH_ITEM_INFO_PAT = Pattern.compile(RANGE_WITH_ITEM_INFO, Pattern.CASE_INSENSITIVE);
-  
     
     /**
      * A volume or number followed by whitespace, then by digits.

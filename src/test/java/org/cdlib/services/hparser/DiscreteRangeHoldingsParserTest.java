@@ -227,7 +227,7 @@ public class DiscreteRangeHoldingsParserTest {
     hp = new DiscreteRangeHoldingsParser(holdings);
     years = hp.getYears();
     years.addAll(hp.getYearRanges(Holdings.NORMAL_RANGE_PAT.matcher(holdings)));
-    expectArray = new Integer[]{1996};
+    expectArray = new Integer[]{};
     expectList = Arrays.asList(expectArray);
     years = hp.removeDuplicateYears(years);
     //System.out.println("For holdings = " + holdings + " Expecting " + expectList + "; got " + years);
