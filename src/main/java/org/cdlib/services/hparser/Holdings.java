@@ -36,8 +36,6 @@ public class Holdings {
     
     private static final String VOL_NO = "v\\.|n\\.|no\\.|vol\\.|ser\\.|\\d?1st|\\d?\\dth|\\d?2nd|\\d?3rd";
     
-    private static final String MONTH_SEASON = "jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec|spr|sum|fal|win";
-    
     /**
      * Substring representing rule for what can be on the left boundary
      * of the base year.
@@ -167,7 +165,7 @@ public class Holdings {
      * (1910-June 1968)
      * 
      */
-    static final String PAREN_RANGE = String.format("\\([^\\)]*%s(%s)-[^\\)]*%s(%s)\\)", LBOUND, BASE_YEAR, LBOUND, BASE_YEAR);
+    static final String PAREN_RANGE = String.format("\\([^\\)]*%s(%s)-[^\\)\\d]*(%s)\\)", LBOUND, BASE_YEAR, BASE_YEAR);
     static final Pattern PAREN_RANGE_PAT = Pattern.compile(PAREN_RANGE, Pattern.CASE_INSENSITIVE);
     
    /**
@@ -175,6 +173,12 @@ public class Holdings {
     */
     static final String TWO_PAREN_RANGE = String.format("(?:%s)?\\d*\\((%s)\\)-(?:%s)?\\d*\\((%s)\\)", VOL_NO, BASE_YEAR, VOL_NO, BASE_YEAR);
     static final Pattern TWO_PAREN_RANGE_PAT = Pattern.compile(TWO_PAREN_RANGE, Pattern.CASE_INSENSITIVE);
+    
+    /**
+     * <1989:9:1-1990:3:1><1997:5:1-1998:3:15>
+     */
+    static final String TWO_COLON_RANGE = String.format("(%s):\\d+:\\d+-(%s):\\d+:\\d+", BASE_YEAR, BASE_YEAR);
+    static final Pattern TWO_COLON_RANGE_PAT = Pattern.compile(TWO_COLON_RANGE, Pattern.CASE_INSENSITIVE);
     
     /*
      * Looks for a year enclosed in parens, followed by a hyphen.
@@ -363,8 +367,10 @@ public class Holdings {
     /**
      * The portion of the string following these words is truncated.
      * These words begin phrases that will include dates that do not correspond to actual holdings.
+     * 
+     * Note that missing will need to be used for removing years.
      */
-    static final String[] STOP_WORDS = {"INDEX"};
+    static final String[] STOP_WORDS = {"INDEX", "SUPP", "MISSING"};
 
     /*
      * Prevents instantiation of this class, which is intended to be static only.

@@ -172,8 +172,8 @@
     <testHoldingsItem n="33">
         <holdings>Cancelled. SUPPLEMENT: 1997:Oct.4 Cancelled. v.52:no.772(1971:Dec.2)-v.52:no.776(1971:Dec.30) Cancelled. v.53(1972)v.54:no.790(1972:Apr.6)- Cancelled. v.54:no.797(1972:May 25),v.54:no.799(1972:June 8)- Cancelled. v.54:no.802(1972:June 29)v.55(1972)-v.60(1973) Cancelled. v.61:no.879(1974:Jan.3)-v.61:no.880(1974:Jan.10), Cancelled. v.61:no.882(1974:Jan.24)-v.61:no.891(1974:Mar.28) Cancelled. v.62(1974)-v.83(1979)v.84:no.1175(1979:Oct.4)- Cancelled. v.84:no.1185(1979:Dec.13),v.85(1980)-v.91(1981) Cancelled. v.
         </holdings>
-        <earliestYear>1971</earliestYear>
-        <latestYear>1997</latestYear>
+        <earliestYear></earliestYear>
+        <latestYear></latestYear>
     </testHoldingsItem>
     <testHoldingsItem n="34">
         <holdings>v.1598(2002)-v.1601(2002);v.1645(2003)- v.1652(2003),v.1696(2004)-v.1703(2004/2005); v.1747(2005)-v.1754(2005); v.1764(2006);v.1774(2007) These holdings are specific to this section only and may appear to be incomplete. A semicolon indicates no volumes are missing.</holdings>

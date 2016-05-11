@@ -96,6 +96,7 @@ public class DiscreteRangeHoldingsParser implements HoldingsParser {
             PAREN_RANGE_PAT,
             TWO_PAREN_RANGE_PAT,
             EXT_RANGE_PAT,
+            TWO_COLON_RANGE_PAT,
             DOUBLED_LEFT_EXT_RANGE_PAT,
             DOUBLED_RIGHT_EXT_RANGE_PAT,
             DOUBLED_YEAR_RANGE_PAT,
