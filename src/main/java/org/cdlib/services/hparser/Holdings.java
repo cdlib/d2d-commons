@@ -70,6 +70,13 @@ public class Holdings {
     private static final String RBOUND = "(?!\\d|\\-|/)";
     
     /**
+     * For single years a trailing hyphen is permitted.
+     * This allows the occasional 2003-FEB expression.
+     * However, this means that the range expressions should be processed before the single year expressions to remove the 2003- .
+     */
+    private static final String RBOUND_SINGLE = "(?!\\d|/)";
+    
+    /**
      * Substring representing rule for what can be on the right boundary
      * of a year-to-current expression
      * 
@@ -97,7 +104,7 @@ public class Holdings {
      * 1899/
      *
      */
-    static final String SINGLE_YEAR = String.format("%s(%s)", LBOUND, BASE_YEAR, RBOUND);
+    static final String SINGLE_YEAR = String.format("%s(%s)%s", LBOUND, BASE_YEAR, RBOUND_SINGLE);
     static final Pattern SINGLE_YEAR_PAT = Pattern.compile(SINGLE_YEAR, Pattern.CASE_INSENSITIVE);
     
     static final String PAREN_SINGLE_YEAR = String.format("\\((%s)\\)", BASE_YEAR, RBOUND);
