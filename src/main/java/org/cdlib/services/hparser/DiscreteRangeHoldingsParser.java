@@ -36,8 +36,8 @@ public class DiscreteRangeHoldingsParser implements HoldingsParser {
    * @param holdings
    */
   DiscreteRangeHoldingsParser(String holdings) {
-    this.holdings = prepareString(holdings);
-    calculate();
+    this.holdings = prepare(holdings);
+    parse();
   }
 
   /**
@@ -46,7 +46,7 @@ public class DiscreteRangeHoldingsParser implements HoldingsParser {
    * @param holdings
    * @return
    */
-  static String prepareString(String holdings) {
+  static String prepare(String holdings) {
     logger.debug("prepareString is pre-processing " + holdings);
     holdings = closeSpaces(holdings);
     holdings = truncateAddenda(holdings);
@@ -90,17 +90,18 @@ public class DiscreteRangeHoldingsParser implements HoldingsParser {
     return holdings;
   }
 
-  private static Pattern[] RANGES
+  private static final Pattern[] RANGES
           = {
+            NORMAL_RANGE_PAT,
+            PAREN_RANGE_PAT,
+            TWO_PAREN_RANGE_PAT,
             EXT_RANGE_PAT,
             DOUBLED_LEFT_EXT_RANGE_PAT,
             DOUBLED_RIGHT_EXT_RANGE_PAT,
-            DOUBLED_YEAR_RANGE_PAT, 
+            DOUBLED_YEAR_RANGE_PAT,
             DOUBLED_RIGHT_YEAR_RANGE_PAT,
             DOUBLED_LEFT_YEAR_RANGE_PAT,
             DOUBLED_YEAR_PAT,
-            RANGE_WITH_ITEM_INFO_PAT,
-            PAREN_RANGE_PAT,
             DOUBLED_RIGHT_2D_EXT_RANGE_PAT,
             DOUBLED_2D_YEAR_PAT,
             DOUBLED_RIGHT_2D_YEAR_RANGE_PAT,
@@ -108,61 +109,59 @@ public class DiscreteRangeHoldingsParser implements HoldingsParser {
             DOUBLED_BOTH_2D_YEAR_RANGE_PAT,
             DOUBLED_BOTH_LEFT_2D_YEAR_RANGE_PAT,
             DOUBLED_BOTH_RIGHT_2D_YEAR_RANGE_PAT,
-            NORMAL_RANGE_PAT,
             NORMAL_2D_YEAR_RANGE_PAT
           };
-  
-  private static Pattern[] TO_CURRENT_RANGES
+
+  private static final Pattern[] TO_CURRENT_RANGES
           = {NORMAL_YEAR_TO_CURRENT_PAT,
             DOUBLED_YEAR_TO_CURRENT_PAT,
             DOUBLED_2D_YEAR_TO_CURRENT_PAT,
             PAREN_RANGE_TO_CURRENT_PAT,
             DOUBLED_PAREN_TO_CURRENT_PAT
           };
-  
-  private static Pattern[] SINGLE_YEARS
-          = {
+
+  private static final Pattern[] SINGLE_YEARS
+          = {PAREN_SINGLE_YEAR_PAT,
             SINGLE_YEAR_PAT
           };
-  
-  private void calculate() {
+
+  private void parse() {
     String lHoldings = holdings;
-    
-    // calculate these first to avoid false to-current expressions created 
+
+    // parse these first to avoid false to-current expressions created 
     // by removing expressions following hyphens
-    lHoldings = calculateToCurrentRanges(lHoldings);
-    lHoldings = calculateRanges(lHoldings);
-    calculateSingleYears(lHoldings);
+    lHoldings = extractToCurrentRanges(lHoldings);
+    lHoldings = extractRanges(lHoldings);
+    extractSingleYears(lHoldings);
   }
-  
-  private String calculateRanges(String lHoldings) {
+
+  private String extractRanges(String lHoldings) {
     for (Pattern pattern : RANGES) {
       Matcher matcher = pattern.matcher(lHoldings);
-      yearsHeld.addAll(getYearRanges(matcher));
+      yearsHeld.addAll(getYearRanges(matcher, lHoldings));
       lHoldings = matcher.replaceAll(" ");
       logger.debug(" After replace " + "of " + pattern + " holdings are: " + lHoldings);
     }
     return lHoldings;
   }
-  
-   private String calculateToCurrentRanges(String lHoldings) {
+
+  private String extractToCurrentRanges(String lHoldings) {
     for (Pattern pattern : TO_CURRENT_RANGES) {
       Matcher matcher = pattern.matcher(lHoldings);
-      yearsHeld.addAll(getToCurrentYearRanges(matcher));
+      yearsHeld.addAll(getToCurrentYearRanges(matcher, lHoldings));
       lHoldings = matcher.replaceAll(" ");
     }
     return lHoldings;
   }
-   
-  private String calculateSingleYears(String lHoldings) {
+
+  private String extractSingleYears(String lHoldings) {
     for (Pattern pattern : SINGLE_YEARS) {
       Matcher matcher = pattern.matcher(lHoldings);
-      yearsHeld.addAll(getSingleYears(matcher));
+      yearsHeld.addAll(getSingleYears(matcher, lHoldings));
       lHoldings = matcher.replaceAll(" ");
     }
     return lHoldings;
   }
-  
 
   List<Integer> getYears() {
     return yearsHeld;
@@ -226,7 +225,7 @@ public class DiscreteRangeHoldingsParser implements HoldingsParser {
    * @return a list of years based on all year ranges that match the matchExp
    * regular expression.
    */
-  List<Integer> getYearRanges(Matcher matcher) {
+  List<Integer> getYearRanges(Matcher matcher, String lHoldings) {
     ArrayList<Integer> list = new ArrayList<>();
 
     // This should not happen but the following code depends on it, so let's check
@@ -234,9 +233,8 @@ public class DiscreteRangeHoldingsParser implements HoldingsParser {
       logger.error("Error in addYearRanges. Incorrect matching expression. Range expression must have at least two subgroups. It has " + matcher.groupCount());
       throw new IllegalArgumentException("Range expression must have at least two subgroups. It has " + matcher.groupCount());
     }
-    int i = 0;
     while (matcher.find()) {
-      logger.debug(i++ + ": Matched on " + holdings.substring(matcher.start(), matcher.end()));
+      logger.debug("Matcher " + matcher + " Matched on " + lHoldings.substring(matcher.start(), matcher.end()));
       int y1 = Integer.parseInt(matcher.group(1));
       int y2 = Integer.parseInt(matcher.group(2));
       // turn any two-digit year on the right side of a range
@@ -252,7 +250,7 @@ public class DiscreteRangeHoldingsParser implements HoldingsParser {
           list.addAll(getYearsInRange(y1, y2));
         }
       } else {
-        String warning = String.format("Excluded range %d or %d from parse of holdings %s because one was out of normal range.", y1, y2, holdings);
+        String warning = String.format("Excluded range %d or %d from parse of holdings %s because one was out of normal range.", y1, y2, lHoldings);
         logger.debug(warning);
       }
     }
@@ -270,7 +268,7 @@ public class DiscreteRangeHoldingsParser implements HoldingsParser {
    * @param exp regex expression to match on
    * @return
    */
-  List<Integer> getSingleYears(Matcher matcher) {
+  List<Integer> getSingleYears(Matcher matcher, String lHoldings) {
 
     ArrayList<Integer> list = new ArrayList<Integer>();
 
@@ -279,20 +277,19 @@ public class DiscreteRangeHoldingsParser implements HoldingsParser {
       logger.error("Error in addYearRanges. Incorrect matching expression. Range expression must have at least two subgroups. It has " + matcher.groupCount());
       throw new IllegalArgumentException("Range expression must have at least one subgroup. It has " + matcher.groupCount());
     }
-    int i = 0;
     while (matcher.find()) {
       String found = matcher.group(1);
-      //logger.debug(i++ + ": Matched on " + holdings.substring(matcher.start(), matcher.end()));
+      logger.debug("Matcher: " + matcher + "Matched on " + lHoldings.substring(matcher.start(), matcher.end()));
       int foundInt = Integer.parseInt(found);
       if (Holdings.yearInRange(foundInt)) {
         list.add(foundInt);
       } else {
         String warning = String.format("Excluded year %d from parse of holdings %s because it was out of normal range.",
-                foundInt, holdings);
+                foundInt, lHoldings);
         logger.debug(warning);
       }
     }
-    //logger.debug(String.format("addSingleYears found %s", list.toString()));
+    logger.debug(String.format("addSingleYears found %s", list.toString()));
     return list;
   }
 
@@ -304,21 +301,20 @@ public class DiscreteRangeHoldingsParser implements HoldingsParser {
    * @return a List<Integer> of the years in all of the range expressions found
    *
    */
-  List<Integer> getToCurrentYearRanges(Matcher matcher) {
+  List<Integer> getToCurrentYearRanges(Matcher matcher, String lHoldings) {
     ArrayList<Integer> list = new ArrayList<Integer>();
-    int i = 0;
     while (matcher.find()) {
-    //  logger.debug(i++ + ": Matched on " + holdings.substring(matcher.start(), matcher.end()));
+      logger.debug("Matcher " + matcher + " Matched on " + lHoldings.substring(matcher.start(), matcher.end()));
       int y1 = Integer.parseInt(matcher.group(1));
       int y2 = Integer.parseInt(Holdings.getCurrentHoldingsYear());
       if (Holdings.yearInRange(y1) && (Holdings.yearInRange(y2))) {
         list.addAll(getYearsInRange(y1, y2));
       } else {
-        //String warning = String.format("Excluded range %d or %d from parse of holdings %s because one was out of normal range.", y1, y2, holdings);
-        //logger.debug(warning);
+        String warning = String.format("Excluded range %d or %d from parse of holdings %s because one was out of normal range.", y1, y2, lHoldings);
+        logger.debug(warning);
       }
     }
-   // logger.debug(String.format("addToCurrentYearRanges found %s", list.toString()));
+    logger.debug(String.format("addToCurrentYearRanges found %s", list.toString()));
     return list;
   }
 

@@ -34,9 +34,13 @@ public class Holdings {
      */
     private static final String TWO_DIGIT_YEAR = "\\d{2}";
     
+    private static final String VOL_NO = "v\\.|n\\.|no\\.|vol\\.|ser\\.|\\d?1st|\\d?\\dth|\\d?2nd|\\d?3rd";
+    
+    private static final String MONTH_SEASON = "jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec|spr|sum|fal|win";
+    
     /**
      * Substring representing rule for what can be on the left boundary
-     * of an expression (other than year-to-current expressions).
+     * of the base year.
      * 
      * Examples:
      * Whitespace char or ","
@@ -50,7 +54,7 @@ public class Holdings {
      * Oct.1968, Nov.1968
      * 
      */
-    private static final String LBOUND = "(?<!vol\\.|\\Wv\\.|no\\.|nos\\.|\\-|/|\\$|\\d|\\w)";
+    static final String LBOUND = "(?<!vol\\.|\\Wv\\.|no\\.|nos\\.|\\-|/|\\$|\\d|\\w)";
     
     /**
      * Substring representing rule for what cannot be on the right boundary
@@ -95,6 +99,9 @@ public class Holdings {
      */
     static final String SINGLE_YEAR = String.format("%s(%s)", LBOUND, BASE_YEAR, RBOUND);
     static final Pattern SINGLE_YEAR_PAT = Pattern.compile(SINGLE_YEAR, Pattern.CASE_INSENSITIVE);
+    
+    static final String PAREN_SINGLE_YEAR = String.format("\\((%s)\\)", BASE_YEAR, RBOUND);
+    static final Pattern PAREN_SINGLE_YEAR_PAT = Pattern.compile(PAREN_SINGLE_YEAR, Pattern.CASE_INSENSITIVE);
     
     /**
      * A doubled year expression.
@@ -156,6 +163,12 @@ public class Holdings {
     static final String PAREN_RANGE = String.format("\\([^\\)]*%s(%s)-[^\\)]*%s(%s)\\)", LBOUND, BASE_YEAR, LBOUND, BASE_YEAR);
     static final Pattern PAREN_RANGE_PAT = Pattern.compile(PAREN_RANGE, Pattern.CASE_INSENSITIVE);
     
+   /**
+    *  1(1928)-17(1972);
+    */
+    static final String TWO_PAREN_RANGE = String.format("(?:%s)?\\d*\\((%s)\\)-(?:%s)?\\d*\\((%s)\\)", VOL_NO, BASE_YEAR, VOL_NO, BASE_YEAR);
+    static final Pattern TWO_PAREN_RANGE_PAT = Pattern.compile(TWO_PAREN_RANGE, Pattern.CASE_INSENSITIVE);
+    
     /*
      * Looks for a year enclosed in parens, followed by a hyphen.
      * 
@@ -167,7 +180,7 @@ public class Holdings {
      * 
      * Also excludes 10th(1998)- 22nd(1999) and 10th(1998)- 12th(1999)
      */
-    static final String PAREN_RANGE_TO_CURRENT = String.format("\\([^\\)]*%s(%s)\\)\\-\\s(?!v\\.|n\\.|no\\.|vol\\.|ser\\.|\\d?1st|\\d?\\dth|\\d?2nd|\\d?3rd)", LBOUND, BASE_YEAR);
+    static final String PAREN_RANGE_TO_CURRENT = String.format("\\([^\\)]*%s(%s)\\)\\-\\s(?!%s)", LBOUND, BASE_YEAR, VOL_NO);
     static final Pattern PAREN_RANGE_TO_CURRENT_PAT = Pattern.compile(PAREN_RANGE_TO_CURRENT, Pattern.CASE_INSENSITIVE);
     
     /*

@@ -551,7 +551,7 @@
     </testHoldingsItem>   
     <testHoldingsItem n="106">
         <holdings>v.v.85-87 (1990),v.v.83-84 (1990),v.v.81-82 (1990) Index v.71-80,v.v.79-80 (1989-90),v.v.77-78 (1989),v.v.75-76 (1989),v.v.72-74 (1988-89),v.v.69-71 (1988),v.v.66-68 (1987-88),v.v.63-65 (1987),v.v.60-62 (1986),v.v.58-59 (1986)</holdings>
-        <earliestYear>1986</earliestYear>
+        <earliestYear>1990</earliestYear>
         <latestYear>1990</latestYear>
     </testHoldingsItem>
     <testHoldingsItem n="107">
@@ -609,10 +609,10 @@
         <earliestYear></earliestYear>
         <latestYear></latestYear>
     </testHoldingsItem>
-        <testHoldingsItem n="118">
+    <testHoldingsItem n="118">
         <holdings>1(1967)-4(1973),6(1979),8-13,17-20(19??-2008) ROUTE: CSP</holdings>
         <earliestYear>1967</earliestYear>
-        <latestYear>2008</latestYear>
+        <latestYear>1979</latestYear>
     </testHoldingsItem>
     <testHoldingsItem n="119">
         <holdings>43-47,49-63 (1990-NOV2010)</holdings>
