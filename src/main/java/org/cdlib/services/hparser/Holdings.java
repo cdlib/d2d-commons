@@ -191,7 +191,7 @@ public class Holdings {
      * 
      * Also excludes 10th(1998)- 22nd(1999) and 10th(1998)- 12th(1999)
      */
-    static final String PAREN_RANGE_TO_CURRENT = String.format("\\([^\\)]*%s(%s)\\)\\-\\s(?!%s)", LBOUND, BASE_YEAR, VOL_NO);
+    static final String PAREN_RANGE_TO_CURRENT = String.format("\\([^\\)]*%s(%s)\\)\\-(?:\\s|,|\\||;)(?!%s)", LBOUND, BASE_YEAR, VOL_NO);
     static final Pattern PAREN_RANGE_TO_CURRENT_PAT = Pattern.compile(PAREN_RANGE_TO_CURRENT, Pattern.CASE_INSENSITIVE);
     
     /*
