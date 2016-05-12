@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <testHoldingsList>
-<!-- Note that -1 in the latestYear field means to calculate the current holdings year. -->
+    <!-- Note that -1 in the latestYear field means to calculate the current holdings year. -->
     <testHoldingsItem n="0">
         <holdings>1 1994 v.3 pt.1-3; 23rd ed. v.1 pt.1-3, v.2 s - 5</holdings>
         <earliestYear>1994</earliestYear>
@@ -136,13 +136,13 @@
         <earliestYear>1931</earliestYear>
         <latestYear>1931</latestYear>
     </testHoldingsItem>  
-<!-- made up example to test zero results -->
+    <!-- made up example to test zero results -->
     <testHoldingsItem n="27">
         <holdings>v.2:no.8/9 ()</holdings>
         <earliestYear></earliestYear>
         <latestYear></latestYear>
     </testHoldingsItem>  
-<!-- made up examples to test years at beginning and end of string -->
+    <!-- made up examples to test years at beginning and end of string -->
     <testHoldingsItem n="28">
         <holdings>1994-2004</holdings>
         <earliestYear>1994</earliestYear>
@@ -375,7 +375,7 @@
         <holdings>1996/97-1997/01 IP - - 4</holdings>
         <earliestYear>1996</earliestYear>
         <latestYear>2001</latestYear>
- <!-- another artificial example -->
+        <!-- another artificial example -->
     </testHoldingsItem>
     <testHoldingsItem n="73">
         <holdings>1999/01-2002/03 IP - - 4</holdings>
@@ -569,7 +569,7 @@
         <earliestYear>1974</earliestYear>
         <latestYear>2008</latestYear>
     </testHoldingsItem>
-        <testHoldingsItem n="110">
+    <testHoldingsItem n="110">
         <holdings>1974-1998 (Microfiche), July 2008 v. 2012 nov. 1963</holdings>
         <earliestYear>1963</earliestYear>
         <latestYear>2008</latestYear>
@@ -629,14 +629,25 @@
         <earliestYear>1989</earliestYear>
         <latestYear>1998</latestYear>
     </testHoldingsItem>
-    <testHoldingsItem n="121">
+    <testHoldingsItem n="122">
         <holdings>v.13-36(1743/1747-1801/1803)</holdings>
         <earliestYear>1743</earliestYear>
         <latestYear>1803</latestYear>
-    </testHoldingsItem>    <testHoldingsItem n="121">
-    <holdings>19-36 (1777-1803)</holdings>
+    </testHoldingsItem>    
+    <testHoldingsItem n="123">
+        <holdings>19-36 (1777-1803)</holdings>
         <earliestYear>1777</earliestYear>
         <latestYear>1803</latestYear>
+    </testHoldingsItem>
+    <testHoldingsItem n="124">
+        <holdings>19-36 (1777-1803)</holdings>
+        <earliestYear>1777</earliestYear>
+        <latestYear>1803</latestYear>
+    </testHoldingsItem>   
+    <testHoldingsItem n="125">
+        <holdings> v.1-5, v.6:1 (1769/71-1804)</holdings>
+        <earliestYear>1769</earliestYear>
+        <latestYear>1804</latestYear>
     </testHoldingsItem>
 </testHoldingsList>
 
