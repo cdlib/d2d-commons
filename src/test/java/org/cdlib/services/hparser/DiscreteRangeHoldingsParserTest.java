@@ -417,6 +417,18 @@ public class DiscreteRangeHoldingsParserTest {
     Collections.sort(years);
     //System.out.println("For holdings = " + holdings + " Expecting " + expectList + "; got " + years);
     assertEquals(expectList, years);
-
+  }
+  
+  @Test
+  public void testDateConversion() {
+    Integer first = 1991;
+    Integer last = 2;
+    Integer result = DiscreteRangeHoldingsParser.oneDigitToFourDigitYear(first, last);
+    assertTrue(result.equals(1992));
+    
+    first = 1999;
+    last = 1;
+    result = DiscreteRangeHoldingsParser.oneDigitToFourDigitYear(first, last);
+    assertTrue(result.equals(2001));
   }
 }

@@ -347,11 +347,11 @@ public class DiscreteRangeHoldingsParser implements HoldingsParser {
    * This works because two-digit years are only allowed when they have 
    * a four-digit year to the left, for example 1996/98.
    * 
-   * If the second year ends up being less than the first year, there may be a rare 
+   * If the second year ends up being less than the first year, there may be an 
    * occurence of something like 1999/01. In this case we attempt to fix it 
    * by adding 100 to the second year after prepending 19 to get [1999, 2001]
    */
-  private Integer twoDigitToFourDigitYear(Integer firstYear, Integer lastYear) {
+  static Integer twoDigitToFourDigitYear(Integer firstYear, Integer lastYear) {
     String firstYearString = firstYear.toString();
     String lastYearString = lastYear.toString();
     if (lastYearString.length() > 2) {
@@ -378,6 +378,52 @@ public class DiscreteRangeHoldingsParser implements HoldingsParser {
       Integer fourDLastYear = Integer.parseInt(fourDLastYearString) + 100;
       fourDLastYearString = fourDLastYear.toString();
       logger.debug("Increased year by 100 in converting 2-digit year.\nOriginal values are "
+              + firstYearString + " and " + lastYearString
+              + ". Read as " + firstYearString + " and " + fourDLastYearString + ".");
+    }
+    return Integer.parseInt(fourDLastYearString);
+  }
+  
+  
+  /*
+   * Turns a one digit year to a four digit year by prepending the first three 
+   * chars of the earlier year to the later year.
+   * 
+   * For example, for the expression 1994/6 it prepends 199 to 6 so that the 
+   * last year becomes 1996.
+   * 
+   * This works because one-digit years are only allowed when they have 
+   * a four-digit year to the left, for example 1996/6.
+   * 
+   * If the second year ends up being less than the first year, there may be an 
+   * occurence of something like 1999/0. In this case we attempt to fix it 
+   * by adding 10 to the second year after prepending 199 to get [1999, 2000]
+   */
+  static Integer oneDigitToFourDigitYear(Integer firstYear, Integer lastYear) {
+    String firstYearString = firstYear.toString();
+    if (firstYearString.length() < 4) {
+      throw new IllegalArgumentException("First argument must be a four-digit integer.");
+    }
+    String lastYearString = lastYear.toString();
+    if (lastYearString.length() > 1) {
+      throw new IllegalArgumentException("Second argument must be a one-digit integer.");
+    }
+
+    // Do the same for firstYearString
+    if (firstYearString.length() == 1) {
+      firstYearString = "0" + firstYearString;
+    }
+
+    // get the first three digits from the previous year
+    // and prepend them to the last year
+    String fourDLastYearString = firstYearString.substring(0, 3) + lastYearString;
+
+    // if by some chance the last year is smaller than the first year
+    // then it is probably something like 1999/01, so we adjust it up 100 years
+    if (Integer.parseInt(fourDLastYearString) < Integer.parseInt(firstYearString)) {
+      Integer fourDLastYear = Integer.parseInt(fourDLastYearString) + 10;
+      fourDLastYearString = fourDLastYear.toString();
+      logger.debug("Increased year by 10 in converting 2-digit year.\nOriginal values are "
               + firstYearString + " and " + lastYearString
               + ". Read as " + firstYearString + " and " + fourDLastYearString + ".");
     }
