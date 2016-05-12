@@ -16,7 +16,7 @@ public class Holdings {
     /**
      * The lowest integer that will be treated as a year.
      */
-    private static final int LBOUND_YEAR = 1800;
+    private static final int LBOUND_YEAR = 1620;
     
     /**
      * Substring representing a 4-digit year referenced in subsequent match expressions.

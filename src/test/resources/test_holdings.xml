@@ -324,7 +324,7 @@
         <latestYear>2003</latestYear>
     </testHoldingsItem>
     <testHoldingsItem n="63">
-        <holdings>1.1 1958/1959 g 1.2 1961/1962-1963/1964 M17600000 h - 2	1760	1964	205</holdings>
+        <holdings>1.1 1958/1959 g 1.2 1961/1962-1963/1964 </holdings>
         <earliestYear>1958</earliestYear>
         <latestYear>1964</latestYear>
     </testHoldingsItem>
@@ -628,6 +628,15 @@
         <holdings>&lt;1989:9:1-1990:3:1&gt;&lt;1997:5:1-1998:3:15&gt;</holdings>
         <earliestYear>1989</earliestYear>
         <latestYear>1998</latestYear>
+    </testHoldingsItem>
+    <testHoldingsItem n="121">
+        <holdings>v.13-36(1743/1747-1801/1803)</holdings>
+        <earliestYear>1743</earliestYear>
+        <latestYear>1803</latestYear>
+    </testHoldingsItem>    <testHoldingsItem n="121">
+    <holdings>19-36 (1777-1803)</holdings>
+        <earliestYear>1777</earliestYear>
+        <latestYear>1803</latestYear>
     </testHoldingsItem>
 </testHoldingsList>
 
