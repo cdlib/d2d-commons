@@ -9,14 +9,17 @@ import org.junit.Test;
 
 public class ExpTest {
 
+  @Test
   public void testShortYear() {
     yearTest(String.format("(%s)/(%s)", Holdings.BASE_YEAR, Holdings.SHORT_YEAR), " 1921/23 ", "1921", "23");
   }
 
+  @Test
   public void testShortYear1() {
     yearTest(String.format("(%s)/(%s)", Holdings.BASE_YEAR, Holdings.SHORT_YEAR), " 1921/2 ", "1921", "2");
   }
 
+  @Test
   public void testSingleYear() {
     yearTest(Holdings.PAREN_RANGE, " (1997-NOV1998) ", "1997", "1998");
   }
@@ -31,13 +34,29 @@ public class ExpTest {
     }
   }
   
+  @Test
   public void testParenRange() {
     testExp(" 1.1 (1995-1996) ", Holdings.NORMAL_RANGE_PAT, new Integer[]{1995,1996});
   }
   
-  @Test 
+  @Test
   public void testShortYear3() {
     testExp("1.1 1995/96", Holdings.DOUBLED_2D_YEAR_PAT, new Integer[]{1995, 1996});
+  }
+  
+  @Test
+  public void testShortYear4() {
+    testExp("1.1 1999/00", Holdings.DOUBLED_2D_YEAR_PAT, new Integer[]{1999, 2000});
+  }
+  
+  @Test
+  public void testShortYear5() {
+    testExp("1.1 1999/0", Holdings.DOUBLED_2D_YEAR_PAT, new Integer[]{1999, 2000});
+  }
+  
+  @Test
+  public void testShortYear6() {
+    testExp("library_holdings: BOUND : v.1-19; 1996/1997-1999/00.", Holdings.DOUBLED_2D_YEAR_RANGE_PAT, new Integer[]{1996,1997,1998,1999, 2000});
   }
   
     

@@ -392,30 +392,4 @@ public class DiscreteRangeHoldingsParser implements HoldingsParser {
     return uniqueYearList;
   }
 
-  /*
-   * Returns List with all four-digit years.
-   * 
-   * NOTE: so far this is not needed as none of the methods produces a list containing 2-digit years.
-   */
-  private List<Integer> replaceTwoDigitYears(List<Integer> mixedList) {
-    List<Integer> fourDigitYearList = new ArrayList<>();
-    int previousYear = 0;
-    // A two-digit year will always be on the right side of a range expression
-    // so there logically must be a date that precedes it
-    if (mixedList.get(0) < 100) {
-      throw new IllegalStateException("First year in list cannot have two digits.");
-    }
-    for (int year : mixedList) {
-      // if this is a two-digit year
-      // replace it with four digit year
-      // by prepending the first two digits from the previous year
-      if (year < 100) {
-        fourDigitYearList.add(toFourDigitYear(previousYear, year));
-      } else {
-        fourDigitYearList.add(year);
-      }
-      previousYear = year;
-    }
-    return fourDigitYearList;
-  }
 }

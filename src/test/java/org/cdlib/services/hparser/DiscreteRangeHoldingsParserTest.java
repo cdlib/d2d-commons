@@ -24,7 +24,7 @@ public class DiscreteRangeHoldingsParserTest {
  public void testPrepareString() {
     String testExp = "(2012- 2013) vol. 1234 index some stuff";
     testExp = DiscreteRangeHoldingsParser.prepare(testExp);
-    System.out. println(testExp);
+    // System.out. println(testExp);
     assertEquals(" (2012-2013) vol.1234 ", testExp);
   }
 

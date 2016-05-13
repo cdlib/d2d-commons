@@ -20,11 +20,11 @@ public class DateConversionTest {
   public void testDateConversion() {
 
     Integer result = DiscreteRangeHoldingsParser.toFourDigitYear(1991, 2);
-    System.out.println(result);
+    // System.out.println(result);
     assertTrue(result.equals(1992));
 
     result = DiscreteRangeHoldingsParser.toFourDigitYear(1999, 1);
-    System.out.println(result);
+    // System.out.println(result);
     assertTrue(result.equals(2001));
   }
 
@@ -34,7 +34,7 @@ public class DateConversionTest {
     DiscreteRangeHoldingsParser hp = new DiscreteRangeHoldingsParser(holdings);
     List<Integer> years = hp.getYears();
     for (int i : years) {
-      System.out.println(i);
+      // System.out.println(i);
     }
     years.addAll(hp.getYearRanges(Holdings.DOUBLED_2D_YEAR_PAT.matcher(holdings), holdings));
     Integer[] expectArray = new Integer[]{1995, 1996};
@@ -51,7 +51,7 @@ public class DateConversionTest {
     List<Integer> years = hp.getYears();
     assertEquals(2, years.size());
     for (int i : years) {
-      System.out.println(i);
+      // System.out.println(i);
     }
     years.addAll(hp.getYearRanges(Holdings.DOUBLED_2D_YEAR_PAT.matcher(holdings), holdings));
     Integer[] expectArray = new Integer[]{1984, 1985};
