@@ -140,6 +140,7 @@ public class DiscreteRangeHoldingsParser implements HoldingsParser {
     for (Pattern pattern : RANGES) {
       Matcher matcher = pattern.matcher(lHoldings);
       yearsHeld.addAll(getYearRanges(matcher, lHoldings));
+      // after adding the matches strip all of the expressions from the holdings
       lHoldings = matcher.replaceAll(" ");
       logger.debug(" After replace " + "of " + pattern + " holdings are: " + lHoldings);
     }
@@ -241,7 +242,7 @@ public class DiscreteRangeHoldingsParser implements HoldingsParser {
       // turn any two-digit year on the right side of a range
       // to a four-digit year
       if (y2 < 100) {
-        y2 = twoDigitToFourDigitYear(y1, y2);
+        y2 = toFourDigitYear(y1, y2);
       }
       if (Holdings.yearInRange(y1) && (Holdings.yearInRange(y2))) {
         List<Integer> expYears = getYearsInRange(y1, y2);
@@ -269,7 +270,8 @@ public class DiscreteRangeHoldingsParser implements HoldingsParser {
    * @param exp regex expression to match on
    * @return
    */
-  List<Integer> getSingleYears(Matcher matcher, String lHoldings) {
+  List<Integer> getSingleYears(Matcher matcher, String lHoldings
+  ) {
 
     ArrayList<Integer> list = new ArrayList<Integer>();
 
@@ -302,7 +304,8 @@ public class DiscreteRangeHoldingsParser implements HoldingsParser {
    * @return a List<Integer> of the years in all of the range expressions found
    *
    */
-  List<Integer> getToCurrentYearRanges(Matcher matcher, String lHoldings) {
+  List<Integer> getToCurrentYearRanges(Matcher matcher, String lHoldings
+  ) {
     ArrayList<Integer> list = new ArrayList<Integer>();
     while (matcher.find()) {
       logger.debug("Matcher " + matcher + " Matched on " + lHoldings.substring(matcher.start(), matcher.end()));
@@ -325,7 +328,8 @@ public class DiscreteRangeHoldingsParser implements HoldingsParser {
    * @param start the first year in the range
    * @parm end the last year in the range
    */
-  List<Integer> getYearsInRange(int start, int end) {
+  List<Integer> getYearsInRange(int start, int end
+  ) {
     ArrayList<Integer> list = new ArrayList<>();
     if (end < start) {
       logger.info(String.format("Range for string %s returned zero results because end of range precedes beginning of range.", holdings));
@@ -336,7 +340,6 @@ public class DiscreteRangeHoldingsParser implements HoldingsParser {
     }
     return list;
   }
-
   /*
    * Turns a two digit year to a four digit year by prepending the first two 
    * chars of the earlier year to the later year.
@@ -351,79 +354,25 @@ public class DiscreteRangeHoldingsParser implements HoldingsParser {
    * occurence of something like 1999/01. In this case we attempt to fix it 
    * by adding 100 to the second year after prepending 19 to get [1999, 2001]
    */
-  static Integer twoDigitToFourDigitYear(Integer firstYear, Integer lastYear) {
+
+  static Integer toFourDigitYear(Integer firstYear, Integer lastYear) {
     String firstYearString = firstYear.toString();
     String lastYearString = lastYear.toString();
-    if (lastYearString.length() > 2) {
-      throw new IllegalArgumentException("Second argument must be a two-digit integer.");
-    }
-    // The toString method returns "1" when we want the string "01", so we will pad it with a zero
-    // to get our two-digit year -- also possible to handle this with String.format method I think
-    if (lastYearString.length() == 1) {
-      lastYearString = "0" + lastYearString;
-    }
-
-    // Do the same for firstYearString
-    if (firstYearString.length() == 1) {
-      firstYearString = "0" + firstYearString;
-    }
-
-    // get the first two digits from the previous year
-    // and prepend them to the last year
-    String fourDLastYearString = firstYearString.substring(0, 2) + lastYearString;
-
-    // if by some chance the last year is smaller than the first year
-    // then it is probably something like 1999/01, so we adjust it up 100 years
-    if (Integer.parseInt(fourDLastYearString) < Integer.parseInt(firstYearString)) {
-      Integer fourDLastYear = Integer.parseInt(fourDLastYearString) + 100;
-      fourDLastYearString = fourDLastYear.toString();
-      logger.debug("Increased year by 100 in converting 2-digit year.\nOriginal values are "
-              + firstYearString + " and " + lastYearString
-              + ". Read as " + firstYearString + " and " + fourDLastYearString + ".");
-    }
-    return Integer.parseInt(fourDLastYearString);
-  }
-  
-  
-  /*
-   * Turns a one digit year to a four digit year by prepending the first three 
-   * chars of the earlier year to the later year.
-   * 
-   * For example, for the expression 1994/6 it prepends 199 to 6 so that the 
-   * last year becomes 1996.
-   * 
-   * This works because one-digit years are only allowed when they have 
-   * a four-digit year to the left, for example 1996/6.
-   * 
-   * If the second year ends up being less than the first year, there may be an 
-   * occurence of something like 1999/0. In this case we attempt to fix it 
-   * by adding 10 to the second year after prepending 199 to get [1999, 2000]
-   */
-  static Integer oneDigitToFourDigitYear(Integer firstYear, Integer lastYear) {
-    String firstYearString = firstYear.toString();
-    if (firstYearString.length() < 4) {
+    if (firstYearString.length() != 4) {
       throw new IllegalArgumentException("First argument must be a four-digit integer.");
     }
-    String lastYearString = lastYear.toString();
-    if (lastYearString.length() > 1) {
-      throw new IllegalArgumentException("Second argument must be a one-digit integer.");
+    if (lastYearString.length() > 2) {
+      throw new IllegalArgumentException("Second argument must be a length of one or two.");
     }
-
-    // Do the same for firstYearString
-    if (firstYearString.length() == 1) {
-      firstYearString = "0" + firstYearString;
-    }
-
-    // get the first three digits from the previous year
-    // and prepend them to the last year
-    String fourDLastYearString = firstYearString.substring(0, 3) + lastYearString;
-
-    // if by some chance the last year is smaller than the first year
-    // then it is probably something like 1999/01, so we adjust it up 100 years
+    
+    // Replace the last x digits of the first year with the last year to get a candidate return value
+    String left = firstYearString.substring(0, 4 - lastYearString.length()); 
+    String fourDLastYearString = left + lastYearString;
     if (Integer.parseInt(fourDLastYearString) < Integer.parseInt(firstYearString)) {
-      Integer fourDLastYear = Integer.parseInt(fourDLastYearString) + 10;
+      int centuryAdjust = lastYearString.length() == 1 ? 10 : 100;
+      Integer fourDLastYear = Integer.parseInt(fourDLastYearString) + centuryAdjust;
       fourDLastYearString = fourDLastYear.toString();
-      logger.debug("Increased year by 10 in converting 2-digit year.\nOriginal values are "
+      logger.debug("Increased year by 100 in converting 2-digit year.\nOriginal values are "
               + firstYearString + " and " + lastYearString
               + ". Read as " + firstYearString + " and " + fourDLastYearString + ".");
     }
@@ -461,7 +410,7 @@ public class DiscreteRangeHoldingsParser implements HoldingsParser {
       // replace it with four digit year
       // by prepending the first two digits from the previous year
       if (year < 100) {
-        fourDigitYearList.add(twoDigitToFourDigitYear(previousYear, year));
+        fourDigitYearList.add(toFourDigitYear(previousYear, year));
       } else {
         fourDigitYearList.add(year);
       }

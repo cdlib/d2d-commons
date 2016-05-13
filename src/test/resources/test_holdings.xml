@@ -365,7 +365,6 @@
         <earliestYear>1995</earliestYear>
         <latestYear>1996</latestYear>
     </testHoldingsItem>
-    <!-- artificial example, not seen in data, but certainly possible. -->
     <testHoldingsItem n="71">
         <holdings>1999/01 IP - - 4</holdings>
         <earliestYear>1999</earliestYear>
@@ -375,7 +374,6 @@
         <holdings>1996/97-1997/01 IP - - 4</holdings>
         <earliestYear>1996</earliestYear>
         <latestYear>2001</latestYear>
-        <!-- another artificial example -->
     </testHoldingsItem>
     <testHoldingsItem n="73">
         <holdings>1999/01-2002/03 IP - - 4</holdings>
