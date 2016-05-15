@@ -228,31 +228,41 @@ public class DiscreteRangeHoldingsParser implements HoldingsParser {
    * regular expression.
    */
   List<Integer> getYearRanges(Matcher matcher, String lHoldings) {
+    logger.debug(" Processing holdings " + lHoldings + " with range expression " + matcher);
     ArrayList<Integer> list = new ArrayList<>();
-
-    // This should not happen but the following code depends on it, so let's check
-    if (matcher.groupCount() < 2) {
+    int nCaptures = matcher.groupCount();
+    if (nCaptures < 2 || nCaptures > 3) {
       logger.error("Error in addYearRanges. Incorrect matching expression. Range expression must have at least two subgroups. It has " + matcher.groupCount());
-      throw new IllegalArgumentException("Range expression must have at least two subgroups. It has " + matcher.groupCount());
+      throw new IllegalArgumentException("Range expression must have two to three capture groups. It has " + matcher.groupCount());
     }
     while (matcher.find()) {
       logger.debug("Matcher " + matcher + " Matched on " + lHoldings.substring(matcher.start(), matcher.end()));
-      int y1 = Integer.parseInt(matcher.group(1));
-      int y2 = Integer.parseInt(matcher.group(2));
+      int beginningYear = Integer.parseInt(matcher.group(1));
+      int endingYear = 0;
+      int penultYear = 0;
+      if (nCaptures == 2) {
+        endingYear = Integer.parseInt(matcher.group(2));
+        penultYear = beginningYear;
+      } else {
+        endingYear = Integer.parseInt(matcher.group(3));
+        penultYear = Integer.parseInt(matcher.group(2));
+      }
+      logger.debug("initial beginningYear: " + beginningYear + " initial penult = " + penultYear + " initial endingYear " + endingYear);
       // turn any two-digit year on the right side of a range
       // to a four-digit year
-      if (y2 < 100) {
-        y2 = toFourDigitYear(y1, y2);
+      if (endingYear < 100) {
+        endingYear = toFourDigitYear(penultYear, endingYear);
       }
-      if (Holdings.yearInRange(y1) && (Holdings.yearInRange(y2))) {
-        List<Integer> expYears = getYearsInRange(y1, y2);
+      logger.debug("Determined ending year in range: " + endingYear);
+      if (Holdings.yearInRange(beginningYear) && (Holdings.yearInRange(endingYear))) {
+        List<Integer> expYears = getYearsInRange(beginningYear, endingYear);
         if (expYears.isEmpty()) {
           logger.debug("Returned empty year list.");
         } else {
-          list.addAll(getYearsInRange(y1, y2));
+          list.addAll(getYearsInRange(beginningYear, endingYear));
         }
       } else {
-        String warning = String.format("Excluded range %d or %d from parse of holdings %s because one was out of normal range.", y1, y2, lHoldings);
+        String warning = String.format("Excluded range %d or %d from parse of holdings %s because one was out of normal range.", beginningYear, endingYear, lHoldings);
         logger.debug(warning);
       }
     }

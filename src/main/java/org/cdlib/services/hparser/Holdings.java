@@ -115,6 +115,7 @@ public class Holdings {
      */
     static final String DOUBLED_YEAR = String.format("%s(%s)/(%s)%s", LBOUND, BASE_YEAR, BASE_YEAR, RBOUND);
     static final Pattern DOUBLED_YEAR_PAT = Pattern.compile(DOUBLED_YEAR, Pattern.CASE_INSENSITIVE);
+    
     /*
      * A doubled year expression where the right year has one or two digits.
      * 
@@ -206,7 +207,7 @@ public class Holdings {
      * 
      * example: 2005/2006-2002/10
      */
-    static final String DOUBLED_2D_YEAR_RANGE = String.format("%s(%s)/%s-%s/(%s)%s", LBOUND, BASE_YEAR, BASE_YEAR, BASE_YEAR, SHORT_YEAR, RBOUND);
+    static final String DOUBLED_2D_YEAR_RANGE = String.format("%s(%s)/%s-(%s)/(%s)%s", LBOUND, BASE_YEAR, BASE_YEAR, BASE_YEAR, SHORT_YEAR, RBOUND);
     static final Pattern DOUBLED_2D_YEAR_RANGE_PAT = Pattern.compile(DOUBLED_2D_YEAR_RANGE, Pattern.CASE_INSENSITIVE);
     
     /*
@@ -214,7 +215,7 @@ public class Holdings {
      * 
      * example: 2005/06-2009/10
      */
-    static final String DOUBLED_BOTH_2D_YEAR_RANGE = String.format("%s(%s)/%s-%s/(%s)%s", LBOUND, BASE_YEAR, SHORT_YEAR, BASE_YEAR, SHORT_YEAR, RBOUND);
+    static final String DOUBLED_BOTH_2D_YEAR_RANGE = String.format("%s(%s)/%s-(%s)/(%s)%s", LBOUND, BASE_YEAR, SHORT_YEAR, BASE_YEAR, SHORT_YEAR, RBOUND);
     static final Pattern DOUBLED_BOTH_2D_YEAR_RANGE_PAT = Pattern.compile(DOUBLED_BOTH_2D_YEAR_RANGE, Pattern.CASE_INSENSITIVE);
     
     /*
@@ -231,13 +232,13 @@ public class Holdings {
      * 
      * Example: 2000-2006/07
      */
-    static final String DOUBLED_RIGHT_2D_YEAR_RANGE = String.format("%s(%s)\\-%s/(%s)%s", LBOUND, BASE_YEAR, BASE_YEAR, SHORT_YEAR, RBOUND);
+    static final String DOUBLED_RIGHT_2D_YEAR_RANGE = String.format("%s(%s)\\-(%s)/(%s)%s", LBOUND, BASE_YEAR, BASE_YEAR, SHORT_YEAR, RBOUND);
     static final Pattern DOUBLED_RIGHT_2D_YEAR_RANGE_PAT = Pattern.compile(DOUBLED_RIGHT_2D_YEAR_RANGE, Pattern.CASE_INSENSITIVE);
     
     /*
      * A range with a double year on the left.
      * 
-     * example: 2006-2010/2011
+     * example: 2006/2007-2010
      */
     static final String DOUBLED_LEFT_YEAR_RANGE = String.format("%s(%s)/%s\\-(%s)%s", LBOUND, BASE_YEAR, BASE_YEAR, BASE_YEAR, RBOUND);
     static final Pattern DOUBLED_LEFT_YEAR_RANGE_PAT = Pattern.compile(DOUBLED_LEFT_YEAR_RANGE, Pattern.CASE_INSENSITIVE);
@@ -264,7 +265,7 @@ public class Holdings {
      * 
      * Example: 1981/1982-1999/00
      */
-    static final String DOUBLED_BOTH_RIGHT_2D_YEAR_RANGE = String.format("%s(%s)/%s-%s/(%s)%s", LBOUND, BASE_YEAR, BASE_YEAR, BASE_YEAR, SHORT_YEAR, RBOUND);
+    static final String DOUBLED_BOTH_RIGHT_2D_YEAR_RANGE = String.format("%s(%s)/%s-(%s)/(%s)%s", LBOUND, BASE_YEAR, BASE_YEAR, BASE_YEAR, SHORT_YEAR, RBOUND);
     static final Pattern DOUBLED_BOTH_RIGHT_2D_YEAR_RANGE_PAT = Pattern.compile(DOUBLED_BOTH_RIGHT_2D_YEAR_RANGE, Pattern.CASE_INSENSITIVE);
 
     /**
@@ -304,7 +305,7 @@ public class Holdings {
      * 
      * 1959-1960-1962/63
      */
-    static final String DOUBLED_RIGHT_2D_EXT_RANGE = String.format("%s(%s)\\-%s\\-%s/(%s)%s", LBOUND, BASE_YEAR, BASE_YEAR, BASE_YEAR, SHORT_YEAR, RBOUND);
+    static final String DOUBLED_RIGHT_2D_EXT_RANGE = String.format("%s(%s)\\-%s\\-(%s)/(%s)%s", LBOUND, BASE_YEAR, BASE_YEAR, BASE_YEAR, SHORT_YEAR, RBOUND);
     static final Pattern DOUBLED_RIGHT_2D_EXT_RANGE_PAT = Pattern.compile(DOUBLED_RIGHT_2D_EXT_RANGE, Pattern.CASE_INSENSITIVE);
     
     /**
@@ -368,7 +369,7 @@ public class Holdings {
      * The portion of the string following these words is truncated.
      * These words begin phrases that will include dates that do not correspond to actual holdings.
      * 
-     * Note that missing will need to be used for removing years.
+     * Note that missing will need to be used for removing years to get gaps correctly.
      */
     static final String[] STOP_WORDS = {"INDEX", "SUPP", "MISSING"};
 
