@@ -50,6 +50,7 @@ public class DiscreteRangeHoldingsParser implements HoldingsParser {
     logger.debug("prepareString is pre-processing " + holdings);
     holdings = closeSpaces(holdings);
     holdings = truncateAddenda(holdings);
+    holdings = holdings.replaceAll("\\d\\d\\?{1,2}-?", "");
     logger.debug("prepareString returned " + holdings);
     return holdings;
   }
@@ -237,7 +238,6 @@ public class DiscreteRangeHoldingsParser implements HoldingsParser {
       throw new IllegalArgumentException("Range expression must have two to three capture groups. It has " + matcher.groupCount());
     }
     while (matcher.find()) {
-      //System.out.println("Matcher " + matcher + " Matched on " + lHoldings.substring(matcher.start(), matcher.end()));
       logger.debug("Matcher " + matcher + " Matched on " + lHoldings.substring(matcher.start(), matcher.end()));
       String beginningYearStr = matcher.group(1);
       String endingYearStr = null;
@@ -250,21 +250,16 @@ public class DiscreteRangeHoldingsParser implements HoldingsParser {
         penultYearStr = matcher.group(2);
       }
       logger.debug("initial beginningYear: " + beginningYearStr + " initial penult = " + penultYearStr + " initial endingYear " + endingYearStr);
-      
       Integer beginningYear = Integer.parseInt(beginningYearStr);
       Integer endingYear = Integer.parseInt(endingYearStr);
       if (penultYearStr.length() < 3) {
         penultYearStr = String.valueOf(toFourDigitYear(beginningYearStr, penultYearStr));
-      //  System.out.println("penult: " + penultYearStr);
       }
       // turn any two-digit year on the right side of a range
       // to a four-digit year
       if (endingYearStr.length() < 3) {
-        //System.out.println("Passing: " + penultYearStr + " " + endingYearStr);
         endingYear = toFourDigitYear(penultYearStr, endingYearStr);
       }
-      //System.out.println("Ending year: " + endingYear);
-
       logger.debug("Determined ending year in range: " + endingYearStr);
       if (Holdings.yearInRange(beginningYear) && (Holdings.yearInRange(endingYear))) {
         List<Integer> expYears = getYearsInRange(beginningYear, endingYear);
