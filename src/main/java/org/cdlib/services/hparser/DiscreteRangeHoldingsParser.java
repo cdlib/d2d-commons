@@ -48,6 +48,10 @@ public class DiscreteRangeHoldingsParser implements HoldingsParser {
    */
   static String prepare(String holdings) {
     logger.debug("prepareString is pre-processing " + holdings);
+    // pad the holdings to make it easier for the regular
+    // expressions: they don't need to account for the range expression
+    // at the beginning or end of the line
+    holdings = " " + holdings + " ";
     holdings = closeSpaces(holdings);
     holdings = truncateAddenda(holdings);
     holdings = holdings.replaceAll("\\d\\d\\?{1,2}-?", "");
@@ -56,25 +60,14 @@ public class DiscreteRangeHoldingsParser implements HoldingsParser {
   }
 
   static private String closeSpaces(String holdings) {
-    // pad the holdings to make it easier for the regular
-    // expressions: they don't need to account for the range expression
-    // at the beginning or end of the line
-    holdings = " " + holdings + " ";
-
     // close up expressions like No. 1111 -- see Redmine #5539
-    String matchExp = VOL_OR_N_W_WHITESPACE;
     // this works using back references to two capture groups in the match expression
     // the middle capture group (\\s+) is not included in the replace expression, removing the whitespace
-    holdings = Pattern.compile(matchExp, Pattern.CASE_INSENSITIVE).matcher(holdings).replaceAll("$1$3");
-
+    holdings = VOL_OR_N_W_WHITESPACE_PAT.matcher(holdings).replaceAll("$1$3");
     // close up expression like (1998- 2009) -- see Planio #8462
-    matchExp = NORMAL_RANGE_W_WHITESPACE;
-    holdings = Pattern.compile(matchExp, Pattern.CASE_INSENSITIVE).matcher(holdings).replaceAll("$1$3");
-
+    holdings = NORMAL_RANGE_W_WHITESPACE_PAT.matcher(holdings).replaceAll("$1$3");
     // close up expression like (1998- 09) -- see Planio #8462
-    matchExp = NORMAL_2D_YEAR_RANGE_W_WHITESPACE;
-    holdings = Pattern.compile(matchExp, Pattern.CASE_INSENSITIVE).matcher(holdings).replaceAll("$1$3");
-
+    holdings = NORMAL_2D_YEAR_RANGE_W_WHITESPACE_PAT.matcher(holdings).replaceAll("$1$3");
     return holdings;
   }
 
