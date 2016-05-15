@@ -423,11 +423,11 @@ public class DiscreteRangeHoldingsParserTest {
   public void testDateConversion() {
 
     Integer result = DiscreteRangeHoldingsParser.toFourDigitYear(1991, 2);
-    System.out.println(result);
+    //System.out.println(result);
     assertTrue(result.equals(1992));
     
     result = DiscreteRangeHoldingsParser.toFourDigitYear(1999, 1);
-    System.out.println(result);
+    //System.out.println(result);
     assertTrue(result.equals(2001));
   }
 }

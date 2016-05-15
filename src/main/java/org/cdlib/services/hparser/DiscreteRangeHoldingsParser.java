@@ -110,7 +110,9 @@ public class DiscreteRangeHoldingsParser implements HoldingsParser {
             DOUBLED_BOTH_2D_YEAR_RANGE_PAT,
             DOUBLED_BOTH_LEFT_2D_YEAR_RANGE_PAT,
             DOUBLED_BOTH_RIGHT_2D_YEAR_RANGE_PAT,
-            NORMAL_2D_YEAR_RANGE_PAT
+            NORMAL_2D_YEAR_RANGE_PAT,
+            DOUBLED_ALL_SHORT_RANGE_PAT,
+            DOUBLED_LEFT_2D_SHORT_RIGHT_PAT
           };
 
   private static final Pattern[] TO_CURRENT_RANGES
@@ -228,7 +230,6 @@ public class DiscreteRangeHoldingsParser implements HoldingsParser {
    * regular expression.
    */
   List<Integer> getYearRanges(Matcher matcher, String lHoldings) {
-    logger.debug(" Processing holdings " + lHoldings + " with range expression " + matcher);
     ArrayList<Integer> list = new ArrayList<>();
     int nCaptures = matcher.groupCount();
     if (nCaptures < 2 || nCaptures > 3) {
@@ -236,6 +237,7 @@ public class DiscreteRangeHoldingsParser implements HoldingsParser {
       throw new IllegalArgumentException("Range expression must have two to three capture groups. It has " + matcher.groupCount());
     }
     while (matcher.find()) {
+      //System.out.println("Matcher " + matcher + " Matched on " + lHoldings.substring(matcher.start(), matcher.end()));
       logger.debug("Matcher " + matcher + " Matched on " + lHoldings.substring(matcher.start(), matcher.end()));
       String beginningYearStr = matcher.group(1);
       String endingYearStr = null;
@@ -250,14 +252,19 @@ public class DiscreteRangeHoldingsParser implements HoldingsParser {
       logger.debug("initial beginningYear: " + beginningYearStr + " initial penult = " + penultYearStr + " initial endingYear " + endingYearStr);
       
       Integer beginningYear = Integer.parseInt(beginningYearStr);
-      Integer endingYear = null;
+      Integer endingYear = Integer.parseInt(endingYearStr);
+      if (penultYearStr.length() < 3) {
+        penultYearStr = String.valueOf(toFourDigitYear(beginningYearStr, penultYearStr));
+      //  System.out.println("penult: " + penultYearStr);
+      }
       // turn any two-digit year on the right side of a range
       // to a four-digit year
       if (endingYearStr.length() < 3) {
+        //System.out.println("Passing: " + penultYearStr + " " + endingYearStr);
         endingYear = toFourDigitYear(penultYearStr, endingYearStr);
-      } else {
-        endingYear = Integer.parseInt(endingYearStr);
       }
+      //System.out.println("Ending year: " + endingYear);
+
       logger.debug("Determined ending year in range: " + endingYearStr);
       if (Holdings.yearInRange(beginningYear) && (Holdings.yearInRange(endingYear))) {
         List<Integer> expYears = getYearsInRange(beginningYear, endingYear);

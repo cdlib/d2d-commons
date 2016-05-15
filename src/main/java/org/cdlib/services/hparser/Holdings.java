@@ -252,6 +252,12 @@ public class Holdings {
     static final String DOUBLED_LEFT_2D_YEAR_RANGE = String.format("%s(%s)/%s\\-(%s)%s", LBOUND, BASE_YEAR, SHORT_YEAR, BASE_YEAR, RBOUND);
     static final Pattern DOUBLED_LEFT_2D_YEAR_RANGE_PAT = Pattern.compile(DOUBLED_LEFT_2D_YEAR_RANGE, Pattern.CASE_INSENSITIVE);
     
+    /**
+     * ser.:2:v.1-3(1923/4-26)
+     */
+    static final String DOUBLED_LEFT_2D_SHORT_RIGHT = String.format("%s(%s)/%s\\-(%s)%s", LBOUND, BASE_YEAR, SHORT_YEAR, SHORT_YEAR, RBOUND);
+    static final Pattern DOUBLED_LEFT_2D_SHORT_RIGHT_PAT = Pattern.compile(DOUBLED_LEFT_2D_SHORT_RIGHT, Pattern.CASE_INSENSITIVE);
+    
     /*
      * A range doubled on both sides in which the left double has a two-digit year.
      * 
@@ -267,6 +273,12 @@ public class Holdings {
      */
     static final String DOUBLED_BOTH_RIGHT_2D_YEAR_RANGE = String.format("%s(%s)/%s-(%s)/(%s)%s", LBOUND, BASE_YEAR, BASE_YEAR, BASE_YEAR, SHORT_YEAR, RBOUND);
     static final Pattern DOUBLED_BOTH_RIGHT_2D_YEAR_RANGE_PAT = Pattern.compile(DOUBLED_BOTH_RIGHT_2D_YEAR_RANGE, Pattern.CASE_INSENSITIVE);
+    
+    /**
+     * (1923/4-26/7)
+     */
+    static final String DOUBLED_ALL_SHORT_RANGE = String.format("%s(%s)/%s-(%s)/(%s)%s", LBOUND, BASE_YEAR, SHORT_YEAR, SHORT_YEAR, SHORT_YEAR, RBOUND);
+    static final Pattern DOUBLED_ALL_SHORT_RANGE_PAT = Pattern.compile(DOUBLED_ALL_SHORT_RANGE, Pattern.CASE_INSENSITIVE);
 
     /**
      * An "extended" range, that is, a triple using hyphens.
