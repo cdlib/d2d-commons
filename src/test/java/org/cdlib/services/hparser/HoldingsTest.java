@@ -10,15 +10,6 @@ import static org.junit.Assert.fail;
  */
 public class HoldingsTest {
     
-    /**
-     * Test of getCurrentHoldingsYear method, of class Holdings.
-     */
-    @Test
-    public void testGetCurrentHoldingsYear() {
-        
-        assertEquals(Holdings.getCurrentHoldingsYear(), "2016");
-    }
-    
     @Test
     public void testGetEarliestYear() {
         HoldingsParser hp = Holdings.getParser("1.1 1- 1000/1700- 1.1 1-12 1000-1900 Ser vol; mark by v.; update cover date on receipt szstx s - 4");
