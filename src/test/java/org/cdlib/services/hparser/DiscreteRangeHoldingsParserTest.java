@@ -120,7 +120,7 @@ public class DiscreteRangeHoldingsParserTest {
     DiscreteRangeHoldingsParser hp = new DiscreteRangeHoldingsParser(holdings);
 
     List<Integer> resultList = hp.getToCurrentYearRanges(Holdings.NORMAL_YEAR_TO_CURRENT_PAT.matcher(holdings), holdings);
-    Integer[] expectArray = new Integer[]{2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016};
+    Integer[] expectArray = new Integer[]{2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017};
     List expectList = Arrays.asList(expectArray);
     assertEquals(expectList, resultList);
 
@@ -153,7 +153,7 @@ public class DiscreteRangeHoldingsParserTest {
     } catch (HoldingsParserException e) {
       fail(e.getMessage());
     }
-    Integer[] expectArray = new Integer[]{1994, 1995, 1996, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016};
+    Integer[] expectArray = new Integer[]{1994, 1995, 1996, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017};
     List expectList = Arrays.asList(expectArray);
     assertEquals(expectList, result);
 
@@ -361,7 +361,7 @@ public class DiscreteRangeHoldingsParserTest {
     hp = new DiscreteRangeHoldingsParser(holdings);
     years = hp.getYears();
     years.addAll(hp.getToCurrentYearRanges(Holdings.NORMAL_YEAR_TO_CURRENT_PAT.matcher(holdings), holdings));
-    expectArray = new Integer[]{2010, 2011, 2012, 2013, 2014, 2015, 2016};
+    expectArray = new Integer[]{2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017};
     expectList = Arrays.asList(expectArray);
     years = hp.removeDuplicateYears(years);
     //System.out.println("For holdings = " + holdings + " Expecting " + expectList + "; got " + years);
@@ -380,7 +380,7 @@ public class DiscreteRangeHoldingsParserTest {
     hp = new DiscreteRangeHoldingsParser(holdings);
     years = hp.getYears();
     years.addAll(hp.getToCurrentYearRanges(Holdings.NORMAL_YEAR_TO_CURRENT_PAT.matcher(holdings), holdings));
-    expectArray = new Integer[]{2010, 2011, 2012, 2013, 2014, 2015, 2016};
+    expectArray = new Integer[]{2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017};
     expectList = Arrays.asList(expectArray);
     years = hp.removeDuplicateYears(years);
     //System.out.println("For holdings = " + holdings + " Expecting " + expectList + "; got " + years);
