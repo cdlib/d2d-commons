@@ -2,9 +2,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.cdlib</groupId>
-    <artifactId>hparser</artifactId>
+    <artifactId>d2d-commons</artifactId>
     <packaging>jar</packaging>
-    <version>1</version>
+    <version>v0.1.1</version>
     <name>D2D Commons</name>
     <url>http://maven.apache.org</url>
 
@@ -32,7 +32,7 @@
     </dependencies>
 
     <build>
-        <finalName>hparser</finalName>
+        <finalName>d2d-commons</finalName>
         <plugins>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
