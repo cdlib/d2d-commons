@@ -7,7 +7,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import static org.cdlib.services.hparser.Holdings.*;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 /**
  * Implementation of HoldingsParser that identifies discrete ranges of holdings
@@ -24,7 +25,7 @@ import org.apache.log4j.Logger;
 public class DiscreteRangeHoldingsParser implements HoldingsParser {
 
   private final List<Integer> yearsHeld = new ArrayList<>();
-  private static final Logger logger = Logger.getLogger(DiscreteRangeHoldingsParser.class);
+  private static final Logger logger = LogManager.getLogger(DiscreteRangeHoldingsParser.class);
   private final String holdings;
 
   /**

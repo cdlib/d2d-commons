@@ -8,7 +8,8 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -22,7 +23,7 @@ public class XPathHelper {
   private final XPath xpath;
   private final DocumentBuilder builder;
   private final Document document;
-  private static final Logger LOG = Logger.getLogger(XPathHelper.class);
+  private static final Logger LOG = LogManager.getLogger(XPathHelper.class);
 
   public XPathHelper(String xml) {
     this.xpath = initXPath();
