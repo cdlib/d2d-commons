@@ -156,4 +156,28 @@ public final class DateUtil {
         return "";
     }
 
+  /**
+   * get the date in the format YYYY/MM/SS HH:MM:SS.TTT
+   */
+  public static String getDisplayDate(Date d) {
+    Calendar c = Calendar.getInstance();
+    c.setTime(d);
+
+    int year = c.get(Calendar.YEAR);
+    int month = c.get(Calendar.MONTH) + 1;
+    int day = c.get(Calendar.DAY_OF_MONTH);
+    int hour = c.get(Calendar.HOUR_OF_DAY);
+    int minute = c.get(Calendar.MINUTE);
+    int second = c.get(Calendar.SECOND);
+    int milli = c.get(Calendar.MILLISECOND);
+
+    return new String("" + year + "/"
+            + (month < 10 ? "0" : "") + month + "/"
+            + (day < 10 ? "0" : "") + day + " "
+            + (hour < 10 ? "0" : "") + hour + ":"
+            + (minute < 10 ? "0" : "") + minute + ":"
+            + (second < 10 ? "0" : "") + second + "."
+            + (milli < 10 ? "00" : (milli < 100 ? "0" : "")) + milli);
+  }
+
 }
