@@ -190,7 +190,7 @@ public class StringUtil {
   }
 
   /**
-   * compress multiple occurances of blanks/white space from a string
+   * compress multiple occurences of blanks/white space from a string
    */
   public static final String compress(String s) {
     StringTokenizer st = new StringTokenizer(s);
