@@ -1,14 +1,27 @@
 package org.cdlib.util;
 
-import java.util.StringTokenizer;
+import java.util.*;
 
+// Modifications: 03/20/20 - Added compress(String). (MJT)
+//	5/27/02 - Added xClean. -EEE
+//	10/08/02 - Added 2F to xClean. -EEE
+//	05/02/03 - Added toVDXDate. -EEE
+//  08/13/03 - Added blankout. (MJT)
+//	11/17/03 - Added hasSpecialChars. (MJT)
+//	11/18/04 - Straightend out the handling of bad parms for a number of methods,
+//			   Added READABLE string and blackoutAllBut method,
+//			   Fixed return value in left and right when exception occurs. (MJT)
+//  11/29/05 - Added unescape. (MJT)
+//  11/14/06 - Fixed blankoutAllBut to handle multiple blanks correctly. (MJT)
+//  11/26/08 - Added dateInterval. (MJT) 
 public class StringUtil {
 
-  /**
-   * not instantiable
-   */
   private StringUtil() {
   }
+
+  public final static String READABLE = "abcdefghijklmnopqrstuvwxyz"
+          + "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+          + " 1234567890`~!@#$%^&*()-_=+[{]}\\|'\";:/?.>,<";
 
   /**
    * isNumeric (String) tests if all the characters of a string are digits
@@ -78,43 +91,35 @@ public class StringUtil {
    * blanks returns the number of blanks requested. The empty string is returned
    * if the number is <= 0
    */
-  public static final String blanks(int len) {
-    return blanks(len, ' ');
+  public static final String blanks(int l) {
+    return blanks(l, ' ');
   }
 
   /**
    * blanks returns the number of the chars requested. The empty string is
    * returned if the number is <= 0
    */
-  public static final String blanks(int len, char c) {
-    if (len <= 0) {
-      return new String();
+  public static final String blanks(int l, char c) {
+    if (l <= 0) {
+      return "";
     }
-
-    StringBuffer sb = new StringBuffer(len);
-    for (int i = 0; i < len; i++) {
-      sb.append(c);
+    String s = String.valueOf(c);
+    StringBuffer sb = new StringBuffer(l);
+    for (int i = 0; i < l; i++) {
+      sb.append(s);
     }
-
     return sb.toString();
   }
 
   /**
-   * squeeze the whitespace from a string
-   *
+   * squeeze the blanks from a string
    */
   public static final String squeeze(String s) {
-    if (isEmpty(s)) {
-      return "";
-    }
-    s = s.trim();
     StringTokenizer st = new StringTokenizer(s);
-    StringBuffer sb = new StringBuffer(s.length());
-
+    StringBuilder sb = new StringBuilder(s.length());
     while (st.hasMoreTokens()) {
       sb.append(st.nextToken());
     }
-
     return (sb.toString());
   }
 
@@ -125,28 +130,79 @@ public class StringUtil {
     if (isEmpty(s)) {
       return "";
     }
-    s = s.trim();
+    if (isEmpty(toRemove)) {
+      return s;
+    }
     StringTokenizer st = new StringTokenizer(s, toRemove);
-    StringBuffer sb = new StringBuffer(s.length());
-
+    StringBuilder sb = new StringBuilder(s.length());
     while (st.hasMoreTokens()) {
       sb.append(st.nextToken());
     }
-
     return (sb.toString());
   }
 
-  public static final String pad(int ival, int size, char padchar) {
-    String str = new Integer(ival).toString();
-    if (str.length() >= size) {
-      return str;
+  /**
+   * blankout converts a set of characters to blanks. If a blank is included in
+   * the characters to blank out, multiple blanks are also removed.
+   */
+  public static final String blankout(String s, String toBlankOut) {
+    StringTokenizer st = new StringTokenizer(s, toBlankOut);
+    StringBuffer sb = new StringBuffer(s.length());
+    while (st.hasMoreTokens()) {
+      if (sb.length() != 0) {
+        sb.append(" ");
+      }
+      sb.append(st.nextToken());
     }
-    StringBuffer sb = new StringBuffer(size);
-    for (int i = 0; i < size - str.length(); i++) {
-      sb.append(padchar);
+    return (sb.toString());
+  }
+
+  /**
+   * blankoutAllBut converts all BUT a set of characters to blanks. That is,
+   * only the characters supplied are left. Multiple blanks are removed.
+   */
+  public static final String blankoutAllBut(String s, String toLeave) {
+    if (isEmpty(s)) {
+      return "";
     }
-    sb.append(str);
-    return sb.toString();
+    if (isEmpty(toLeave)) {
+      return "";
+    }
+    StringBuffer sb = new StringBuffer(s.length());
+    boolean handlingBlanks = false;
+    // Loop through the string s one character at a time
+    for (int i = 0; i < s.length(); i++) {
+      // If it is one to leave, copy it
+      if (toLeave.indexOf(s.charAt(i)) >= 0) {
+        if (s.charAt(i) != ' '
+                || !handlingBlanks) {
+          sb.append(s.charAt(i));
+        }
+        // If it is a blank note it
+        handlingBlanks = (s.charAt(i) == ' ');
+      } else // Output a blank, if we haven't already done so
+      if (!handlingBlanks) {
+        sb.append(' ');
+        handlingBlanks = true;
+      }
+    }
+    return (sb.toString());
+  }
+
+  /**
+   * compress multiple occurences of blanks/white space from a string
+   */
+  public static final String compress(String s) {
+    StringTokenizer st = new StringTokenizer(s);
+    StringBuffer sb = new StringBuffer(s.length());
+    if (st.hasMoreTokens()) {
+      sb.append(st.nextToken());
+    }
+    while (st.hasMoreTokens()) {
+      sb.append(" ");
+      sb.append(st.nextToken());
+    }
+    return (sb.toString());
   }
 
   /**
@@ -212,7 +268,7 @@ public class StringUtil {
     try {
       return s.substring(s.length() - l);
     } catch (StringIndexOutOfBoundsException e) {
-      return "";
+      return s;
     }
 
   }
@@ -224,7 +280,7 @@ public class StringUtil {
     try {
       return s.substring(0, l);
     } catch (StringIndexOutOfBoundsException e) {
-      return "";
+      return s;
     }
   }
 
@@ -244,6 +300,8 @@ public class StringUtil {
     }
     return min;
   }
+
+ 
 
   /**
    * adjoin two strings together using a specified delimiter, if either is
@@ -313,14 +371,12 @@ public class StringUtil {
       } else {
         pre = "";
       }
-
       // Get the stuff after the backspace
       if (nextBack < sb.length() - 1) {
         post = sb.substring(nextBack + 1);
       } else {
         post = "";
       }
-
       // Put the string back together
       sb = pre + post;
       nextBack = sb.indexOf(backSpace);
@@ -331,46 +387,20 @@ public class StringUtil {
   /**
    * processBackSpace allows backspaces in the line to delete the previous
    * characters as you would expect at a terminal. This routine will process
-   * backspaces the conventional backspace
+   * backspaces using the conventional backspace
    */
   public static String processBackSpace(String line) {
-    return processBackSpace(processBackSpace(line, (char) 127), '\b');
-  }
-
-  /**
-   * replace a substring value with another substring value replaces all
-   * occurrences in the in string
-   *
-   * @param in - string to have value replace
-   * @param from - current substring value in 'in'
-   * @param to - replacement value for 'from'
-   * @return - new string with replaced substrings
-   */
-  public static String replace(
-          String in,
-          String from,
-          String to) {
-    StringBuffer sbuf = new StringBuffer();
-    int start = 0;
-    int pos = 0;
-    while (start < in.length()) {
-      pos = in.indexOf(from, start);
-
-      if (pos >= 0) {
-        sbuf.append(in.substring(start, pos));
-        sbuf.append(to);
-        start = pos + from.length();
-      } else {
-        sbuf.append(in.substring(start));
-        start = in.length();
-      }
-    }
-    return sbuf.toString();
+    return processBackSpace(
+            processBackSpace(line,
+                    (char) 127),
+            '\b');
   }
 
   /**
    * stripTelnetSpecials removes special characters from a strings that are
-   * TELNET control options.
+   * telnet control options. (Some testing with this routine indicate it does
+   * not always work. I think it has to do with the conversion between strings
+   * and and back again.)
    */
   public static String stripTelnetSpecials(String line) {
     StringBuffer so = new StringBuffer(line.length());
@@ -412,19 +442,241 @@ public class StringUtil {
   }
 
   /**
-   * Strip control characters
+   * hasSpecialChars (String) creturn true if any of the characters in the
+   * string passed have values over 127.
    */
-  public static String stripControls(String line) {
-    StringBuffer so = new StringBuffer(line.length());
-    // For each character see if we include it or skip it
-    for (int i = 0; i < line.length(); i++) {
-      char c = line.charAt(i);
-      // Strip ascii control characters
-      if (c >= 32) {
-        so.append(c);
+  public static boolean hasSpecialChars(String in) {
+    for (int i = 0; i < in.length(); i++) {
+      if (in.charAt(i) > 127) {
+        return true;
       }
     }
-    return (so.toString());
+    return false;
+  }
+
+  /**
+   * removeSpecialChars (String) return the passed string with any of the
+   * characters with values over 127 removed.
+   */
+  public static String removeSpecialChars(String in) {
+    StringBuffer out = new StringBuffer();
+    for (int i = 0; i < in.length(); i++) {
+      if (in.charAt(i) <= 127) {
+        out.append(in.charAt(i));
+      }
+    }
+    return out.toString();
+  }
+
+  /**
+   * replaces all occurances of one string for another in a string. Example:
+   * xchange ("This is text that repeats other text", "text", "stuff") returns
+   * "This is stuff that repeats stuff"
+   */
+  public static String xchange(String in, String from, String to) {
+    // handle empty parms
+    if (isEmpty(from)) {
+      return in;
+    }
+    if (isEmpty(in)) {
+      return "";
+    }
+    // Start with the first test, so we can return immediately if the
+    // from string isn't found
+    int index = in.indexOf(from);
+    if (index == -1) {
+      return in;
+    }
+    // Create the output area we are building - use a StringBuffer for
+    // efficiency
+    StringBuffer out = new StringBuffer(in.length());
+    // prev keeps track of the last position we replaced
+    int prev = -1;
+    // As long as we have found something...
+    while (index >= 0) {
+      // move the text from the prevous change to this occurance
+      out.append(in.substring(prev + 1, index));
+      // Move the new value
+      out.append(to);
+      // Skip the old value
+      prev = index + from.length() - 1;
+      // Look again
+      index = in.indexOf(from, prev + 1);
+    }
+    // Move everything after the last occurance
+    out.append(in.substring(prev + 1));
+    return out.toString();
+  }
+
+  /**
+   * toHex (String) returns the passed string in hex
+   */
+  public static String toHex(String inString) {
+    StringBuffer outString = new StringBuffer(4 * inString.length());
+    for (int i = 0; i < inString.length(); i++) {
+      String hexChar = Integer.toHexString(inString.charAt(i));
+      // Make the number of hex chars even
+      if (hexChar.length() % 2 == 1) {
+        outString.append("0");
+      }
+      outString.append(hexChar);
+    }
+    return outString.toString();
+  }
+
+  /**
+   * toHex (byte []) returns the passed byte array in hex
+   */
+  public static String toHex(byte[] inBytes) {
+    StringBuffer outString = new StringBuffer(4 * inBytes.length);
+    for (int i = 0; i < inBytes.length; i++) {
+      String hexChar;
+      if (inBytes[i] < 0) {
+        hexChar = Integer.toHexString(256 + inBytes[i]);
+      } else {
+        hexChar = Integer.toHexString(inBytes[i]);
+      }
+      // Make the number of hex chars even
+      if (hexChar.length() % 2 == 1) {
+        outString.append("0");
+      }
+      outString.append(hexChar);
+    }
+    return outString.toString();
+  }
+
+  /**
+   * xClean cleans up certain special characters returned by the X-server
+   *
+   */
+  public static String xClean(String inString) {
+    if (isEmpty(inString)) {
+      return "";
+    }
+    String outString = new String(inString);
+    outString = StringUtil.xchange(outString, "%20", " ");
+    outString = StringUtil.xchange(outString, "%40", "@");
+    outString = StringUtil.xchange(outString, "%27", "'");
+    outString = StringUtil.xchange(outString, "%2F", "/");
+    return outString;
+  }
+
+  /**
+   * toVDXDate - Converts a date string from yyyymmdd to dd-Mmm-yyyy
+   *
+   */
+  public static String toVDXDate(String inString) {
+
+    String[] month = {"???",
+      "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+      "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
+
+    if (isEmpty(inString)) {
+      return "";
+    }
+    if (!isNumeric(inString)) {
+      return inString;
+    }
+    // Make sure month is in range
+    int i = (StringUtil.parseInt(inString.substring(4, 6)));
+    if (i < 1 || i > 12) {
+      return inString;
+    }
+
+    StringBuffer outString = new StringBuffer(11);
+    //Set the day
+    outString.append(inString.substring(6) + "-");
+    //Set the month
+    outString.append(month[i]);
+    //Set the year
+    outString.append("-" + inString.substring(0, 4));
+    return outString.toString();
+  }
+
+  /**
+   * unescape removes the %xx codes and replaces them with the character the
+   * represent. (This was solen from the web @
+   * http://www.w3.org/International/unescape.java)
+   */
+  public static String unescape(String s) {
+    StringBuffer sbuf = new StringBuffer();
+    int l = s.length();
+    int ch = -1;
+    int b, sumb = 0;
+    for (int i = 0, more = -1; i < l; i++) {
+      /* Get next byte b from URL segment s */
+      switch (ch = s.charAt(i)) {
+        case '%':
+          ch = s.charAt(++i);
+          int hb = (Character.isDigit((char) ch)
+                  ? ch - '0'
+                  : 10 + Character.toLowerCase((char) ch) - 'a') & 0xF;
+          ch = s.charAt(++i);
+          int lb = (Character.isDigit((char) ch)
+                  ? ch - '0'
+                  : 10 + Character.toLowerCase((char) ch) - 'a') & 0xF;
+          b = (hb << 4) | lb;
+          break;
+        case '+':
+          b = ' ';
+          break;
+        default:
+          b = ch;
+      }
+      /* Decode byte b as UTF-8, sumb collects incomplete chars */
+      if ((b & 0xc0) == 0x80) {			// 10xxxxxx (continuation byte)
+        sumb = (sumb << 6) | (b & 0x3f);	// Add 6 bits to sumb
+        if (--more == 0) {
+          sbuf.append((char) sumb); // Add char to sbuf
+        }
+      } else if ((b & 0x80) == 0x00) {		// 0xxxxxxx (yields 7 bits)
+        sbuf.append((char) b);			// Store in sbuf
+      } else if ((b & 0xe0) == 0xc0) {		// 110xxxxx (yields 5 bits)
+        sumb = b & 0x1f;
+        more = 1;				// Expect 1 more byte
+      } else if ((b & 0xf0) == 0xe0) {		// 1110xxxx (yields 4 bits)
+        sumb = b & 0x0f;
+        more = 2;				// Expect 2 more bytes
+      } else if ((b & 0xf8) == 0xf0) {		// 11110xxx (yields 3 bits)
+        sumb = b & 0x07;
+        more = 3;				// Expect 3 more bytes
+      } else if ((b & 0xfc) == 0xf8) {		// 111110xx (yields 2 bits)
+        sumb = b & 0x03;
+        more = 4;				// Expect 4 more bytes
+      } else /*if ((b & 0xfe) == 0xfc)*/ {	// 1111110x (yields 1 bit)
+        sumb = b & 0x01;
+        more = 5;				// Expect 5 more bytes
+      }
+      /* We don't test if the UTF-8 encoding is well-formed */
+    }
+    return sbuf.toString();
+  }
+
+  /**
+   * Returns a substring between the first occurrence of a start string and the
+   * first occurrence of an end string.
+   *
+   * @param source the string to parse
+   * @param start returned string segment begins after first occurrence of this
+   * @param end returned string segment ends before first occurrence of this
+   * @return the string between start and end
+   * @throws IllegalArgumentException if any argument is empty or null
+   */
+  public static String between(String source, String start, String end) {
+    if (isEmpty(source) || isEmpty(start) || isEmpty(end)) {
+      throw new IllegalArgumentException("Unexpected null or empty value.");
+    }
+    int sectionStart = source.indexOf(start);
+    int sectionEnd = source.indexOf(end);
+    if (sectionStart == -1 || sectionEnd == -1 || sectionStart > sectionEnd) {
+      return null;
+    }
+    String section = source.substring(sectionStart, sectionEnd);
+    if (isEmpty(section)) {
+      return null;
+    }
+    section = section.substring(start.length());
+    return section;
   }
 
   /**
@@ -611,33 +863,6 @@ public class StringUtil {
   public static boolean startsWithIgnoreCase(String source, String prefix) {
     return (source.toUpperCase().startsWith(prefix.toUpperCase())
             || source.toLowerCase().startsWith(prefix.toLowerCase()));
-  }
-
-  /**
-   * Returns a substring between the first occurrence of a start string and the
-   * first occurrence of an end string.
-   *
-   * @param source the string to parse
-   * @param start returned string segment begins after first occurrence of this
-   * @param end returned string segment ends before first occurrence of this
-   * @return the string between start and end
-   * @throws IllegalArgumentException if any argument is empty or null
-   */
-  public static String between(String source, String start, String end) {
-    if (isEmpty(source) || isEmpty(start) || isEmpty(end)) {
-      throw new IllegalArgumentException("Unexpected null or empty value.");
-    }
-    int sectionStart = source.indexOf(start);
-    int sectionEnd = source.indexOf(end);
-    if (sectionStart == -1 || sectionEnd == -1 || sectionStart > sectionEnd) {
-      return null;
-    }
-    String section = source.substring(sectionStart, sectionEnd);
-    if (isEmpty(section)) {
-      return null;
-    }
-    section = section.substring(start.length());
-    return section;
   }
 
 }
