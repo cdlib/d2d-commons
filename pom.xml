@@ -4,7 +4,7 @@
     <groupId>org.cdlib</groupId>
     <artifactId>d2d-commons</artifactId>
     <packaging>jar</packaging>
-    <version>0.1.3</version>
+    <version>v0.1.3</version>
     <name>D2D Commons</name>
     <url>http://maven.apache.org</url>
 
@@ -64,4 +64,19 @@
             </plugin>
         </plugins>
     </build>
+    
+    <distributionManagement>
+     <repository>
+       <id>cdl-releases</id>
+       <name>CDL Snapshot Repository</name>
+       <url>http://mvn.cdlib.org/content/repositories/cdl-releases/</url>
+     </repository>
+     <!--
+     <snapshotRepository>
+       <id>cdl-snapshots</id>
+       <name>CDL Snapshot Repository</name>
+       <url>http://mvn.cdlib.org/content/repositories/cdl-snapshots/</url>
+     </snapshotRepository>
+     -->
+   </distributionManagement>
 </project>
