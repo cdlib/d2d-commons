@@ -68,15 +68,8 @@
     <distributionManagement>
      <repository>
        <id>cdl-releases</id>
-       <name>CDL Snapshot Repository</name>
+       <name>CDL releases repository</name>
        <url>http://mvn.cdlib.org/content/repositories/cdl-releases/</url>
      </repository>
-     <!--
-     <snapshotRepository>
-       <id>cdl-snapshots</id>
-       <name>CDL Snapshot Repository</name>
-       <url>http://mvn.cdlib.org/content/repositories/cdl-snapshots/</url>
-     </snapshotRepository>
-     -->
    </distributionManagement>
 </project>
