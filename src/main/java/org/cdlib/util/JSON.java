@@ -5,12 +5,12 @@
  */
 package org.cdlib.util;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.io.InputStream;
-import org.codehaus.jackson.map.DeserializationConfig;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.map.type.TypeFactory;
-import org.codehaus.jackson.type.JavaType;
+
 
 /**
  * Utility class for JSON serialization and deserialization.
@@ -27,11 +27,11 @@ public final class JSON {
 
   private static ObjectMapper objectMapper = initMapper();
 
-  // instantiate and configure the mapper
   private static ObjectMapper initMapper() {
     ObjectMapper jsonMapper = new ObjectMapper();
-    jsonMapper = jsonMapper.configure(DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-    jsonMapper = jsonMapper.configure(DeserializationConfig.Feature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
+    jsonMapper = jsonMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+    jsonMapper = jsonMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
+    jsonMapper.setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
     return jsonMapper;
   }
 
@@ -39,9 +39,12 @@ public final class JSON {
    * Serialize a Java object to a JSON string
    */
   public static String serialize(Object pojo) {
+    if (pojo == null) {
+      throw new JSONConversionException("cannot serialize null");
+    }
     String json = null;
     if (!objectMapper.canSerialize(pojo.getClass())) {
-      throw new RuntimeException("object cannot be serialized");
+      throw new JSONConversionException("object cannot be serialized");
     }
     try {
       json = objectMapper.writeValueAsString(pojo);
@@ -52,8 +55,7 @@ public final class JSON {
   }
 
   private static void checkDeserialize(Class clazz) {
-    JavaType javaType = TypeFactory.fromCanonical(clazz.getCanonicalName());
-    if (!objectMapper.canDeserialize(javaType)) {
+    if (!objectMapper.canDeserialize(objectMapper.constructType(clazz))) {
       throw new JSONConversionException("json cannot be deserialized to object type");
     }
   }
