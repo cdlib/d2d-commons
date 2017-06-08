@@ -1,14 +1,17 @@
 package org.cdlib.http;
 
 import java.io.IOException;
+import java.nio.charset.UnsupportedCharsetException;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.ParseException;
+import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -42,7 +45,7 @@ public class URLClientImpl implements URLClient {
   String returnString(byte[] byteArr) {
     String retval = null;
     try {
-            //because charset will not raise an exception on an invalid character type
+      //because charset will not raise an exception on an invalid character type
       // you have to check to see if the length of the result String included the entire
       // byte array
       String utfs = new String(byteArr, "utf-8");
@@ -58,7 +61,7 @@ public class URLClientImpl implements URLClient {
     }
     return retval;
   }
-  
+
   @Override
   public String doURLPost(String post) {
     return doURLPost(myURL, post, DEFAULT_TIMEOUT);
@@ -86,36 +89,36 @@ public class URLClientImpl implements URLClient {
    */
   @Override
   public String doURLPost(String url, String post, int timeout) {
-    //LOGGER.debug("URLClientImpl doURLPost: url=" + url + " timeout=" + timeout);
     String result = "";
 
-    DefaultHttpClient httpclient = new DefaultHttpClient();
+    RequestConfig config = RequestConfig.custom().setConnectTimeout(timeout).setSocketTimeout(timeout).build();
+    CloseableHttpClient httpClient = HttpClientBuilder.create().setDefaultRequestConfig(config).build();
     HttpPost httpPost = new HttpPost(url);
-    httpPost.getParams().setParameter("http.socket.timeout", new Integer(timeout));
-    httpPost.getParams().setParameter("http.connection.timeout", new Integer(timeout));
 
     try {
       HttpEntity requestEntity = new StringEntity(post, ContentType.APPLICATION_FORM_URLENCODED);
       httpPost.setEntity(requestEntity);
-      HttpResponse response = httpclient.execute(httpPost);
+      HttpResponse response = httpClient.execute(httpPost);
       if (response.getStatusLine().getStatusCode() < 200 || response.getStatusLine().getStatusCode() > 206) {
-        LOGGER.error("Response status line = " + response.getStatusLine() + ", code = " + response.getStatusLine().getStatusCode() + ", from URL " + url + " post " + post);
+        LOGGER.error("Response status line = "
+                + response.getStatusLine()
+                + ", code = "
+                + response.getStatusLine().getStatusCode()
+                + ", from URL " + url + " post "
+                + post);
         return null;
       }
       HttpEntity entity = response.getEntity();
       result = EntityUtils.toString(entity, "utf-8");
       EntityUtils.consume(entity);
-    } catch (Exception e) {
+    } catch (IOException | UnsupportedCharsetException | ParseException e) {
       LOGGER.error(e.toString());
       error = e.toString();
-      //LOGGER.debug("URLClientImpl response with error "+error);
       return result;
     } finally {
       httpPost.releaseConnection();
     }
-    //LOGGER.debug("URLClientImpl response: "+result);
     return result;
-
   }
 
   @Override
@@ -147,12 +150,10 @@ public class URLClientImpl implements URLClient {
   public String doURLGet(String url, int cycles, int timeout) {
     int attempt = 0;
     if (timeout < 0) {
-      timeout = 0; // no timeout
+      timeout = 0;
     }
-    // We will retry up to n times.
     for (attempt = 1; attempt <= cycles; attempt++) {
       try {
-                // execute the method.
         LOGGER.debug("URLClientImpl: cycleGet timeout= " + timeout + ", attempt " + attempt + 1);
         LOGGER.debug("URL is: " + url);
         return doURLGet(url, timeout);
@@ -161,8 +162,6 @@ public class URLClientImpl implements URLClient {
                 + e.getMessage());
       }
     }
-
-    // If we are here, we didn't succeed
     LOGGER.error("Unable to get result for " + url);
     error = "Unable to get result for " + url;
     return "";
@@ -172,13 +171,12 @@ public class URLClientImpl implements URLClient {
   private String doURLGet(String url, int timeout) throws Exception {
     LOGGER.debug("URLClientImpl doURLGet: url=" + url + " timeout=" + timeout);
     String result = "";
-    DefaultHttpClient httpclient = new DefaultHttpClient();
+    RequestConfig config = RequestConfig.custom().setConnectTimeout(timeout).setSocketTimeout(timeout).build();
+    CloseableHttpClient httpClient = HttpClientBuilder.create().setDefaultRequestConfig(config).build();
     HttpGet httpGet = new HttpGet(url);
-    httpGet.getParams().setParameter("http.socket.timeout", new Integer(timeout));
-    httpGet.getParams().setParameter("http.connection.timeout", new Integer(timeout));
 
     try {
-      HttpResponse response = httpclient.execute(httpGet);
+      HttpResponse response = httpClient.execute(httpGet);
       if (response.getStatusLine().getStatusCode() != 200) {
         LOGGER.error("Response status line = " + response.getStatusLine() + ", code = " + response.getStatusLine().getStatusCode() + ", from url " + url);
         return null;
@@ -194,9 +192,7 @@ public class URLClientImpl implements URLClient {
       e.printStackTrace();
       LOGGER.error("While getting url " + url + " error: " + e.toString());
       throw (e);
-    }
-    
-    finally {
+    } finally {
       httpGet.releaseConnection();
     }
     return result;
