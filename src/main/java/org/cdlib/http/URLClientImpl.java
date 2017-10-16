@@ -109,7 +109,7 @@ public class URLClientImpl implements URLClient {
             HttpEntity requestEntity = new StringEntity(post, ContentType.APPLICATION_FORM_URLENCODED);
             httpPost.setEntity(requestEntity);
             HttpResponse response = httpClient.execute(httpPost);
-            content = EntityUtils.toString(response.getEntity(), "utf=8");
+            content = EntityUtils.toString(response.getEntity(), "utf-8");
             if (response.getStatusLine().getStatusCode() < 200 || response.getStatusLine().getStatusCode() > 206) {
                 LOGGER.error("Response status line = "
                         + response.getStatusLine()
@@ -187,10 +187,10 @@ public class URLClientImpl implements URLClient {
         RequestConfig config = RequestConfig.custom().setConnectTimeout(timeout).setSocketTimeout(timeout).build();
         CloseableHttpClient httpClient = HttpClientBuilder.create().setDefaultRequestConfig(config).build();
         HttpGet httpGet = new HttpGet(url);
-
+        
         try {
             HttpResponse response = httpClient.execute(httpGet);
-            content = EntityUtils.toString(response.getEntity(), "utf=8");
+            content = EntityUtils.toString(response.getEntity(), "utf-8");
             if (response.getStatusLine().getStatusCode() != 200) {
                 LOGGER.error("Response status line = " + response.getStatusLine() + ", code = " + response.getStatusLine().getStatusCode() + ", from url " + url);
                 return null;
