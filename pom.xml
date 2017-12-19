@@ -4,9 +4,8 @@
     <groupId>org.cdlib</groupId>
     <artifactId>d2d-commons</artifactId>
     <packaging>jar</packaging>
-    <version>0.2.2</version>
+    <version>0.1.6</version>
     <name>D2D Commons</name>
-    <url>http://maven.apache.org</url>
     
     <!-- comment -->
 
