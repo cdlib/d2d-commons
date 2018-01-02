@@ -66,6 +66,13 @@
         </plugins>
     </build>
     
+    <repositories>
+        <repository>
+            <id>cdl-releases</id>
+            <url>http://mvn.cdlib.org/content/repositories/cdl-releases</url>
+        </repository>
+    </repositories>
+    
     <distributionManagement>
         <repository>
             <id>cdl-releases</id>
