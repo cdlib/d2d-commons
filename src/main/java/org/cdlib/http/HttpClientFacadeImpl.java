@@ -11,7 +11,6 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
 import org.apache.logging.log4j.LogManager;
@@ -19,7 +18,7 @@ import org.apache.logging.log4j.Logger;
 
 public class HttpClientFacadeImpl implements HttpClientFacade {
 
-  private static Logger LOGGER = LogManager.getLogger(HttpClientFacadeImpl.class);
+  private static final Logger LOGGER = LogManager.getLogger(HttpClientFacadeImpl.class);
   private static final int DEFAULT_TRIES = 3;
   private static final int DEFAULT_TIMEOUT = 20000;
 
@@ -46,16 +45,16 @@ public class HttpClientFacadeImpl implements HttpClientFacade {
       HttpEntity requestEntity = new StringEntity(post, ContentType.APPLICATION_FORM_URLENCODED);
       httpPost.setEntity(requestEntity);
       HttpResponse response = httpClient.execute(httpPost);
-      if (response.getStatusLine().getStatusCode() < 200 || response.getStatusLine().getStatusCode() > 206) {
+      if (response.getStatusLine().getStatusCode() < 200 || response.getStatusLine().getStatusCode() > 399) {
         LOGGER.error("Response status line = " + response.getStatusLine() + ", code = " + response.getStatusLine().getStatusCode() + ", from URL " + url + " post " + post);
-        return null;
+        throw new WebException(response.getStatusLine().getReasonPhrase(), response);
       }
       HttpEntity entity = response.getEntity();
       result = EntityUtils.toString(entity, "utf-8");
       EntityUtils.consume(entity);
     } catch (IOException | UnsupportedCharsetException | ParseException e) {
       LOGGER.error(e.toString());
-      return result;
+      return "";
     } finally {
       httpPost.releaseConnection();
     }
@@ -78,6 +77,7 @@ public class HttpClientFacadeImpl implements HttpClientFacade {
    */
   @Override
   public String get(String url, int cycles, int timeout) {
+    WebException exception = null;
     int attempt = 0;
     if (timeout < 0) {
       timeout = 0;
@@ -87,19 +87,18 @@ public class HttpClientFacadeImpl implements HttpClientFacade {
         LOGGER.debug("URLClientImpl: cycleGet timeout= " + timeout + ", attempt " + attempt + 1);
         LOGGER.debug("URL is: " + url);
         return doURLGet(url, timeout);
-      } catch (Exception e) {
-        LOGGER.error("A recoverable exception occurred, attempt " + attempt + ". "
-                + e.getMessage());
+      } catch (WebException e) {
+        LOGGER.debug("An exception occurred on attempt " + attempt + ". " + e.getMessage());
+        exception = e;
+        if (e.getStatus() < 500) {
+          break;
+        }
       }
     }
+    throw exception;
+}
 
-    // If we are here, we didn't succeed
-    LOGGER.error("Unable to get result for " + url);
-    return "";
-
-  }
-
-  private String doURLGet(String url, int timeout) throws Exception {
+  private String doURLGet(String url, int timeout) {
     LOGGER.debug("URLClientImpl doURLGet: url=" + url + " timeout=" + timeout);
     String result = "";
     RequestConfig config = RequestConfig.custom().setConnectTimeout(timeout).setSocketTimeout(timeout).build();
@@ -110,20 +109,19 @@ public class HttpClientFacadeImpl implements HttpClientFacade {
       HttpResponse response = httpClient.execute(httpGet);
       if (response.getStatusLine().getStatusCode() != 200) {
         LOGGER.error("Response status line = " + response.getStatusLine() + ", code = " + response.getStatusLine().getStatusCode() + ", from url " + url);
-        return null;
+        return "";
       }
       HttpEntity entity = response.getEntity();
       result = EntityUtils.toString(entity, "utf-8");
       EntityUtils.consume(entity);
     } catch (IOException e) {
-      e.printStackTrace();
       LOGGER.error("While getting url " + url + " error: " + e.toString());
-      throw (e);
+      throw new WebException(e.getMessage(), 500);
     } catch (ParseException e) {
-      e.printStackTrace();
       LOGGER.error("While getting url " + url + " error: " + e.toString());
-      throw (e);
-    } finally {
+      throw new WebException(e.getMessage(), 422);
+    }
+    finally {
       httpGet.releaseConnection();
     }
     return result;
