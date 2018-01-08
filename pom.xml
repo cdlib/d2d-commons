@@ -4,9 +4,8 @@
     <groupId>org.cdlib</groupId>
     <artifactId>d2d-commons</artifactId>
     <packaging>jar</packaging>
-    <version>v0.1.5</version>
+    <version>0.1.8</version>
     <name>D2D Commons</name>
-    <url>http://maven.apache.org</url>
     
     <!-- comment -->
 
@@ -39,7 +38,7 @@
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
-            <version>4.3.4</version>
+            <version>4.5.4</version>
         </dependency>
     </dependencies>  
 
@@ -66,6 +65,13 @@
             </plugin>
         </plugins>
     </build>
+    
+    <repositories>
+        <repository>
+            <id>cdl-releases</id>
+            <url>http://mvn.cdlib.org/content/repositories/cdl-releases</url>
+        </repository>
+    </repositories>
     
     <distributionManagement>
         <repository>
