@@ -32,8 +32,6 @@ public abstract class MailMessage {
   public abstract String getToAddress();
 
   public abstract String getFromAddress();
-  
-  public abstract String getSender();
 
   public abstract String getSubject();
 
@@ -41,7 +39,6 @@ public abstract class MailMessage {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("to= " + getToAddress() + NL);
-    sb.append("sender=" + getSender() + NL);
     sb.append("from=" + getFromAddress() + NL);
     sb.append("subject=" + getSubject() + NL);
     sb.append("body=" + getBody() + NL);
