@@ -3,13 +3,6 @@ package org.cdlib.mail;
 import java.util.Map;
 import org.cdlib.util.CollectionUtil;
 
-/**
- * Produces the message that is passed into a mail service method.
- *
- *
- * @author jferrie
- *
- */
 public abstract class MailMessage {
 
   private Map<String, String> model;
