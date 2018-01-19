@@ -54,20 +54,20 @@ public class MailMessage {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("to= " + to + "\n");
-        sb.append("from=" + from + "\n");
-        sb.append("subject=" + subject + "\n");
-        sb.append("body=" + body + "\n");
+        sb.append("to=").append(getTo()).append("\n");
+        sb.append("from=").append(getFrom()).append("\n");
+        sb.append("subject=").append(getSubject()).append("\n");
+        sb.append("body=").append(getBody()).append("\n");
         return sb.toString();
     }
 
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 61 * hash + Objects.hashCode(this.body);
-        hash = 61 * hash + Objects.hashCode(this.to);
-        hash = 61 * hash + Objects.hashCode(this.from);
-        hash = 61 * hash + Objects.hashCode(this.subject);
+        hash = 61 * hash + Objects.hashCode(this.getBody());
+        hash = 61 * hash + Objects.hashCode(this.getTo());
+        hash = 61 * hash + Objects.hashCode(this.getFrom());
+        hash = 61 * hash + Objects.hashCode(this.getSubject());
         return hash;
     }
 
@@ -83,16 +83,16 @@ public class MailMessage {
             return false;
         }
         final MailMessage other = (MailMessage) obj;
-        if (!Objects.equals(this.body, other.body)) {
+        if (!Objects.equals(this.getBody(), other.getBody())) {
             return false;
         }
-        if (!Objects.equals(this.to, other.to)) {
+        if (!Objects.equals(this.getTo(), other.getTo())) {
             return false;
         }
-        if (!Objects.equals(this.from, other.from)) {
+        if (!Objects.equals(this.getFrom(), other.getFrom())) {
             return false;
         }
-        if (!Objects.equals(this.subject, other.subject)) {
+        if (!Objects.equals(this.getSubject(), other.getSubject())) {
             return false;
         }
         return true;
