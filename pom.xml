@@ -4,7 +4,7 @@
     <groupId>org.cdlib</groupId>
     <artifactId>d2d-commons</artifactId>
     <packaging>jar</packaging>
-    <version>1.1.1</version>
+    <version>1.1.2</version>
     <name>D2D Commons</name>
     
     <!-- comment -->

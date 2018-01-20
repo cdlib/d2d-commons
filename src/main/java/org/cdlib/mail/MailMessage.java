@@ -79,9 +79,6 @@ public class MailMessage {
         if (obj == null) {
             return false;
         }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
         final MailMessage other = (MailMessage) obj;
         if (!Objects.equals(this.getBody(), other.getBody())) {
             return false;
