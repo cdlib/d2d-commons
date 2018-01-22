@@ -1,27 +1,14 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.cdlib.util;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.io.IOException;
 import java.io.InputStream;
 
-
-/**
- * Utility class for JSON serialization and deserialization.
- *
- * @author jferrie
- */
 public final class JSON {
 
-  /*
-   * Prevent instantiation.
-   */
   private JSON() {
   }
 
@@ -31,7 +18,8 @@ public final class JSON {
     ObjectMapper jsonMapper = new ObjectMapper();
     jsonMapper = jsonMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
     jsonMapper = jsonMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
-    jsonMapper.setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
+    jsonMapper = jsonMapper.setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
+    jsonMapper = jsonMapper.registerModule(new JavaTimeModule());
     return jsonMapper;
   }
 
