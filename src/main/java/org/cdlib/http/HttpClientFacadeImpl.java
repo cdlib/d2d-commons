@@ -21,20 +21,19 @@ public class HttpClientFacadeImpl implements HttpClientFacade {
   private static final Logger LOGGER = LogManager.getLogger(HttpClientFacadeImpl.class);
   private static final int DEFAULT_TRIES = 3;
   private static final int DEFAULT_TIMEOUT = 20000;
+  private static final ContentType DEFAULT_CONTENT_TYPE = ContentType.APPLICATION_FORM_URLENCODED;
 
   public HttpClientFacadeImpl() {
   }
+  
 
-  /**
-   * post return the result of post to the supplied URL
-   *
-   * @param url
-   * @param post
-   * @param timeout
-   * @return
-   */
   @Override
   public String post(String url, String post, int timeout) {
+    return post(url, post, timeout, DEFAULT_CONTENT_TYPE);
+  }
+
+  @Override
+  public String post(String url, String post, int timeout, ContentType contentType) {
     String result = "";
 
     RequestConfig config = RequestConfig.custom().setConnectTimeout(timeout).setSocketTimeout(timeout).build();
@@ -42,7 +41,7 @@ public class HttpClientFacadeImpl implements HttpClientFacade {
     HttpPost httpPost = new HttpPost(url);
 
     try {
-      HttpEntity requestEntity = new StringEntity(post, ContentType.APPLICATION_FORM_URLENCODED);
+      HttpEntity requestEntity = new StringEntity(post, contentType);
       httpPost.setEntity(requestEntity);
       HttpResponse response = httpClient.execute(httpPost);
       if (response.getStatusLine().getStatusCode() < 200 || response.getStatusLine().getStatusCode() > 399) {
@@ -96,7 +95,7 @@ public class HttpClientFacadeImpl implements HttpClientFacade {
       }
     }
     throw exception;
-}
+  }
 
   private String doURLGet(String url, int timeout) {
     LOGGER.debug("URLClientImpl doURLGet: url=" + url + " timeout=" + timeout);
@@ -120,8 +119,7 @@ public class HttpClientFacadeImpl implements HttpClientFacade {
     } catch (ParseException e) {
       LOGGER.error("While getting url " + url + " error: " + e.toString());
       throw new WebException(e.getMessage(), 422);
-    }
-    finally {
+    } finally {
       httpGet.releaseConnection();
     }
     return result;
