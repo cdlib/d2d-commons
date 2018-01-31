@@ -10,6 +10,7 @@ import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.util.Assert;
 import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -26,12 +27,14 @@ public class XPathHelper {
   private static final Logger LOG = LogManager.getLogger(XPathHelper.class);
 
   public XPathHelper(String xml) {
+    LOG.debug("XPathHelper got xml: " + xml);
+    Assert.hasText(xml, "XML has no content, cannot parse.");
     this.xpath = initXPath();
     this.builder = initDocumentBuilder();
     try {
       document = builder.parse(new InputSource(new ByteArrayInputStream(xml.getBytes("utf-8"))));
     } catch (SAXException | IOException e) {
-      throw new RuntimeException(e);
+      throw new RuntimeException("Could not parse xml " + xml, e);
     }
   }
 

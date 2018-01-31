@@ -115,10 +115,10 @@ public class HttpClientFacadeImpl implements HttpClientFacade {
       EntityUtils.consume(entity);
     } catch (IOException e) {
       LOGGER.error("While getting url " + url + " error: " + e.toString());
-      throw new WebException(e.getMessage(), 500);
+      throw new WebException(e.getMessage(), e, 500);
     } catch (ParseException e) {
       LOGGER.error("While getting url " + url + " error: " + e.toString());
-      throw new WebException(e.getMessage(), 422);
+      throw new WebException(e.getMessage(), e, 422);
     } finally {
       httpGet.releaseConnection();
     }
