@@ -11,6 +11,7 @@ import org.junit.runners.Parameterized;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
+import org.junit.Ignore;
 
 /**
  * JUnit tests for HoldingsParser methods. These tests are run using the test data in test_holdings.xml.
@@ -18,6 +19,7 @@ import static org.junit.Assert.fail;
  * 
  * @author jferrie
  */
+@Ignore
 @RunWith(Parameterized.class)
 public class HoldingsParserTest {
 
