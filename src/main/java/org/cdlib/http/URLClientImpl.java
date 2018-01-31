@@ -113,7 +113,7 @@ public class URLClientImpl implements URLClient {
     } finally {
       httpPost.releaseConnection();
     }
-    //LOGGER.debug("URLClientImpl response: "+result);
+    LOGGER.debug("URLClientImpl response: "+result);
     return result;
 
   }
