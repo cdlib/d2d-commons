@@ -1,6 +1,5 @@
 package org.cdlib.util;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -17,8 +16,6 @@ public final class JSON {
   private static ObjectMapper initMapper() {
     ObjectMapper jsonMapper = new ObjectMapper();
     jsonMapper = jsonMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-    jsonMapper = jsonMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
-    jsonMapper = jsonMapper.setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
     jsonMapper = jsonMapper.registerModule(new JavaTimeModule());
     return jsonMapper;
   }

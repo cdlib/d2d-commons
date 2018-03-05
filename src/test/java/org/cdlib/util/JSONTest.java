@@ -41,22 +41,8 @@ public class JSONTest {
 
   @Test
   public void serializesString() {
-    SerializablePojo pojo = JSON.deserialize("{\"testString\":\"test String val\",\"testInt\":22}", SerializablePojo.class);
-    assertEquals(22, pojo.getTestInt());
-  }
-
-  @Test
-  public void omitsNullValueFromSerialization() {
-    pojo.setTestString(null);
-    String result = JSON.serialize(pojo);
-    assertFalse(result.contains("testString"));
-  }
-
-  @Test
-  public void omitsEmptyValueFromSerialization() {
-    pojo.setTestString("");
-    String result = JSON.serialize(pojo);
-    assertFalse(result.contains("testString"));
+    SerializablePojo obj = JSON.deserialize("{\"testString\":\"test String val\",\"testInt\":22}", SerializablePojo.class);
+    assertEquals(22, obj.getTestInt());
   }
 
 }
