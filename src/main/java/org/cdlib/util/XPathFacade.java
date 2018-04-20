@@ -15,18 +15,14 @@ import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
-/**
- *
- * @author jferrie
- */
-public class XPathHelper {
+public class XPathFacade {
 
   private final XPath xpath;
   private final DocumentBuilder builder;
   private final Document document;
-  private static final Logger LOG = LogManager.getLogger(XPathHelper.class);
+  private static final Logger LOG = LogManager.getLogger(XPathFacade.class);
 
-  public XPathHelper(String xml) {
+  public XPathFacade(String xml) {
     LOG.debug("XPathHelper got xml: " + xml);
     Assert.hasText(xml, "XML has no content, cannot parse.");
     this.xpath = initXPath();
@@ -34,7 +30,7 @@ public class XPathHelper {
     try {
       document = builder.parse(new InputSource(new ByteArrayInputStream(xml.getBytes("utf-8"))));
     } catch (SAXException | IOException e) {
-      throw new RuntimeException("Could not parse xml " + xml, e);
+      throw new XPathFacadeException("Could not parse xml " + xml, e);
     }
   }
 
@@ -49,21 +45,16 @@ public class XPathHelper {
     try {
       documentBuilder = factory.newDocumentBuilder();
     } catch (ParserConfigurationException e) {
-      throw new RuntimeException(e);
+      throw new XPathFacadeException(e);
     }
     return documentBuilder;
   }
 
-
-  /**
-   *
-   * Returns content
-   */
   public String getContent(String path) {
     try {
       return xpath.compile(path).evaluate(document);
     } catch (XPathExpressionException e) {
-      throw new RuntimeException(e);
+      throw new XPathFacadeException(e);
     }
   }
 
