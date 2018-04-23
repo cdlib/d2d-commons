@@ -26,7 +26,6 @@ public class HttpClientFacadeImpl implements HttpClientFacade {
   public HttpClientFacadeImpl() {
   }
   
-
   @Override
   public String post(String url, String post, int timeout) {
     return post(url, post, timeout, DEFAULT_CONTENT_TYPE);

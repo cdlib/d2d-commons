@@ -24,13 +24,15 @@ public class XPathFacade {
 
   public XPathFacade(String xml) {
     LOG.debug("XPathHelper got xml: " + xml);
-    Assert.hasText(xml, "XML has no content, cannot parse.");
-    this.xpath = initXPath();
-    this.builder = initDocumentBuilder();
     try {
+      Assert.hasText(xml, "XML has no content, cannot parse.");
+      this.xpath = initXPath();
+      this.builder = initDocumentBuilder();
       document = builder.parse(new InputSource(new ByteArrayInputStream(xml.getBytes("utf-8"))));
-    } catch (SAXException | IOException e) {
+    } catch (IllegalArgumentException | SAXException | IOException e) {
       throw new XPathFacadeException("Could not parse xml " + xml, e);
+    } catch (RuntimeException e) {
+      throw new XPathFacadeException("Caught unexpected runtime exception: " + e.getMessage(), e);
     }
   }
 
