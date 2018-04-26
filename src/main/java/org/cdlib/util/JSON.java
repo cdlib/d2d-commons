@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.io.IOException;
 import java.io.InputStream;
+import org.springframework.util.Assert;
 
 public final class JSON {
 
@@ -20,9 +21,6 @@ public final class JSON {
     return jsonMapper;
   }
 
-  /*
-   * Serialize a Java object to a JSON string
-   */
   public static String serialize(Object pojo) {
     if (pojo == null) {
       throw new JSONConversionException("cannot serialize null");
@@ -44,11 +42,10 @@ public final class JSON {
       throw new JSONConversionException("json cannot be deserialized to object type");
     }
   }
-  
-  /*
-   * Deserialize a JSON inputstream
-   */
+
   public static <T> T deserialize(InputStream json, Class<T> clazz) {
+    Assert.notNull(clazz);
+    Assert.notNull(json);
     checkDeserialize(clazz);
     T result = null;
     try {
@@ -59,16 +56,17 @@ public final class JSON {
     return result;
   }
 
-  /*
-   * Deserialize a JSON string
-   */
   public static <T> T deserialize(String json, Class<T> clazz) {
+    Assert.notNull(clazz);
+    Assert.notNull(json);
     checkDeserialize(clazz);
     T result = null;
     try {
       result = objectMapper.readValue(json, clazz);
     } catch (IOException e) {
       throw new JSONConversionException("Could not deserialize JSON", e);
+    } catch (RuntimeException e) {
+      throw new JSONConversionException("Unexpected runtime exception caught when attempting to deserialize " + json);
     }
     return result;
   }
@@ -82,8 +80,8 @@ public final class JSON {
     public JSONConversionException(Exception e) {
       super(e);
     }
-    
-     public JSONConversionException(String message, Exception e) {
+
+    public JSONConversionException(String message, Exception e) {
       super(message, e);
     }
   }
