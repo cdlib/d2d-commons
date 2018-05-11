@@ -75,7 +75,7 @@ public class HttpClientFacadeImpl implements HttpClientFacade {
    */
   @Override
   public String get(String url, int cycles, int timeout) {
-    WebException exception = null;
+    WebException exception = new WebException("Unknown exception.", 500);
     int attempt = 0;
     if (timeout < 0) {
       timeout = 0;
