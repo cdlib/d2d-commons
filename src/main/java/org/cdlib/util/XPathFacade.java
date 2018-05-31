@@ -67,17 +67,20 @@ public class XPathFacade {
 
   /**
    * @param path an expression that evaluates to a list of nodes
-   * @return a List<String> with the text of the nodes extracted by the path expression
+   * @return a List<String> with the text of the nodes extracted by the path
+   * expression
    */
   public List<String> getNodeListContent(String path) {
     List<String> result = new ArrayList<>();
     try {
       NodeList nodeList = (NodeList) xpath.compile(path).evaluate(document, XPathConstants.NODESET);
       for (int i = 0; i <= nodeList.getLength() - 1; i++) {
-          System.out.println("testing " + i);
+        String content = nodeList.item(i).getTextContent();
+        if (content != null) {
           result.add(nodeList.item(i).getTextContent());
+        }
       }
-    return result;
+      return result;
     } catch (XPathExpressionException e) {
       throw new XPathFacadeException(e);
     }
