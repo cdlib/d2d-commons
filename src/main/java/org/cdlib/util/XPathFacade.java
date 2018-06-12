@@ -76,7 +76,7 @@ public class XPathFacade {
       NodeList nodeList = (NodeList) xpath.compile(path).evaluate(document, XPathConstants.NODESET);
       for (int i = 0; i <= nodeList.getLength() - 1; i++) {
         String content = nodeList.item(i).getTextContent();
-        if (content != null) {
+        if (content != null && !content.isEmpty()) {
           result.add(nodeList.item(i).getTextContent());
         }
       }
