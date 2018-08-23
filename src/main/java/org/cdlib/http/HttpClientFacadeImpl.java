@@ -19,13 +19,12 @@ import org.apache.logging.log4j.Logger;
 public class HttpClientFacadeImpl implements HttpClientFacade {
 
   private static final Logger LOGGER = LogManager.getLogger(HttpClientFacadeImpl.class);
-  private static final int DEFAULT_TRIES = 3;
   private static final int DEFAULT_TIMEOUT = 20000;
   private static final ContentType DEFAULT_CONTENT_TYPE = ContentType.APPLICATION_FORM_URLENCODED;
 
   public HttpClientFacadeImpl() {
   }
-  
+
   @Override
   public String post(String url, String post, int timeout) {
     return post(url, post, timeout, DEFAULT_CONTENT_TYPE);
@@ -62,52 +61,16 @@ public class HttpClientFacadeImpl implements HttpClientFacade {
 
   @Override
   public String get(String url) {
-    return get(url, DEFAULT_TRIES, DEFAULT_TIMEOUT);
-  }
-
-  /**
-   * get returns the result of the HTTP get URL.
-   *
-   * @param url - the URL to get
-   * @param cycles - the number of time to try
-   * @param timeout - the max time to wait in millisecs. No timeout if <= 0
-   * @return
-   */
-  @Override
-  public String get(String url, int cycles, int timeout) {
-    WebException exception = new WebException("Unknown exception.", 500);
-    int attempt = 0;
-    if (timeout < 0) {
-      timeout = 0;
-    }
-    for (attempt = 1; attempt <= cycles; attempt++) {
-      try {
-        LOGGER.debug("URLClientImpl: cycleGet timeout= " + timeout + ", attempt " + attempt + 1);
-        LOGGER.debug("URL is: " + url);
-        return doURLGet(url, timeout);
-      } catch (WebException e) {
-        LOGGER.debug("An exception occurred on attempt " + attempt + ". " + e.getMessage());
-        exception = e;
-        if (e.getStatus() < 500) {
-          break;
-        }
-      }
-    }
-    throw exception;
-  }
-
-  private String doURLGet(String url, int timeout) {
-    LOGGER.debug("URLClientImpl doURLGet: url=" + url + " timeout=" + timeout);
+    LOGGER.debug("URLClientImpl doURLGet: url=" + url + " timeout=" + DEFAULT_TIMEOUT);
     String result = "";
-    RequestConfig config = RequestConfig.custom().setConnectTimeout(timeout).setSocketTimeout(timeout).build();
-    CloseableHttpClient httpClient = HttpClientBuilder.create().setDefaultRequestConfig(config).build();
+    RequestConfig config = RequestConfig.custom().setConnectTimeout(DEFAULT_TIMEOUT).setSocketTimeout(DEFAULT_TIMEOUT).build();
     HttpGet httpGet = new HttpGet(url);
 
-    try {
+    try (CloseableHttpClient httpClient = HttpClientBuilder.create().setDefaultRequestConfig(config).build()) {
       HttpResponse response = httpClient.execute(httpGet);
       if (response.getStatusLine().getStatusCode() != 200) {
         LOGGER.error("Response status line = " + response.getStatusLine() + ", code = " + response.getStatusLine().getStatusCode() + ", from url " + url);
-        return "";
+        throw new WebException(response.getStatusLine().getReasonPhrase(), response);
       }
       HttpEntity entity = response.getEntity();
       result = EntityUtils.toString(entity, "utf-8");
@@ -118,8 +81,6 @@ public class HttpClientFacadeImpl implements HttpClientFacade {
     } catch (ParseException e) {
       LOGGER.error("While getting url " + url + " error: " + e.toString());
       throw new WebException(e.getMessage(), e, 422);
-    } finally {
-      httpGet.releaseConnection();
     }
     return result;
 

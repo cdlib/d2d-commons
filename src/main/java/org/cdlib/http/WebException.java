@@ -9,7 +9,6 @@ import org.apache.http.util.EntityUtils;
  * Runtime error that stores HTTP status code. Wrap all exception that will be
  * handled by the controller class in one of these and throw.
  *
- * @author jferrie
  */
 public class WebException extends RuntimeException {
 
@@ -38,7 +37,7 @@ public class WebException extends RuntimeException {
     try {
       body = EntityUtils.toString(httpResponse.getEntity(), "utf-8");
     } catch (IOException e) {
-
+      body = "";
     }
     content = body;
   }
