@@ -5,14 +5,14 @@ import java.util.Objects;
 public class ShelvingLocationId {
 
     private OpacLocation opac;
-    private String name;
+    private String matchValue;
 
     public ShelvingLocationId() {
     }
 
     public ShelvingLocationId(OpacLocation opac, String name) {
         this.opac = opac;
-        this.name = name;
+        this.matchValue = name;
     }
 
     public OpacLocation getOpacCode() {
@@ -23,19 +23,19 @@ public class ShelvingLocationId {
         this.opac = opac;
     }
 
-    public String getName() {
-        return name;
+    public String getMatchValue() {
+        return matchValue;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setMatchValue(String matchValue) {
+        this.matchValue = matchValue;
     }
 
     @Override
     public int hashCode() {
         int hash = 3;
         hash = 17 * hash + Objects.hashCode(this.opac);
-        hash = 17 * hash + Objects.hashCode(this.name);
+        hash = 17 * hash + Objects.hashCode(this.matchValue);
         return hash;
     }
 
@@ -51,7 +51,7 @@ public class ShelvingLocationId {
             return false;
         }
         final ShelvingLocationId other = (ShelvingLocationId) obj;
-        if (!Objects.equals(this.name, other.name)) {
+        if (!Objects.equals(this.matchValue, other.matchValue)) {
             return false;
         }
         if (this.opac != other.opac) {
@@ -62,7 +62,7 @@ public class ShelvingLocationId {
 
     @Override
     public String toString() {
-        return "ShelvingLocationId{" + "opac=" + opac + ", name=" + name + '}';
+        return "ShelvingLocationId{" + "opac=" + opac + ", name=" + matchValue + '}';
     }
 
 }
