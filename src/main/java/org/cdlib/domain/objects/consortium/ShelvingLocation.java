@@ -7,13 +7,11 @@ public class ShelvingLocation {
 
     private OpacLocation recordLocation;
     
-    @NotNull(message = "Shelving location name is required.")
     private String name;
-    
     private String opacShelvingLocationId;
-    private String oclcSymbol;
+    private String oclcHoldingSymbol;
     
-    @NotNull(message = "Shelving location holding institution code is required.")
+    @NotNull(message = "Shelving location storage institution code is required.")
     private InstitutionCode storageLocation;
     
     private String vdxLocation;
@@ -33,7 +31,7 @@ public class ShelvingLocation {
         this.recordLocation = source.recordLocation;
         this.name = source.name;
         this.opacShelvingLocationId = source.opacShelvingLocationId;
-        this.oclcSymbol = source.oclcSymbol;
+        this.oclcHoldingSymbol = source.oclcHoldingSymbol;
         this.storageLocation = source.storageLocation;
         this.vdxLocation = source.vdxLocation;
         this.lhrCode = source.lhrCode;
@@ -42,12 +40,12 @@ public class ShelvingLocation {
         this.collectionType = source.collectionType;
     }
 
-    public ShelvingLocation(OpacLocation wclOpac, String name, String opacCode, String institutionSymbol, InstitutionCode memberInstitution, String vdxLocation, String lhrCode, String note, LendingPolicy lendingPolicy, CollectionType collectionType) {
-        this.recordLocation = wclOpac;
+    public ShelvingLocation(OpacLocation recordLocation, String name, String opacCode, String oclcHoldingSymbol, InstitutionCode storageLocation, String vdxLocation, String lhrCode, String note, LendingPolicy lendingPolicy, CollectionType collectionType) {
+        this.recordLocation = recordLocation;
         this.name = name;
         this.opacShelvingLocationId = opacCode;
-        this.oclcSymbol = institutionSymbol;
-        this.storageLocation = memberInstitution;
+        this.oclcHoldingSymbol = oclcHoldingSymbol;
+        this.storageLocation = storageLocation;
         this.vdxLocation = vdxLocation;
         this.lhrCode = lhrCode;
         this.note = note;
@@ -67,12 +65,12 @@ public class ShelvingLocation {
         this.name = name;
     }
 
-    public String getOclcSymbol() {
-        return oclcSymbol;
+    public String getOclcHoldingSymbol() {
+        return oclcHoldingSymbol;
     }
 
-    public void setOclcSymbol(String oclcSymbol) {
-        this.oclcSymbol = oclcSymbol;
+    public void setOclcHoldingSymbol(String oclcHoldingSymbol) {
+        this.oclcHoldingSymbol = oclcHoldingSymbol;
     }
 
     public LendingPolicy getLendingPolicy() {
@@ -141,7 +139,7 @@ public class ShelvingLocation {
     hash = 19 * hash + Objects.hashCode(this.recordLocation);
     hash = 19 * hash + Objects.hashCode(this.name);
     hash = 19 * hash + Objects.hashCode(this.opacShelvingLocationId);
-    hash = 19 * hash + Objects.hashCode(this.oclcSymbol);
+    hash = 19 * hash + Objects.hashCode(this.oclcHoldingSymbol);
     hash = 19 * hash + Objects.hashCode(this.storageLocation);
     hash = 19 * hash + Objects.hashCode(this.vdxLocation);
     hash = 19 * hash + Objects.hashCode(this.lhrCode);
@@ -169,7 +167,7 @@ public class ShelvingLocation {
     if (!Objects.equals(this.opacShelvingLocationId, other.opacShelvingLocationId)) {
       return false;
     }
-    if (!Objects.equals(this.oclcSymbol, other.oclcSymbol)) {
+    if (!Objects.equals(this.oclcHoldingSymbol, other.oclcHoldingSymbol)) {
       return false;
     }
     if (!Objects.equals(this.vdxLocation, other.vdxLocation)) {
@@ -198,8 +196,7 @@ public class ShelvingLocation {
 
   @Override
   public String toString() {
-    return "ShelvingLocation{" + "opacLocation=" + recordLocation + ", name=" + name + ", opacShelvingLocationId=" + opacShelvingLocationId + ", oclcSymbol=" + oclcSymbol + ", storageLocation=" + storageLocation + ", vdxLocation=" + vdxLocation + ", lhrCode=" + lhrCode + ", note=" + note + ", lendingPolicy=" + lendingPolicy + ", collectionType=" + collectionType + '}';
+    return "ShelvingLocation{" + "recordLocation=" + recordLocation + ", name=" + name + ", opacShelvingLocationId=" + opacShelvingLocationId + ", oclcHoldingSymbol=" + oclcHoldingSymbol + ", storageLocation=" + storageLocation + ", vdxLocation=" + vdxLocation + ", lhrCode=" + lhrCode + ", note=" + note + ", lendingPolicy=" + lendingPolicy + ", collectionType=" + collectionType + '}';
   }
-
     
 }
