@@ -181,10 +181,36 @@ public class Item {
     }
     return true;
   }
+  
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
 
-  @Override
-  public String toString() {
-    return "Item{" + "oclcNumber=" + oclcNumber + ", carrier=" + carrier + ", circStatus=" + circStatus + ", seriality=" + seriality + ", shelvingLocation=" + shelvingLocation + ", opacShelvingLocationName=" + opacShelvingLocationName + ", callNumber=" + callNumber + ", summaryHoldings=" + summaryHoldings + ", lhrId=" + lhrCode + '}';
-  }
+        append(sb, "oclcNumber", oclcNumber);
+        append(sb, "carrier", carrier);
+        append(sb, "circStatus", circStatus);
+        append(sb, "seriality", seriality);
+        append(sb, "shelvingLocation", shelvingLocation);
+        append(sb, "opacShelvingLocationName", opacShelvingLocationName);
+        append(sb, "callNumber", callNumber);
+        append(sb, "summaryHoldings", summaryHoldings);
 
+        return "Item{" + sb.toString() + '}';
+
+    }
+
+    private StringBuilder append(StringBuilder sb, String label, Object var) {
+        if (var == null) {
+            return sb;
+        }
+        String varString = var.toString();
+        if (varString.isEmpty()) {
+            return sb;
+        }
+        if (sb.length() != 0) {
+            sb.append(", ");
+        }
+        sb.append(label).append("=").append(varString);
+        return sb;
+    }
 }
