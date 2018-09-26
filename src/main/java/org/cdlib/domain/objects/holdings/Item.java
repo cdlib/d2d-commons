@@ -33,6 +33,8 @@ public class Item {
   private String callNumber;
 
   private String summaryHoldings;
+  
+  private String lhrCode;
 
   public Item() {
   }
@@ -70,6 +72,10 @@ public class Item {
 
   public ShelvingLocation getShelvingLocation() {
     return shelvingLocation;
+  }
+
+  public String getLhrCode() {
+    return lhrCode;
   }
   
   /**
@@ -111,21 +117,26 @@ public class Item {
     this.opacShelvingLocationName = shelf;
   }
 
+  public void setLhrCode(String lhrCode) {
+    this.lhrCode = lhrCode;
+  }
+
   public String getSummaryHoldings() {
     return summaryHoldings;
   }
 
   @Override
   public int hashCode() {
-    int hash = 7;
-    hash = 59 * hash + Objects.hashCode(this.oclcNumber);
-    hash = 59 * hash + Objects.hashCode(this.carrier);
-    hash = 59 * hash + Objects.hashCode(this.circStatus);
-    hash = 59 * hash + Objects.hashCode(this.seriality);
-    hash = 59 * hash + Objects.hashCode(this.shelvingLocation);
-    hash = 59 * hash + Objects.hashCode(this.opacShelvingLocationName);
-    hash = 59 * hash + Objects.hashCode(this.callNumber);
-    hash = 59 * hash + Objects.hashCode(this.summaryHoldings);
+    int hash = 5;
+    hash = 61 * hash + Objects.hashCode(this.oclcNumber);
+    hash = 61 * hash + Objects.hashCode(this.carrier);
+    hash = 61 * hash + Objects.hashCode(this.circStatus);
+    hash = 61 * hash + Objects.hashCode(this.seriality);
+    hash = 61 * hash + Objects.hashCode(this.shelvingLocation);
+    hash = 61 * hash + Objects.hashCode(this.opacShelvingLocationName);
+    hash = 61 * hash + Objects.hashCode(this.callNumber);
+    hash = 61 * hash + Objects.hashCode(this.summaryHoldings);
+    hash = 61 * hash + Objects.hashCode(this.lhrCode);
     return hash;
   }
 
@@ -153,6 +164,9 @@ public class Item {
     if (!Objects.equals(this.summaryHoldings, other.summaryHoldings)) {
       return false;
     }
+    if (!Objects.equals(this.lhrCode, other.lhrCode)) {
+      return false;
+    }
     if (this.carrier != other.carrier) {
       return false;
     }
@@ -167,6 +181,7 @@ public class Item {
     }
     return true;
   }
+<<<<<<< HEAD
   
     @Override
     public String toString() {
@@ -199,5 +214,12 @@ public class Item {
         sb.append(label).append("=").append(varString);
         return sb;
     }
+=======
+
+  @Override
+  public String toString() {
+    return "Item{" + "oclcNumber=" + oclcNumber + ", carrier=" + carrier + ", circStatus=" + circStatus + ", seriality=" + seriality + ", shelvingLocation=" + shelvingLocation + ", opacShelvingLocationName=" + opacShelvingLocationName + ", callNumber=" + callNumber + ", summaryHoldings=" + summaryHoldings + ", lhrId=" + lhrCode + '}';
+  }
+>>>>>>> 2375a0daf3ca58c1a9369d98e0634b567e2eda39
 
 }

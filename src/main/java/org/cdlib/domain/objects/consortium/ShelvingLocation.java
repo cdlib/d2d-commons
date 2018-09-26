@@ -5,7 +5,7 @@ import javax.validation.constraints.NotNull;
 
 public class ShelvingLocation {
 
-    private OpacLocation opacLocation;
+    private OpacLocation recordLocation;
     
     @NotNull(message = "Shelving location name is required.")
     private String name;
@@ -30,7 +30,7 @@ public class ShelvingLocation {
     }
 
     public ShelvingLocation(ShelvingLocation source) {
-        this.opacLocation = source.opacLocation;
+        this.recordLocation = source.recordLocation;
         this.name = source.name;
         this.opacShelvingLocationId = source.opacShelvingLocationId;
         this.oclcSymbol = source.oclcSymbol;
@@ -43,7 +43,7 @@ public class ShelvingLocation {
     }
 
     public ShelvingLocation(OpacLocation wclOpac, String name, String opacCode, String institutionSymbol, InstitutionCode memberInstitution, String vdxLocation, String lhrCode, String note, LendingPolicy lendingPolicy, CollectionType collectionType) {
-        this.opacLocation = wclOpac;
+        this.recordLocation = wclOpac;
         this.name = name;
         this.opacShelvingLocationId = opacCode;
         this.oclcSymbol = institutionSymbol;
@@ -127,18 +127,18 @@ public class ShelvingLocation {
         this.vdxLocation = vdxLocation;
     }
 
-    public OpacLocation getOpacLocation() {
-        return opacLocation;
+    public OpacLocation getRecordLocation() {
+        return recordLocation;
     }
 
-    public void setOpacLocation(OpacLocation campus) {
-        this.opacLocation = campus;
+    public void setRecordLocation(OpacLocation campus) {
+        this.recordLocation = campus;
     }
 
   @Override
   public int hashCode() {
     int hash = 7;
-    hash = 19 * hash + Objects.hashCode(this.opacLocation);
+    hash = 19 * hash + Objects.hashCode(this.recordLocation);
     hash = 19 * hash + Objects.hashCode(this.name);
     hash = 19 * hash + Objects.hashCode(this.opacShelvingLocationId);
     hash = 19 * hash + Objects.hashCode(this.oclcSymbol);
@@ -181,7 +181,7 @@ public class ShelvingLocation {
     if (!Objects.equals(this.note, other.note)) {
       return false;
     }
-    if (this.opacLocation != other.opacLocation) {
+    if (this.recordLocation != other.recordLocation) {
       return false;
     }
     if (this.storageLocation != other.storageLocation) {
@@ -198,7 +198,7 @@ public class ShelvingLocation {
 
   @Override
   public String toString() {
-    return "ShelvingLocation{" + "opacLocation=" + opacLocation + ", name=" + name + ", opacShelvingLocationId=" + opacShelvingLocationId + ", oclcSymbol=" + oclcSymbol + ", storageLocation=" + storageLocation + ", vdxLocation=" + vdxLocation + ", lhrCode=" + lhrCode + ", note=" + note + ", lendingPolicy=" + lendingPolicy + ", collectionType=" + collectionType + '}';
+    return "ShelvingLocation{" + "opacLocation=" + recordLocation + ", name=" + name + ", opacShelvingLocationId=" + opacShelvingLocationId + ", oclcSymbol=" + oclcSymbol + ", storageLocation=" + storageLocation + ", vdxLocation=" + vdxLocation + ", lhrCode=" + lhrCode + ", note=" + note + ", lendingPolicy=" + lendingPolicy + ", collectionType=" + collectionType + '}';
   }
 
     
