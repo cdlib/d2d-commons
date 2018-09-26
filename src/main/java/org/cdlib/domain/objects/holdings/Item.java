@@ -181,7 +181,6 @@ public class Item {
     }
     return true;
   }
-<<<<<<< HEAD
   
     @Override
     public String toString() {
