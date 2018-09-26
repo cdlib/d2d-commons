@@ -214,12 +214,4 @@ public class Item {
         sb.append(label).append("=").append(varString);
         return sb;
     }
-=======
-
-  @Override
-  public String toString() {
-    return "Item{" + "oclcNumber=" + oclcNumber + ", carrier=" + carrier + ", circStatus=" + circStatus + ", seriality=" + seriality + ", shelvingLocation=" + shelvingLocation + ", opacShelvingLocationName=" + opacShelvingLocationName + ", callNumber=" + callNumber + ", summaryHoldings=" + summaryHoldings + ", lhrId=" + lhrCode + '}';
-  }
->>>>>>> 2375a0daf3ca58c1a9369d98e0634b567e2eda39
-
 }
