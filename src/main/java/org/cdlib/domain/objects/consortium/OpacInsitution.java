@@ -8,20 +8,20 @@ import java.util.logging.Logger;
  * Represents the OPAC used by OCLC WorldCat Local instances.
  *
  * A single enumeration can be used either for a production or parallel WorldCat
- * Local instance, as both instances uses the same library OPAC.
- *
- * The OpacLocation regId value is present in the AQ service response that represents the
- * OPAC or set of OPACs used by the WorlCat Local instance. The ones enumerated
- * here correspond to lending institutions who participate in the UC consortium,
- * and whose shelving locations are maintained by CDL.
- *
- * Note that not all lenders participating in the consortium have their own OPAC
- * regId, as some "institutions" share the same OPAC (specifically NRLF shares
- * UCB, and SRLF shares UCLA).
+ Local instance, as both instances uses the same library OPAC.
+
+ The OpacInsitution regId value is present in the AQ service response that represents the
+ OPAC or set of OPACs used by the WorlCat Local instance. The ones enumerated
+ here correspond to lending institutions who participate in the UC consortium,
+ and whose shelving locations are maintained by CDL.
+
+ Note that not all lenders participating in the consortium have their own OPAC
+ regId, as some "institutions" share the same OPAC (specifically NRLF shares
+ UCB, and SRLF shares UCLA).
  *
  * @author jff after mjt
  */
-public enum OpacLocation {
+public enum OpacInsitution {
     CRL(93175, 93175),
     UCB(5689, 110115),
     UCD(5697, 110113),
@@ -36,9 +36,9 @@ public enum OpacLocation {
 
     private final int wclOpacRegId;
     private final int wclParallelInstanceRegId;
-    private static final Logger logger = Logger.getLogger(OpacLocation.class.getName());
+    private static final Logger logger = Logger.getLogger(OpacInsitution.class.getName());
 
-    OpacLocation(int prodWclOpacRegId, int parallelWclOpacRegId) {
+    OpacInsitution(int prodWclOpacRegId, int parallelWclOpacRegId) {
         this.wclOpacRegId = prodWclOpacRegId;
         this.wclParallelInstanceRegId = parallelWclOpacRegId;
     }
@@ -51,8 +51,8 @@ public enum OpacLocation {
         return wclParallelInstanceRegId;
     }
 
-    public static Optional<OpacLocation> byAnyRegId(int regId) {
-        for (OpacLocation campus : OpacLocation.values()) {
+    public static Optional<OpacInsitution> byAnyRegId(int regId) {
+        for (OpacInsitution campus : OpacInsitution.values()) {
             if (campus.wclProductionRegId() == regId || campus.wclParallelIRegId() == regId) {
                 return Optional.of(campus);
             }
@@ -60,7 +60,7 @@ public enum OpacLocation {
         return Optional.empty();
     }
 
-    public static Optional<OpacLocation> byAnyRegId(String regIdStr) {
+    public static Optional<OpacInsitution> byAnyRegId(String regIdStr) {
         int regId;
         try {
             regId = Integer.parseInt(regIdStr);
@@ -71,8 +71,8 @@ public enum OpacLocation {
         return byAnyRegId(regId);
     }
 
-    public static Optional<OpacLocation> fromString(String code) {
-        for (OpacLocation enumCode : OpacLocation.values()) {
+    public static Optional<OpacInsitution> fromString(String code) {
+        for (OpacInsitution enumCode : OpacInsitution.values()) {
             if (enumCode.toString().equalsIgnoreCase(code)) {
                 return Optional.of(enumCode);
             }

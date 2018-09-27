@@ -4,22 +4,22 @@ import java.util.Objects;
 
 public class ShelvingLocationId {
 
-    private OpacLocation opac;
+    private OpacInsitution opac;
     private String matchValue;
 
     public ShelvingLocationId() {
     }
 
-    public ShelvingLocationId(OpacLocation opac, String name) {
+    public ShelvingLocationId(OpacInsitution opac, String name) {
         this.opac = opac;
         this.matchValue = name;
     }
 
-    public OpacLocation getOpacCode() {
+    public OpacInsitution getOpacCode() {
         return opac;
     }
 
-    public void setOpacCode(OpacLocation opac) {
+    public void setOpacCode(OpacInsitution opac) {
         this.opac = opac;
     }
 
