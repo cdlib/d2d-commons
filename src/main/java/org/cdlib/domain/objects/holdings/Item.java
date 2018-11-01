@@ -32,6 +32,8 @@ public class Item {
   @NotNull(message = "Item call number is required.")
   private String callNumber;
 
+  private Boolean massDigitizedContent;
+
   private String summaryHoldings;
 
   private String oclcLhrCode;
@@ -48,6 +50,8 @@ public class Item {
     this.opacShelvingLocationName = source.opacShelvingLocationName;
     this.callNumber = source.callNumber;
     this.summaryHoldings = source.summaryHoldings;
+    this.massDigitizedContent = source.massDigitizedContent;
+    this.oclcLhrCode = source.oclcLhrCode;
   }
 
   /**
@@ -97,6 +101,10 @@ public class Item {
     return shelvingLocation;
   }
 
+  public Boolean isMassDigitizedContent() {
+    return massDigitizedContent;
+  }
+
   /**
    * The code for the the items local holdings record as specified by OCLC.
    *
@@ -124,8 +132,9 @@ public class Item {
 
   /**
    * The summary holdings statement for a serial title.
-   * 
-   * This value is built from fields in the LHR, and is only available if there is an LHR for the serial.
+   *
+   * This value is built from fields in the LHR, and is only available if there
+   * is an LHR for the serial.
    */
   public String getSummaryHoldings() {
     return summaryHoldings;
@@ -145,6 +154,10 @@ public class Item {
 
   public void setCircStatus(CircStatus circStatus) {
     this.circStatus = circStatus;
+  }
+  
+  public void setMassDigitizedContent(Boolean massDigitizedContent) {
+    this.massDigitizedContent = massDigitizedContent;
   }
 
   public void setSeriality(Seriality seriality) {
@@ -236,6 +249,7 @@ public class Item {
     append(sb, "opacShelvingLocationName", opacShelvingLocationName);
     append(sb, "callNumber", callNumber);
     append(sb, "summaryHoldings", summaryHoldings);
+    append(sb, "massDigitizedContent", massDigitizedContent);
 
     return "Item{" + sb.toString() + '}';
 

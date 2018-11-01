@@ -1,6 +1,5 @@
 package org.cdlib.xml;
 
-import java.util.Hashtable;
 import java.util.Vector;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;

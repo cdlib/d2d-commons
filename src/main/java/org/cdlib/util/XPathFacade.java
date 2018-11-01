@@ -15,7 +15,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.util.Assert;
 import org.w3c.dom.Document;
-import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -83,6 +82,19 @@ public class XPathFacade {
       return result;
     } catch (XPathExpressionException e) {
       throw new XPathFacadeException(e);
+    }
+  }
+
+  /**
+   * @param path an expression that evaluates to a list of nodes
+   * @return a List<String> with the text of the nodes extracted by the path
+   * expression
+   */
+  public NodeList getNodeList(String path) {
+    try {
+      return (NodeList) xpath.compile(path).evaluate(document, XPathConstants.NODESET);
+    } catch (XPathExpressionException e) {
+      throw new XPathFacadeException("Failed to build node list", e);
     }
   }
 
