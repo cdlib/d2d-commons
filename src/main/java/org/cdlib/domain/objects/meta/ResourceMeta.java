@@ -1,23 +1,39 @@
 package org.cdlib.domain.objects.meta;
 
-import java.util.Map;
-
 /**
  *
  * Provides metadata about domain resource.
  * 
  * Provides information about resource context, such as errors, diagnostics, and duration.
  */
-public class ResourceMeta {
+public class ResourceMeta<S, E, L> {
   
-  private Map<String, ?> metaProperties;
-  
-  public Map<String, ?> getMetaProperties() {
-    return metaProperties;
+  private S source;
+  private E status;
+  private L eventLog;
+
+  public S getSource() {
+    return source;
   }
 
-  public void setMetaProperties(Map<String, ?> properties) {
-    metaProperties = properties;
+  public void setSource(S source) {
+    this.source = source;
+  }
+
+  public E getStatus() {
+    return status;
+  }
+
+  public void setStatus(E status) {
+    this.status = status;
+  }
+
+  public L getEventLog() {
+    return eventLog;
+  }
+
+  public void setEventLog(L eventLog) {
+    this.eventLog = eventLog;
   }
 
 }
