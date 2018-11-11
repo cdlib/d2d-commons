@@ -6,8 +6,7 @@ import org.apache.http.HttpResponse;
 import org.apache.http.util.EntityUtils;
 
 /**
- * Runtime error that stores HTTP status code. Wrap all exception that will be
- * handled by the controller class in one of these and throw.
+ * Exception that includes HTTP status code and response body.
  *
  */
 public class WebException extends RuntimeException {

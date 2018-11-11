@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import org.cdlib.domain.objects.bib.Bib;
+import org.cdlib.domain.objects.meta.ResourceMeta;
 
 /**
  * Summarized list of lending candidates, as Items, and the Bib for which they
@@ -19,6 +20,8 @@ public class Holdings {
     @Valid
     @NotNull(message = "A list of holdings is required.")
     private List<Item> heldItems;
+    
+    private ResourceMeta resourceMeta;
 
     public Holdings() {
     }
@@ -52,6 +55,14 @@ public class Holdings {
     public void setHeldItems(List<Item> heldItems) {
         this.heldItems = heldItems;
     }
+    
+    public ResourceMeta getResourceMeta() {
+      return resourceMeta;
+    }
+    
+    public void setResourceMeta(ResourceMeta meta) {
+      resourceMeta = meta;
+    }
 
     @Override
     public int hashCode() {
@@ -61,6 +72,7 @@ public class Holdings {
         return hash;
     }
 
+    
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -76,6 +88,7 @@ public class Holdings {
         if (!Objects.equals(this.bib, other.bib)) {
             return false;
         }
+        // TODO: compare collections
         if (!Objects.equals(this.heldItems, other.heldItems)) {
             return false;
         }
