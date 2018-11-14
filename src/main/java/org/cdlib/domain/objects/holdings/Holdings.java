@@ -99,7 +99,7 @@ public class Holdings {
 
   @Override
   public String toString() {
-    return "Holdings{" + "bib=" + bib + ", heldItems=" + heldItems + '}';
+    return "Holdings{" + "bib=" + bib + ", heldItems=" + heldItems + ", resourceMeta=" + resourceMeta + '}';
   }
 
 }

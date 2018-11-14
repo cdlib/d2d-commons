@@ -2,7 +2,6 @@ package org.cdlib.domain.objects.bib;
 
 import java.util.Objects;
 import javax.validation.constraints.NotNull;
-import org.cdlib.domain.constraints.OCLCNumber;
 
 /**
  * Bibliographic data about an item that is requested.
@@ -27,7 +26,7 @@ public class Bib {
     private String ericIdentifier;
     @NotNull(message = "RecordType is required.")
     private RecordType recordType;
-    @NotNull(message = "BibLevel is required.")
+    @NotNull(message = "Seriality is required.")
     private Seriality seriality;
     private MultipartResourceRecordLevel multipartLevel;
 

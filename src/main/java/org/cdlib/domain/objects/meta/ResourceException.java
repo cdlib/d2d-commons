@@ -1,13 +1,12 @@
 package org.cdlib.domain.objects.meta;
 
-import java.util.List;
-import org.cdlib.domain.objects.consortium.InstitutionCode;
-
 /**
  *
- * ExceptionEvent for inclusion in ResourceMeta.
+ * ResourceException for inclusion in ResourceMeta.
+ * 
+ * Serializable data about any error conditions that occurred while obtaining a resource.
  */
-public class ExceptionEvent {
+public class ResourceException {
   
   private String message;
   private Severity severity;
@@ -35,6 +34,11 @@ public class ExceptionEvent {
 
   public void setScope(Scope scope) {
     this.scope = scope;
+  }
+
+  @Override
+  public String toString() {
+    return "ResourceException{" + "message=" + message + ", severity=" + severity + ", scope=" + scope + '}';
   }
   
   public static enum Severity {
