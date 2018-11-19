@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull;
  */
 public class ShelvingLocation {
 
-    private OpacInsitution opacInstitution;
+    private OpacInstitution opacInstitution;
     private String name;
     private String opacShelvingLocationId;
     private String oclcHoldingSymbol;
@@ -47,7 +47,7 @@ public class ShelvingLocation {
         this.collectionType = source.collectionType;
     }
 
-    public ShelvingLocation(OpacInsitution recordLocation, String name, String opacCode, String oclcHoldingSymbol, InstitutionCode storageLocation, String vdxLocation, String lhrCode, String note, LendingPolicy lendingPolicy, CollectionType collectionType) {
+    public ShelvingLocation(OpacInstitution recordLocation, String name, String opacCode, String oclcHoldingSymbol, InstitutionCode storageLocation, String vdxLocation, String lhrCode, String note, LendingPolicy lendingPolicy, CollectionType collectionType) {
         this.opacInstitution = recordLocation;
         this.name = name;
         this.opacShelvingLocationId = opacCode;
@@ -176,11 +176,11 @@ public class ShelvingLocation {
      * in which case the RLF handles the lending of items held at this shelving location.
      * 
      */
-    public OpacInsitution getOpacInstitution() {
+    public OpacInstitution getOpacInstitution() {
         return opacInstitution;
     }
 
-    public void setOpacInstitution(OpacInsitution campus) {
+    public void setOpacInstitution(OpacInstitution campus) {
         this.opacInstitution = campus;
     }
 

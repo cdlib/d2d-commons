@@ -155,7 +155,7 @@ public class Item {
   public void setCircStatus(CircStatus circStatus) {
     this.circStatus = circStatus;
   }
-  
+
   public void setMassDigitizedContent(Boolean massDigitizedContent) {
     this.massDigitizedContent = massDigitizedContent;
   }
@@ -247,6 +247,7 @@ public class Item {
     append(sb, "seriality", seriality);
     append(sb, "shelvingLocation", shelvingLocation);
     append(sb, "opacShelvingLocationName", opacShelvingLocationName);
+    append(sb, "oclcLhrCode", oclcLhrCode);
     append(sb, "callNumber", callNumber);
     append(sb, "summaryHoldings", summaryHoldings);
     append(sb, "massDigitizedContent", massDigitizedContent);
