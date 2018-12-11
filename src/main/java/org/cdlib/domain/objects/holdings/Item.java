@@ -37,6 +37,8 @@ public class Item {
   private String summaryHoldings;
 
   private String oclcLhrCode;
+  
+  private boolean localUseOnly;
 
   public Item() {
   }
@@ -52,6 +54,7 @@ public class Item {
     this.summaryHoldings = source.summaryHoldings;
     this.massDigitizedContent = source.massDigitizedContent;
     this.oclcLhrCode = source.oclcLhrCode;
+    this.localUseOnly = source.localUseOnly;
   }
 
   /**
@@ -99,6 +102,10 @@ public class Item {
    */
   public ShelvingLocation getShelvingLocation() {
     return shelvingLocation;
+  }
+  
+  public boolean isLocalUseOnly() {
+    return localUseOnly;
   }
 
   public Boolean isMassDigitizedContent() {
@@ -154,6 +161,10 @@ public class Item {
 
   public void setCircStatus(CircStatus circStatus) {
     this.circStatus = circStatus;
+  }
+  
+  public void setLocalUseOnly(boolean localUseOnly) {
+    this.localUseOnly = localUseOnly;
   }
 
   public void setMassDigitizedContent(Boolean massDigitizedContent) {
