@@ -27,7 +27,7 @@ public class HoldingsParserTest {
     private Logger mLogger;
 
     /*
-     * JUnit calls this contructor once for each item in the Collection returned by getHoldingsList
+     * JUnit calls this constructor once for each item in the Collection returned by getHoldingsList
      */
     public HoldingsParserTest(String holdings, Integer earliestYear, Integer latestYear) {
         this.mHoldings = holdings;
