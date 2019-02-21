@@ -11,7 +11,8 @@ import org.cdlib.domain.objects.consortium.ShelvingLocation;
  */
 public class Item {
 
-  private String oclcNumber;
+  @NotNull(message = "Item call number is required.")
+  private String callNumber;
 
   @NotNull(message = "Item carrier is required.")
   private Carrier carrier;
@@ -19,6 +20,18 @@ public class Item {
   @Valid
   @NotNull(message = "Item circulation status is required.")
   private CircStatus circStatus;
+  
+  private String copyNumber;
+
+  private boolean localUseOnly;
+
+  private Boolean massDigitizedContent;
+
+  private String oclcLhrCode;
+
+  private String oclcNumber;
+
+  private String opacShelvingLocationName;
 
   @NotNull(message = "Item seriality is required.")
   private Seriality seriality;
@@ -26,19 +39,8 @@ public class Item {
   @NotNull(message = "Item shelving location is required.")
   @Valid
   private ShelvingLocation shelvingLocation;
-
-  private String opacShelvingLocationName;
-
-  @NotNull(message = "Item call number is required.")
-  private String callNumber;
-
-  private Boolean massDigitizedContent;
-
-  private String summaryHoldings;
-
-  private String oclcLhrCode;
   
-  private boolean localUseOnly;
+  private String summaryHoldings;
 
   public Item() {
   }
@@ -55,155 +57,6 @@ public class Item {
     this.massDigitizedContent = source.massDigitizedContent;
     this.oclcLhrCode = source.oclcLhrCode;
     this.localUseOnly = source.localUseOnly;
-  }
-
-  /**
-   * The call number of the item specified in the OPAC record.
-   */
-  public String getCallNumber() {
-    return callNumber;
-  }
-
-  /**
-   * Specified whether the item is physical or electronic.
-   *
-   */
-  public Carrier getCarrier() {
-    return carrier;
-  }
-
-  /**
-   *
-   * Values that specify whether the item is available to circulate.
-   *
-   */
-  public CircStatus getCircStatus() {
-    return circStatus;
-  }
-
-  /**
-   * Specifies whether the item is published as a serial, or as a monograph.
-   */
-  public Seriality getSeriality() {
-    return seriality;
-  }
-
-  public String getOclcNumber() {
-    return oclcNumber;
-  }
-
-  /**
-   * The shelving location where the item is held.
-   *
-   * This value is obtained from the CDL-managed location table. If the shelving
-   * location for the requested item cannot be found in the table, a default
-   * value will be provided in this field.
-   *
-   */
-  public ShelvingLocation getShelvingLocation() {
-    return shelvingLocation;
-  }
-  
-  public boolean isLocalUseOnly() {
-    return localUseOnly;
-  }
-
-  public Boolean isMassDigitizedContent() {
-    return massDigitizedContent;
-  }
-
-  /**
-   * The code for the the items local holdings record as specified by OCLC.
-   *
-   * If an LHR for the item exists, this value holds the LHR code as provided by
-   * OCLC. This value is used to look up the shelving location in the
-   * CDL-managed table.
-   *
-   */
-  public String getOclcLhrCode() {
-    return oclcLhrCode;
-  }
-
-  /**
-   * The name of the shelving location as known to OCLC WorldCat Local.
-   *
-   * This value is used to look up the shelving location in the CDL-managed
-   * table in the cases where there is no LHR for the item at OCLC.
-   *
-   * This value is the same as the display text for the location in WorldCat
-   * Local.
-   */
-  public String getOpacShelvingLocationName() {
-    return opacShelvingLocationName;
-  }
-
-  /**
-   * The summary holdings statement for a serial title.
-   *
-   * This value is built from fields in the LHR, and is only available if there
-   * is an LHR for the serial.
-   */
-  public String getSummaryHoldings() {
-    return summaryHoldings;
-  }
-
-  public void setSummaryHoldings(String summaryHoldings) {
-    this.summaryHoldings = summaryHoldings;
-  }
-
-  public void setCallNumber(String callNumber) {
-    this.callNumber = callNumber;
-  }
-
-  public void setCarrier(Carrier carrier) {
-    this.carrier = carrier;
-  }
-
-  public void setCircStatus(CircStatus circStatus) {
-    this.circStatus = circStatus;
-  }
-  
-  public void setLocalUseOnly(boolean localUseOnly) {
-    this.localUseOnly = localUseOnly;
-  }
-
-  public void setMassDigitizedContent(Boolean massDigitizedContent) {
-    this.massDigitizedContent = massDigitizedContent;
-  }
-
-  public void setSeriality(Seriality seriality) {
-    this.seriality = seriality;
-  }
-
-  public void setOclcNumber(String oclcNumber) {
-    this.oclcNumber = oclcNumber;
-  }
-
-  public void setShelvingLocation(ShelvingLocation shelvingLocation) {
-    this.shelvingLocation = shelvingLocation;
-  }
-
-  public void setOpacShelvingLocationName(String shelf) {
-    this.opacShelvingLocationName = shelf;
-  }
-
-  public void setOclcLhrCode(String oclcLhrCode) {
-    this.oclcLhrCode = oclcLhrCode;
-  }
-
-  @Override
-  public int hashCode() {
-    int hash = 5;
-    hash = 61 * hash + Objects.hashCode(this.oclcNumber);
-    hash = 61 * hash + Objects.hashCode(this.carrier);
-    hash = 61 * hash + Objects.hashCode(this.circStatus);
-    hash = 61 * hash + Objects.hashCode(this.seriality);
-    hash = 61 * hash + Objects.hashCode(this.shelvingLocation);
-    hash = 61 * hash + Objects.hashCode(this.opacShelvingLocationName);
-    hash = 61 * hash + Objects.hashCode(this.callNumber);
-    hash = 61 * hash + Objects.hashCode(this.summaryHoldings);
-    hash = 61 * hash + Objects.hashCode(this.oclcLhrCode);
-    return hash;
   }
 
   @Override
@@ -246,6 +99,163 @@ public class Item {
       return false;
     }
     return true;
+  }
+
+  /**
+   * The call number of the item specified in the OPAC record.
+   */
+  public String getCallNumber() {
+    return callNumber;
+  }
+
+  /**
+   * Specified whether the item is physical or electronic.
+   *
+   */
+  public Carrier getCarrier() {
+    return carrier;
+  }
+
+  /**
+   *
+   * Values that specify whether the item is available to circulate.
+   *
+   */
+  public CircStatus getCircStatus() {
+    return circStatus;
+  }
+
+  public String getCopyNumber() {
+    return copyNumber;
+  }
+
+  /**
+   * The code for the the items local holdings record as specified by OCLC.
+   *
+   * If an LHR for the item exists, this value holds the LHR code as provided by
+   * OCLC. This value is used to look up the shelving location in the
+   * CDL-managed table.
+   *
+   */
+  public String getOclcLhrCode() {
+    return oclcLhrCode;
+  }
+  
+  public String getOclcNumber() {
+    return oclcNumber;
+  }
+
+  /**
+   * The name of the shelving location as known to OCLC WorldCat Local.
+   *
+   * This value is used to look up the shelving location in the CDL-managed
+   * table in the cases where there is no LHR for the item at OCLC.
+   *
+   * This value is the same as the display text for the location in WorldCat
+   * Local.
+   */
+  public String getOpacShelvingLocationName() {
+    return opacShelvingLocationName;
+  }
+
+  /**
+   * Specifies whether the item is published as a serial, or as a monograph.
+   */
+  public Seriality getSeriality() {
+    return seriality;
+  }
+
+  /**
+   * The shelving location where the item is held.
+   *
+   * This value is obtained from the CDL-managed location table. If the shelving
+   * location for the requested item cannot be found in the table, a default
+   * value will be provided in this field.
+   *
+   */
+  public ShelvingLocation getShelvingLocation() {
+    return shelvingLocation;
+  }
+
+  /**
+   * The summary holdings statement for a serial title.
+   *
+   * This value is built from fields in the LHR, and is only available if there
+   * is an LHR for the serial.
+   */
+  public String getSummaryHoldings() {
+    return summaryHoldings;
+  }
+
+  @Override
+  public int hashCode() {
+    int hash = 5;
+    hash = 61 * hash + Objects.hashCode(this.oclcNumber);
+    hash = 61 * hash + Objects.hashCode(this.carrier);
+    hash = 61 * hash + Objects.hashCode(this.circStatus);
+    hash = 61 * hash + Objects.hashCode(this.seriality);
+    hash = 61 * hash + Objects.hashCode(this.shelvingLocation);
+    hash = 61 * hash + Objects.hashCode(this.opacShelvingLocationName);
+    hash = 61 * hash + Objects.hashCode(this.callNumber);
+    hash = 61 * hash + Objects.hashCode(this.summaryHoldings);
+    hash = 61 * hash + Objects.hashCode(this.oclcLhrCode);
+    return hash;
+  }
+
+  public boolean isLocalUseOnly() {
+    return localUseOnly;
+  }
+
+  public Boolean isMassDigitizedContent() {
+    return massDigitizedContent;
+  }
+
+  public void setCallNumber(String callNumber) {
+    this.callNumber = callNumber;
+  }
+  
+  public void setCarrier(Carrier carrier) {
+    this.carrier = carrier;
+  }
+
+  public void setCircStatus(CircStatus circStatus) {
+    this.circStatus = circStatus;
+  }
+
+  public void setCopyNumber(String copyNumber) {
+    this.copyNumber = copyNumber;
+  }
+
+  public void setLocalUseOnly(boolean localUseOnly) {
+    this.localUseOnly = localUseOnly;
+  }
+
+  public void setMassDigitizedContent(Boolean massDigitizedContent) {
+    this.massDigitizedContent = massDigitizedContent;
+  }
+
+  public void setOclcLhrCode(String oclcLhrCode) {
+    this.oclcLhrCode = oclcLhrCode;
+  }
+
+  public void setOclcNumber(String oclcNumber) {
+    this.oclcNumber = oclcNumber;
+  }
+
+  public void setOpacShelvingLocationName(String shelf) {
+    this.opacShelvingLocationName = shelf;
+  }
+
+  public void setSeriality(Seriality seriality) {
+    this.seriality = seriality;
+  }
+
+  public void setShelvingLocation(ShelvingLocation shelvingLocation) {
+    this.shelvingLocation = shelvingLocation;
+  }
+
+  public void setSummaryHoldings(String summaryHoldings) {
+    this.summaryHoldings = summaryHoldings;
   }
 
   @Override
