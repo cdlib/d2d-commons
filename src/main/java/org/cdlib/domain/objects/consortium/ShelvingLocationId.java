@@ -1,11 +1,9 @@
 package org.cdlib.domain.objects.consortium;
 
-import java.util.Objects;
-
 public class ShelvingLocationId {
 
-    private OpacInstitution opac;
     private String matchValue;
+    private OpacInstitution opac;
 
     public ShelvingLocationId() {
     }
@@ -14,55 +12,62 @@ public class ShelvingLocationId {
         this.opac = opac;
         this.matchValue = name;
     }
+    
+    public ShelvingLocationId(OpacInstitution opac, String oclcHoldingsSymbol, String lhrCode) {
+      this.opac = opac;
+      this.matchValue = oclcHoldingsSymbol + "." + lhrCode;
+  }
 
-    public OpacInstitution getOpacCode() {
-        return opac;
-    }
-
-    public void setOpacCode(OpacInstitution opac) {
-        this.opac = opac;
+    @Override
+    public boolean equals(Object obj) {
+      if (this == obj)
+        return true;
+      if (obj == null)
+        return false;
+      if (getClass() != obj.getClass())
+        return false;
+      ShelvingLocationId other = (ShelvingLocationId) obj;
+      if (matchValue == null) {
+        if (other.matchValue != null)
+          return false;
+      } else if (!matchValue.equals(other.matchValue))
+        return false;
+      if (opac != other.opac)
+        return false;
+      return true;
     }
 
     public String getMatchValue() {
         return matchValue;
     }
 
-    public void setMatchValue(String matchValue) {
-        this.matchValue = matchValue;
+    public OpacInstitution getOpacCode() {
+        return opac;
     }
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 17 * hash + Objects.hashCode(this.opac);
-        hash = 17 * hash + Objects.hashCode(this.matchValue);
-        return hash;
+      final int prime = 31;
+      int result = 1;
+      result = prime * result + ((matchValue == null) ? 0 : matchValue.hashCode());
+      result = prime * result + ((opac == null) ? 0 : opac.hashCode());
+      return result;
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final ShelvingLocationId other = (ShelvingLocationId) obj;
-        if (!Objects.equals(this.matchValue, other.matchValue)) {
-            return false;
-        }
-        if (this.opac != other.opac) {
-            return false;
-        }
-        return true;
+    public void setMatchValue(String matchValue) {
+        this.matchValue = matchValue;
+    }
+
+    public void setOpacCode(OpacInstitution opac) {
+        this.opac = opac;
     }
 
     @Override
     public String toString() {
-        return "ShelvingLocationId{" + "opac=" + opac + ", name=" + matchValue + '}';
+      return "ShelvingLocationId [opac=" + opac + ", matchValue=" + matchValue + "]";
     }
+
+
+
 
 }
