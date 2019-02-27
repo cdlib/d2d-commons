@@ -1,6 +1,6 @@
 package org.cdlib.domain.objects.holdings;
 
-public enum NormalizedCircStatus {
+public enum CircAvailability {
   
   AVAILABLE,
   UNAVAILABLE,

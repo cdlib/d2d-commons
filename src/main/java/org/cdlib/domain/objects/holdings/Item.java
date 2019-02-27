@@ -1,9 +1,8 @@
 package org.cdlib.domain.objects.holdings;
 
-import org.cdlib.domain.objects.bib.Seriality;
-import java.util.Objects;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import org.cdlib.domain.objects.bib.Seriality;
 import org.cdlib.domain.objects.consortium.ShelvingLocation;
 
 /**
@@ -31,6 +30,8 @@ public class Item {
 
   private String oclcNumber;
 
+  private String opacOclcHoldingsSymbol;
+  
   private String opacShelvingLocationName;
 
   @NotNull(message = "Item seriality is required.")
@@ -39,20 +40,22 @@ public class Item {
   @NotNull(message = "Item shelving location is required.")
   @Valid
   private ShelvingLocation shelvingLocation;
-  
+
   private String summaryHoldings;
 
   public Item() {
   }
-
+  
   public Item(@Valid Item source) {
     this.oclcNumber = source.oclcNumber;
     this.carrier = source.carrier;
     this.circStatus = new CircStatus(source.circStatus);
     this.seriality = source.seriality;
     this.shelvingLocation = new ShelvingLocation(source.shelvingLocation);
+    this.opacOclcHoldingsSymbol = source.opacOclcHoldingsSymbol;
     this.opacShelvingLocationName = source.opacShelvingLocationName;
     this.callNumber = source.callNumber;
+    this.copyNumber = source.copyNumber;
     this.summaryHoldings = source.summaryHoldings;
     this.massDigitizedContent = source.massDigitizedContent;
     this.oclcLhrCode = source.oclcLhrCode;
@@ -61,45 +64,73 @@ public class Item {
 
   @Override
   public boolean equals(Object obj) {
-    if (this == obj) {
+    if (this == obj)
       return true;
-    }
-    if (obj == null) {
+    if (obj == null)
       return false;
-    }
-    if (getClass() != obj.getClass()) {
+    if (getClass() != obj.getClass())
       return false;
-    }
-    final Item other = (Item) obj;
-    if (!Objects.equals(this.oclcNumber, other.oclcNumber)) {
+    Item other = (Item) obj;
+    if (callNumber == null) {
+      if (other.callNumber != null)
+        return false;
+    } else if (!callNumber.equals(other.callNumber))
       return false;
-    }
-    if (!Objects.equals(this.opacShelvingLocationName, other.opacShelvingLocationName)) {
+    if (carrier != other.carrier)
       return false;
-    }
-    if (!Objects.equals(this.callNumber, other.callNumber)) {
+    if (circStatus == null) {
+      if (other.circStatus != null)
+        return false;
+    } else if (!circStatus.equals(other.circStatus))
       return false;
-    }
-    if (!Objects.equals(this.summaryHoldings, other.summaryHoldings)) {
+    if (copyNumber == null) {
+      if (other.copyNumber != null)
+        return false;
+    } else if (!copyNumber.equals(other.copyNumber))
       return false;
-    }
-    if (!Objects.equals(this.oclcLhrCode, other.oclcLhrCode)) {
+    if (localUseOnly != other.localUseOnly)
       return false;
-    }
-    if (this.carrier != other.carrier) {
+    if (massDigitizedContent == null) {
+      if (other.massDigitizedContent != null)
+        return false;
+    } else if (!massDigitizedContent.equals(other.massDigitizedContent))
       return false;
-    }
-    if (!Objects.equals(this.circStatus, other.circStatus)) {
+    if (oclcLhrCode == null) {
+      if (other.oclcLhrCode != null)
+        return false;
+    } else if (!oclcLhrCode.equals(other.oclcLhrCode))
       return false;
-    }
-    if (this.seriality != other.seriality) {
+    if (oclcNumber == null) {
+      if (other.oclcNumber != null)
+        return false;
+    } else if (!oclcNumber.equals(other.oclcNumber))
       return false;
-    }
-    if (!Objects.equals(this.shelvingLocation, other.shelvingLocation)) {
+    if (opacOclcHoldingsSymbol == null) {
+      if (other.opacOclcHoldingsSymbol != null)
+        return false;
+    } else if (!opacOclcHoldingsSymbol.equals(other.opacOclcHoldingsSymbol))
       return false;
-    }
+    if (opacShelvingLocationName == null) {
+      if (other.opacShelvingLocationName != null)
+        return false;
+    } else if (!opacShelvingLocationName.equals(other.opacShelvingLocationName))
+      return false;
+    if (seriality != other.seriality)
+      return false;
+    if (shelvingLocation == null) {
+      if (other.shelvingLocation != null)
+        return false;
+    } else if (!shelvingLocation.equals(other.shelvingLocation))
+      return false;
+    if (summaryHoldings == null) {
+      if (other.summaryHoldings != null)
+        return false;
+    } else if (!summaryHoldings.equals(other.summaryHoldings))
+      return false;
     return true;
   }
+
+
 
   /**
    * The call number of the item specified in the OPAC record.
@@ -140,9 +171,13 @@ public class Item {
   public String getOclcLhrCode() {
     return oclcLhrCode;
   }
-  
+
   public String getOclcNumber() {
     return oclcNumber;
+  }
+
+  public String getOpacOclcHoldingsSymbol() {
+    return opacOclcHoldingsSymbol;
   }
 
   /**
@@ -157,7 +192,7 @@ public class Item {
   public String getOpacShelvingLocationName() {
     return opacShelvingLocationName;
   }
-
+  
   /**
    * Specifies whether the item is published as a serial, or as a monograph.
    */
@@ -189,17 +224,25 @@ public class Item {
 
   @Override
   public int hashCode() {
-    int hash = 5;
-    hash = 61 * hash + Objects.hashCode(this.oclcNumber);
-    hash = 61 * hash + Objects.hashCode(this.carrier);
-    hash = 61 * hash + Objects.hashCode(this.circStatus);
-    hash = 61 * hash + Objects.hashCode(this.seriality);
-    hash = 61 * hash + Objects.hashCode(this.shelvingLocation);
-    hash = 61 * hash + Objects.hashCode(this.opacShelvingLocationName);
-    hash = 61 * hash + Objects.hashCode(this.callNumber);
-    hash = 61 * hash + Objects.hashCode(this.summaryHoldings);
-    hash = 61 * hash + Objects.hashCode(this.oclcLhrCode);
-    return hash;
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + ((callNumber == null) ? 0 : callNumber.hashCode());
+    result = prime * result + ((carrier == null) ? 0 : carrier.hashCode());
+    result = prime * result + ((circStatus == null) ? 0 : circStatus.hashCode());
+    result = prime * result + ((copyNumber == null) ? 0 : copyNumber.hashCode());
+    result = prime * result + (localUseOnly ? 1231 : 1237);
+    result =
+        prime * result + ((massDigitizedContent == null) ? 0 : massDigitizedContent.hashCode());
+    result = prime * result + ((oclcLhrCode == null) ? 0 : oclcLhrCode.hashCode());
+    result = prime * result + ((oclcNumber == null) ? 0 : oclcNumber.hashCode());
+    result =
+        prime * result + ((opacOclcHoldingsSymbol == null) ? 0 : opacOclcHoldingsSymbol.hashCode());
+    result = prime * result
+        + ((opacShelvingLocationName == null) ? 0 : opacShelvingLocationName.hashCode());
+    result = prime * result + ((seriality == null) ? 0 : seriality.hashCode());
+    result = prime * result + ((shelvingLocation == null) ? 0 : shelvingLocation.hashCode());
+    result = prime * result + ((summaryHoldings == null) ? 0 : summaryHoldings.hashCode());
+    return result;
   }
 
   public boolean isLocalUseOnly() {
@@ -213,11 +256,11 @@ public class Item {
   public void setCallNumber(String callNumber) {
     this.callNumber = callNumber;
   }
-  
+
   public void setCarrier(Carrier carrier) {
     this.carrier = carrier;
   }
-
+  
   public void setCircStatus(CircStatus circStatus) {
     this.circStatus = circStatus;
   }
@@ -242,6 +285,10 @@ public class Item {
     this.oclcNumber = oclcNumber;
   }
 
+  public void setOpacOclcHoldingsSymbol(String opacOclcHoldingsSymbol) {
+    this.opacOclcHoldingsSymbol = opacOclcHoldingsSymbol;
+  }
+
   public void setOpacShelvingLocationName(String shelf) {
     this.opacShelvingLocationName = shelf;
   }
@@ -260,35 +307,15 @@ public class Item {
 
   @Override
   public String toString() {
-    StringBuilder sb = new StringBuilder();
-
-    append(sb, "oclcNumber", oclcNumber);
-    append(sb, "carrier", carrier);
-    append(sb, "circStatus", circStatus);
-    append(sb, "seriality", seriality);
-    append(sb, "shelvingLocation", shelvingLocation);
-    append(sb, "opacShelvingLocationName", opacShelvingLocationName);
-    append(sb, "oclcLhrCode", oclcLhrCode);
-    append(sb, "callNumber", callNumber);
-    append(sb, "summaryHoldings", summaryHoldings);
-    append(sb, "massDigitizedContent", massDigitizedContent);
-
-    return "Item{" + sb.toString() + '}';
-
+    return "Item [callNumber=" + callNumber + ", carrier=" + carrier + ", circStatus=" + circStatus
+        + ", copyNumber=" + copyNumber + ", localUseOnly=" + localUseOnly
+        + ", massDigitizedContent=" + massDigitizedContent + ", oclcLhrCode=" + oclcLhrCode
+        + ", oclcNumber=" + oclcNumber + ", opacOclcHoldingsSymbol=" + opacOclcHoldingsSymbol
+        + ", opacShelvingLocationName=" + opacShelvingLocationName + ", seriality=" + seriality
+        + ", shelvingLocation=" + shelvingLocation + ", summaryHoldings=" + summaryHoldings + "]";
   }
+  
+  
 
-  private StringBuilder append(StringBuilder sb, String label, Object var) {
-    if (var == null) {
-      return sb;
-    }
-    String varString = var.toString();
-    if (varString.isEmpty()) {
-      return sb;
-    }
-    if (sb.length() != 0) {
-      sb.append(", ");
-    }
-    sb.append(label).append("=").append(varString);
-    return sb;
-  }
+
 }

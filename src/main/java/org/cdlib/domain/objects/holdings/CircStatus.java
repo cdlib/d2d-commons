@@ -1,75 +1,87 @@
 package org.cdlib.domain.objects.holdings;
 
-import java.util.Objects;
 import javax.validation.constraints.NotNull;
 
 public class CircStatus {
 
     private String localCirculationStatus;
     @NotNull(message = "Normalized circulation status is required.")
-    private NormalizedCircStatus normalizedCircStatus;
+    private CircAvailability localAvailability;
+    private CircAvailability iLLAvailability;
 
     public CircStatus() {
     }
 
     public CircStatus(CircStatus source) {
         this.localCirculationStatus = source.localCirculationStatus;
-        this.normalizedCircStatus = source.normalizedCircStatus;
+        this.localAvailability = source.localAvailability;
     }
 
-    public CircStatus(String localCirculationStatus, NormalizedCircStatus normalizedCircStatus) {
+    public CircStatus(String localCirculationStatus, CircAvailability normalizedCircStatus) {
         this.localCirculationStatus = localCirculationStatus;
-        this.normalizedCircStatus = normalizedCircStatus;
+        this.localAvailability = normalizedCircStatus;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+      if (this == obj)
+        return true;
+      if (obj == null)
+        return false;
+      if (getClass() != obj.getClass())
+        return false;
+      CircStatus other = (CircStatus) obj;
+      if (iLLAvailability != other.iLLAvailability)
+        return false;
+      if (localAvailability != other.localAvailability)
+        return false;
+      if (localCirculationStatus == null) {
+        if (other.localCirculationStatus != null)
+          return false;
+      } else if (!localCirculationStatus.equals(other.localCirculationStatus))
+        return false;
+      return true;
+    }
+
+    public CircAvailability getiLLAvailability() {
+      return iLLAvailability;
+    }
+
+    public CircAvailability getLocalAvailability() {
+        return localAvailability;
     }
 
     public String getLocalCirculationStatus() {
         return localCirculationStatus;
     }
 
+    @Override
+    public int hashCode() {
+      final int prime = 31;
+      int result = 1;
+      result = prime * result + ((iLLAvailability == null) ? 0 : iLLAvailability.hashCode());
+      result = prime * result + ((localAvailability == null) ? 0 : localAvailability.hashCode());
+      result = prime * result
+          + ((localCirculationStatus == null) ? 0 : localCirculationStatus.hashCode());
+      return result;
+    }
+
+    public void setiLLAvailability(CircAvailability iLLAvailability) {
+      this.iLLAvailability = iLLAvailability;
+    }
+
+    public void setLocalAvailability(CircAvailability normalizedCircStatus) {
+        this.localAvailability = normalizedCircStatus;
+    }
+
     public void setLocalCirculationStatus(String localCirculationStatus) {
         this.localCirculationStatus = localCirculationStatus;
     }
 
-    public NormalizedCircStatus getNormalizedCircStatus() {
-        return normalizedCircStatus;
-    }
-
-    public void setNormalizedCircStatus(NormalizedCircStatus normalizedCircStatus) {
-        this.normalizedCircStatus = normalizedCircStatus;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 23 * hash + Objects.hashCode(this.localCirculationStatus);
-        hash = 23 * hash + Objects.hashCode(this.normalizedCircStatus);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final CircStatus other = (CircStatus) obj;
-        if (!Objects.equals(this.localCirculationStatus, other.localCirculationStatus)) {
-            return false;
-        }
-        if (this.normalizedCircStatus != other.normalizedCircStatus) {
-            return false;
-        }
-        return true;
-    }
-
     @Override
     public String toString() {
-        return "CircStatus{" + "localCirculationStatus=" + localCirculationStatus + ", normalizedCircStatus=" + normalizedCircStatus + '}';
+      return "CircStatus [localCirculationStatus=" + localCirculationStatus + ", localAvailability="
+          + localAvailability + ", iLLAvailability=" + iLLAvailability + "]";
     }
 
 }
