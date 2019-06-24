@@ -152,7 +152,8 @@ public final class DateUtil {
     return "";
   }
 
-  private static final int LBOUND = 1454;
+  public static final int GUTTENBERG_YEAR = 1454;
+  private static final int LBOUND = GUTTENBERG_YEAR;
   private static final int UBOUND = Integer.valueOf(nextYear());
 
   /**
