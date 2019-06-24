@@ -152,7 +152,7 @@ public final class DateUtil {
     return "";
   }
 
-  private static final int LBOUND = 1650;
+  private static final int LBOUND = 1454;
   private static final int UBOUND = Integer.valueOf(nextYear());
 
   /**

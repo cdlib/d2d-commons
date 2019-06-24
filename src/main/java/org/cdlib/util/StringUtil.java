@@ -2,18 +2,6 @@ package org.cdlib.util;
 
 import java.util.*;
 
-// Modifications: 03/20/20 - Added compress(String). (MJT)
-//	5/27/02 - Added xClean. -EEE
-//	10/08/02 - Added 2F to xClean. -EEE
-//	05/02/03 - Added toVDXDate. -EEE
-//  08/13/03 - Added blankout. (MJT)
-//	11/17/03 - Added hasSpecialChars. (MJT)
-//	11/18/04 - Straightend out the handling of bad parms for a number of methods,
-//			   Added READABLE string and blackoutAllBut method,
-//			   Fixed return value in left and right when exception occurs. (MJT)
-//  11/29/05 - Added unescape. (MJT)
-//  11/14/06 - Fixed blankoutAllBut to handle multiple blanks correctly. (MJT)
-//  11/26/08 - Added dateInterval. (MJT) 
 public class StringUtil {
 
   private StringUtil() {
