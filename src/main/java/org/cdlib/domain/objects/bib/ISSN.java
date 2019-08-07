@@ -1,71 +1,87 @@
 package org.cdlib.domain.objects.bib;
 
 import java.util.List;
-import java.util.Objects;
+import org.cdlib.util.JSON;
 
 /**
- * Represents an ISSN identifier.
+ * 
+ * Represents the ISSN identifiers associated with a bibliographic resource.
+ * 
  */
-public class ISSN implements Identifier {
+public class ISSN {
 
-  private String value;
-  private List<String> formerValues;
+  private List<String> precedingValues;
+  private List<String> succeedingValues;
+  private List<String> values;
   
-  public ISSN() {
+  public List<String> getPrecedingValues() {
+    return precedingValues;
   }
-
-  public ISSN(String value) {
-    this.value = value;
+  
+  public List<String> getSucceedingValues() {
+    return succeedingValues;
   }
-
+  
   public String getValue() {
-    return value;
+    return values.get(0);
+  }
+  
+  public List<String> getValues() {
+    return values;
+  }
+  
+  public void setPrecedingValues(List<String> precedingValues) {
+    this.precedingValues = precedingValues;
   }
 
-  public void setValue(String value) {
-    this.value = value;
+  public void setSucceedingValues(List<String> succeedingValues) {
+    this.succeedingValues = succeedingValues;
   }
 
-  public List<String> getFormerValues() {
-    return formerValues;
-  }
-
-  public void setFormerValues(List<String> formerValues) {
-    this.formerValues = formerValues;
+  public void setValues(List<String> values) {
+    this.values = values;
   }
 
   @Override
   public int hashCode() {
-    int hash = 7;
-    hash = 23 * hash + Objects.hashCode(this.value);
-    hash = 23 * hash + Objects.hashCode(this.formerValues);
-    return hash;
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + ((precedingValues == null) ? 0 : precedingValues.hashCode());
+    result = prime * result + ((succeedingValues == null) ? 0 : succeedingValues.hashCode());
+    result = prime * result + ((values == null) ? 0 : values.hashCode());
+    return result;
   }
 
   @Override
   public boolean equals(Object obj) {
-    if (this == obj) {
+    if (this == obj)
       return true;
-    }
-    if (obj == null) {
+    if (obj == null)
       return false;
-    }
-    if (getClass() != obj.getClass()) {
+    if (getClass() != obj.getClass())
       return false;
-    }
-    final ISSN other = (ISSN) obj;
-    if (!Objects.equals(this.value, other.value)) {
+    ISSN other = (ISSN) obj;
+    if (precedingValues == null) {
+      if (other.precedingValues != null)
+        return false;
+    } else if (!precedingValues.equals(other.precedingValues))
       return false;
-    }
-    if (!Objects.equals(this.formerValues, other.formerValues)) {
+    if (succeedingValues == null) {
+      if (other.succeedingValues != null)
+        return false;
+    } else if (!succeedingValues.equals(other.succeedingValues))
       return false;
-    }
+    if (values == null) {
+      if (other.values != null)
+        return false;
+    } else if (!values.equals(other.values))
+      return false;
     return true;
   }
-
+  
   @Override
   public String toString() {
-    return "ISSN{" + "value=" + value + ", formerValues=" + formerValues + '}';
+    return JSON.serialize(this);
   }
 
 }

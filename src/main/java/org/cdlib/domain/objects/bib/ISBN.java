@@ -1,70 +1,55 @@
 package org.cdlib.domain.objects.bib;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
+import org.cdlib.util.JSON;
 
-public class ISBN implements Identifier {
+public class ISBN {
 
-  private String value;
-  private List<String> formerValues;
+  private List<String> values = new ArrayList<String>();
   
-  public ISBN() {
-  }
-
-  public ISBN(String value) {
-    this.value = value;
-  }
-
-  @Override
   public String getValue() {
-    return value;
+    return values.get(0);
   }
 
-  public void setValue(String value) {
-    this.value = value;
+  public List<String> getValues() {
+    return values;
   }
 
-  @Override
-  public List<String> getFormerValues() {
-    return formerValues;
-  }
-
-  public void setFormerValues(List<String> formerValues) {
-    this.formerValues = formerValues;
+  public void setValues(List<String> values) {
+    this.values = values;
   }
 
   @Override
   public int hashCode() {
-    int hash = 7;
-    hash = 23 * hash + Objects.hashCode(this.value);
-    hash = 23 * hash + Objects.hashCode(this.formerValues);
-    return hash;
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + ((values == null) ? 0 : values.hashCode());
+    return result;
   }
 
   @Override
   public boolean equals(Object obj) {
-    if (this == obj) {
+    if (this == obj)
       return true;
-    }
-    if (obj == null) {
+    if (obj == null)
       return false;
-    }
-    if (getClass() != obj.getClass()) {
+    if (getClass() != obj.getClass())
       return false;
-    }
-    final ISBN other = (ISBN) obj;
-    if (!Objects.equals(this.value, other.value)) {
+    ISBN other = (ISBN) obj;
+    if (values == null) {
+      if (other.values != null)
+        return false;
+    } else if (!values.equals(other.values))
       return false;
-    }
-    if (!Objects.equals(this.formerValues, other.formerValues)) {
-      return false;
-    }
     return true;
   }
 
   @Override
   public String toString() {
-    return "ISSN{" + "value=" + value + ", formerValues=" + formerValues + '}';
+    return JSON.serialize(this);
   }
+  
+  
 
 }
