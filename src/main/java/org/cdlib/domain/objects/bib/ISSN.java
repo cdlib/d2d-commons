@@ -1,6 +1,8 @@
 package org.cdlib.domain.objects.bib;
 
+import java.util.ArrayList;
 import java.util.List;
+import org.cdlib.util.CollectionUtil;
 import org.cdlib.util.JSON;
 
 /**
@@ -10,16 +12,22 @@ import org.cdlib.util.JSON;
  */
 public class ISSN {
 
-  private List<String> precedingValues;
-  private List<String> succeedingValues;
-  private List<String> values;
+  private List<String> precedingValues = new ArrayList<String>();
+  private List<String> succeedingValues = new ArrayList<String>();
+  private List<String> values = new ArrayList<String>();
+  
+  public ISSN() {}
+  
+  public ISSN(String value) {
+    values.add(value);
+  }
   
   public List<String> getPrecedingValues() {
-    return precedingValues;
+    return CollectionUtil.dedupedList(precedingValues);
   }
   
   public List<String> getSucceedingValues() {
-    return succeedingValues;
+    return CollectionUtil.dedupedList(succeedingValues);
   }
   
   public String getValue() {
@@ -27,7 +35,7 @@ public class ISSN {
   }
   
   public List<String> getValues() {
-    return values;
+    return CollectionUtil.dedupedList(values);
   }
   
   public void setPrecedingValues(List<String> precedingValues) {

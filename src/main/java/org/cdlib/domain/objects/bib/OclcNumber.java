@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import org.cdlib.domain.constraints.OCLCNumber;
+import org.cdlib.util.CollectionUtil;
 
 public class OclcNumber {
 
@@ -28,7 +29,7 @@ public class OclcNumber {
   }
 
   public List<String> getFormerValues() {
-    return formerValues;
+    return CollectionUtil.dedupedList(formerValues);
   }
 
   public void setFormerValues(List<String> formerValues) {

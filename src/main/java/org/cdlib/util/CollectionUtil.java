@@ -4,9 +4,11 @@
  */
 package org.cdlib.util;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -135,11 +137,26 @@ public class CollectionUtil {
      * Returns a Set based on varargs set members
      */
     public static <T> Set<T> makeSet(T... members) {
-      Set hs =  new HashSet<T>();
+      Set<T> hs =  new HashSet<T>();
       for (T member : members) {
         hs.add(member);
       }
       return hs;
+    }
+    
+    /** 
+     * 
+     * @param list that has possible duplicate values
+     * @return a deduplicated list
+     */
+    public static <T> List<T> dedupedList(List<T> list) {
+      List<T> deduped = new ArrayList<>();
+      for (T o : list) {
+        if (!deduped.contains(o)) {
+          deduped.add(o);
+        }
+      }
+      return deduped;
     }
 
 }

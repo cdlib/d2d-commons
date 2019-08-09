@@ -2,18 +2,28 @@ package org.cdlib.domain.objects.bib;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.cdlib.util.CollectionUtil;
 import org.cdlib.util.JSON;
 
 public class ISBN {
 
   private List<String> values = new ArrayList<String>();
   
+  public ISBN() {}
+  
+  public ISBN(String value) {
+    values.add(value);
+  }
+  
   public String getValue() {
+    if (values == null || values.isEmpty()) {
+      return null;
+    }
     return values.get(0);
   }
 
   public List<String> getValues() {
-    return values;
+    return CollectionUtil.dedupedList(values);
   }
 
   public void setValues(List<String> values) {
