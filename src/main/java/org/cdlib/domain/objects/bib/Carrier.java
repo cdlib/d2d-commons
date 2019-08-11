@@ -1,4 +1,4 @@
-package org.cdlib.domain.objects.holdings;
+package org.cdlib.domain.objects.bib;
 
 
 public enum Carrier {

@@ -2,6 +2,7 @@ package org.cdlib.domain.objects.bib;
 
 import java.util.Objects;
 import javax.validation.constraints.NotNull;
+import org.cdlib.util.JSON;
 
 /**
  * Bibliographic data about an item that is requested.
@@ -28,7 +29,7 @@ public class Bib {
     private RecordType recordType;
     @NotNull(message = "Seriality is required.")
     private Seriality seriality;
-    private MultipartResourceRecordLevel multipartLevel;
+    private Carrier carrier;
 
     public Bib() {
     }
@@ -48,7 +49,7 @@ public class Bib {
         this.ericIdentifier = source.ericIdentifier;
         this.recordType = source.recordType;
         this.seriality = source.seriality;
-        this.multipartLevel = source.multipartLevel;
+        this.carrier = source.carrier;
     }
 
     public Bib(OclcNumber oclcNumber) {
@@ -69,6 +70,14 @@ public class Bib {
 
     public void setAuthorName(String authorName) {
         this.authorName = authorName;
+    }
+    
+    public Carrier getCarrier() {
+      return carrier;
+    }
+    
+    public void setCarrier(Carrier carrier) {
+      this.carrier = carrier;
     }
 
     public String getTitle() {
@@ -167,131 +176,109 @@ public class Bib {
         this.seriality = seriality;
     }
 
-    public MultipartResourceRecordLevel getMultipartLevel() {
-        return multipartLevel;
-    }
-
-    public void setMultipartLevel(MultipartResourceRecordLevel multipartLevel) {
-        this.multipartLevel = multipartLevel;
-    }
-
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 61 * hash + Objects.hashCode(this.oclcNumber);
-        hash = 61 * hash + Objects.hashCode(this.authorName);
-        hash = 61 * hash + Objects.hashCode(this.title);
-        hash = 61 * hash + Objects.hashCode(this.publisher);
-        hash = 61 * hash + Objects.hashCode(this.placeOfPublication);
-        hash = 61 * hash + Objects.hashCode(this.publicationDate);
-        hash = 61 * hash + Objects.hashCode(this.issn);
-        hash = 61 * hash + Objects.hashCode(this.isbn);
-        hash = 61 * hash + Objects.hashCode(this.edition);
-        hash = 61 * hash + Objects.hashCode(this.corporateAuthor);
-        hash = 61 * hash + Objects.hashCode(this.dissertationNumber);
-        hash = 61 * hash + Objects.hashCode(this.ericIdentifier);
-        hash = 61 * hash + Objects.hashCode(this.recordType);
-        hash = 61 * hash + Objects.hashCode(this.seriality);
-        hash = 61 * hash + Objects.hashCode(this.multipartLevel);
-        return hash;
+      final int prime = 31;
+      int result = 1;
+      result = prime * result + ((authorName == null) ? 0 : authorName.hashCode());
+      result = prime * result + ((carrier == null) ? 0 : carrier.hashCode());
+      result = prime * result + ((corporateAuthor == null) ? 0 : corporateAuthor.hashCode());
+      result = prime * result + ((dissertationNumber == null) ? 0 : dissertationNumber.hashCode());
+      result = prime * result + ((edition == null) ? 0 : edition.hashCode());
+      result = prime * result + ((ericIdentifier == null) ? 0 : ericIdentifier.hashCode());
+      result = prime * result + ((isbn == null) ? 0 : isbn.hashCode());
+      result = prime * result + ((issn == null) ? 0 : issn.hashCode());
+      result = prime * result + ((oclcNumber == null) ? 0 : oclcNumber.hashCode());
+      result = prime * result + ((placeOfPublication == null) ? 0 : placeOfPublication.hashCode());
+      result = prime * result + ((publicationDate == null) ? 0 : publicationDate.hashCode());
+      result = prime * result + ((publisher == null) ? 0 : publisher.hashCode());
+      result = prime * result + ((recordType == null) ? 0 : recordType.hashCode());
+      result = prime * result + ((seriality == null) ? 0 : seriality.hashCode());
+      result = prime * result + ((title == null) ? 0 : title.hashCode());
+      return result;
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Bib other = (Bib) obj;
-        if (!Objects.equals(this.oclcNumber, other.oclcNumber)) {
-            return false;
-        }
-        if (!Objects.equals(this.authorName, other.authorName)) {
-            return false;
-        }
-        if (!Objects.equals(this.title, other.title)) {
-            return false;
-        }
-        if (!Objects.equals(this.publisher, other.publisher)) {
-            return false;
-        }
-        if (!Objects.equals(this.placeOfPublication, other.placeOfPublication)) {
-            return false;
-        }
-        if (!Objects.equals(this.publicationDate, other.publicationDate)) {
-            return false;
-        }
-        if (!Objects.equals(this.issn, other.issn)) {
-            return false;
-        }
-        if (!Objects.equals(this.isbn, other.isbn)) {
-            return false;
-        }
-        if (!Objects.equals(this.edition, other.edition)) {
-            return false;
-        }
-        if (!Objects.equals(this.corporateAuthor, other.corporateAuthor)) {
-            return false;
-        }
-        if (!Objects.equals(this.dissertationNumber, other.dissertationNumber)) {
-            return false;
-        }
-        if (!Objects.equals(this.ericIdentifier, other.ericIdentifier)) {
-            return false;
-        }
-        if (this.recordType != other.recordType) {
-            return false;
-        }
-        if (this.seriality != other.seriality) {
-            return false;
-        }
-        if (this.multipartLevel != other.multipartLevel) {
-            return false;
-        }
+      if (this == obj)
         return true;
+      if (obj == null)
+        return false;
+      if (getClass() != obj.getClass())
+        return false;
+      Bib other = (Bib) obj;
+      if (authorName == null) {
+        if (other.authorName != null)
+          return false;
+      } else if (!authorName.equals(other.authorName))
+        return false;
+      if (carrier != other.carrier)
+        return false;
+      if (corporateAuthor == null) {
+        if (other.corporateAuthor != null)
+          return false;
+      } else if (!corporateAuthor.equals(other.corporateAuthor))
+        return false;
+      if (dissertationNumber == null) {
+        if (other.dissertationNumber != null)
+          return false;
+      } else if (!dissertationNumber.equals(other.dissertationNumber))
+        return false;
+      if (edition == null) {
+        if (other.edition != null)
+          return false;
+      } else if (!edition.equals(other.edition))
+        return false;
+      if (ericIdentifier == null) {
+        if (other.ericIdentifier != null)
+          return false;
+      } else if (!ericIdentifier.equals(other.ericIdentifier))
+        return false;
+      if (isbn == null) {
+        if (other.isbn != null)
+          return false;
+      } else if (!isbn.equals(other.isbn))
+        return false;
+      if (issn == null) {
+        if (other.issn != null)
+          return false;
+      } else if (!issn.equals(other.issn))
+        return false;
+      if (oclcNumber == null) {
+        if (other.oclcNumber != null)
+          return false;
+      } else if (!oclcNumber.equals(other.oclcNumber))
+        return false;
+      if (placeOfPublication == null) {
+        if (other.placeOfPublication != null)
+          return false;
+      } else if (!placeOfPublication.equals(other.placeOfPublication))
+        return false;
+      if (publicationDate == null) {
+        if (other.publicationDate != null)
+          return false;
+      } else if (!publicationDate.equals(other.publicationDate))
+        return false;
+      if (publisher == null) {
+        if (other.publisher != null)
+          return false;
+      } else if (!publisher.equals(other.publisher))
+        return false;
+      if (recordType != other.recordType)
+        return false;
+      if (seriality != other.seriality)
+        return false;
+      if (title == null) {
+        if (other.title != null)
+          return false;
+      } else if (!title.equals(other.title))
+        return false;
+      return true;
     }
-
+    
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-
-        append(sb, "oclcNumber", oclcNumber);
-        append(sb, "authorName", authorName);
-        append(sb, "title", title);
-        append(sb, "publisher", publisher);
-        append(sb, "placeOfPublication", placeOfPublication);
-        append(sb, "publicationDate", publicationDate);
-        append(sb, "issn", issn);
-        append(sb, "isbn", isbn);
-        append(sb, "edition", edition);
-        append(sb, "corporateAuthor", corporateAuthor);
-        append(sb, "dissertationNumber", dissertationNumber);
-        append(sb, "ericIdentifier", ericIdentifier);
-        append(sb, "recordType", recordType);
-        append(sb, "seriality", seriality);
-        append(sb, "multipartLevel", getMultipartLevel());
-
-        return "Bib{" + sb.toString() + '}';
-
+      return JSON.serialize(this);
     }
 
-    private StringBuilder append(StringBuilder sb, String label, Object var) {
-        if (var == null) {
-            return sb;
-        }
-        String varString = var.toString();
-        if (varString.isEmpty()) {
-            return sb;
-        }
-        if (sb.length() != 0) {
-            sb.append(", ");
-        }
-        sb.append(label).append("=").append(varString);
-        return sb;
-    }
 }

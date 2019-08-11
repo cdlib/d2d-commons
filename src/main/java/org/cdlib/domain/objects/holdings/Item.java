@@ -2,6 +2,7 @@ package org.cdlib.domain.objects.holdings;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import org.cdlib.domain.objects.bib.Carrier;
 import org.cdlib.domain.objects.bib.Seriality;
 import org.cdlib.domain.objects.consortium.ShelvingLocation;
 

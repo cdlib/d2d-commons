@@ -31,6 +31,9 @@ public class ISSN {
   }
   
   public String getValue() {
+    if (values.isEmpty()) {
+      return null;
+    }
     return values.get(0);
   }
   
