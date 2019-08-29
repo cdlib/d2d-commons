@@ -12,7 +12,6 @@ public class MailServiceImpl implements MailService {
     private JavaMailSender mailSender;
     private static final Logger LOGGER = LogManager.getLogger(MailServiceImpl.class);
 
-    // @Autowired
     public void setMailSender(JavaMailSender mailSender) {
         this.mailSender = mailSender;
     }
