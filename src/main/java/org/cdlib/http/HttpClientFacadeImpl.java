@@ -80,7 +80,7 @@ public class HttpClientFacadeImpl implements HttpClientFacade {
       throw new WebException(e.getMessage(), e, 500);
     } catch (ParseException e) {
       LOGGER.error("While getting url " + url + " error: " + e.toString());
-      throw new WebException(e.getMessage(), e, 422);
+      throw new WebException(e.getMessage(), e, 400);
     }
     return result;
 

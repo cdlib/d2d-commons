@@ -2,6 +2,8 @@ package org.cdlib.domain.objects.bib;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import org.cdlib.util.CollectionUtil;
 import org.cdlib.util.JSON;
 
@@ -10,7 +12,7 @@ import org.cdlib.util.JSON;
  * Represents the ISSN identifiers associated with a bibliographic resource.
  * 
  */
-public class ISSN {
+public class ISSN implements Identifier {
 
   private List<String> precedingValues = new ArrayList<String>();
   private List<String> succeedingValues = new ArrayList<String>();
@@ -22,14 +24,18 @@ public class ISSN {
     values.add(value);
   }
   
+  @NotNull
   public List<String> getPrecedingValues() {
     return CollectionUtil.dedupedList(precedingValues);
   }
   
+  @NotNull
   public List<String> getSucceedingValues() {
     return CollectionUtil.dedupedList(succeedingValues);
   }
   
+  @NotNull
+  @NotEmpty
   public String getValue() {
     if (values.isEmpty()) {
       return null;
@@ -37,6 +43,7 @@ public class ISSN {
     return values.get(0);
   }
   
+  @NotNull
   public List<String> getValues() {
     return CollectionUtil.dedupedList(values);
   }
