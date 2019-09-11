@@ -1,5 +1,7 @@
 package org.cdlib.domain.objects.bib;
 
+import org.cdlib.util.JSON;
+
 public class Title {
 
     private String canonical; //245
@@ -39,4 +41,41 @@ public class Title {
         this.uniform = uniform;
     }
     
+    @Override
+    public boolean equals(Object obj) {
+      if (this == obj)
+        return true;
+      if (obj == null)
+        return false;
+      if (getClass() != obj.getClass())
+        return false;
+      Title other = (Title) obj;
+      if (canonical == null) {
+        if (other.canonical != null)
+          return false;
+      } else if (!canonical.equals(other.canonical))
+        return false;
+      if (abbr == null) {
+        if (other.abbr != null)
+          return false;
+      } else if (!abbr.equals(other.abbr))
+        return false;
+      if (key == null) {
+        if (other.key != null)
+          return false;
+      } else if (!key.equals(other.key))
+        return false;
+      if (uniform == null) {
+        if (other.uniform != null)
+          return false;
+      } else if (!uniform.equals(other.uniform))
+        return false;
+      return true;
+    }
+    
+    @Override
+    public String toString() {
+      return JSON.serialize(this);
+    }
+
 }
