@@ -1,8 +1,8 @@
 package org.cdlib.domain.objects.bib;
 
 import java.net.URL;
-import java.util.Objects;
 import javax.validation.constraints.NotNull;
+import org.cdlib.domain.objects.meta.ResourceMeta;
 import org.cdlib.util.JSON;
 
 /**
@@ -15,6 +15,7 @@ public class Bib {
 
     private OclcNumber oclcNumber;
     private String authorName;
+    
     @NotNull(message = "Title is required.")
     private Title title;
     private String publisher;
@@ -30,8 +31,10 @@ public class Bib {
     private String language;
     private String govDocNumber; 
     private String lccn;
+    private ResourceMeta resourceMeta;
     @NotNull(message = "RecordType is required.")
     private RecordType recordType;
+    
     @NotNull(message = "Seriality is required.")
     private Seriality seriality;
     private Carrier carrier;
@@ -59,6 +62,7 @@ public class Bib {
         this.recordType = source.recordType;
         this.seriality = source.seriality;
         this.carrier = source.carrier;
+        this.resourceMeta = source.resourceMeta;
     }
 
     public Bib(OclcNumber oclcNumber) {
@@ -204,19 +208,27 @@ public class Bib {
     public RecordType getRecordType() {
         return recordType;
     }
+    
+    public void setRecordType(RecordType recordType) {
+      this.recordType = recordType;
+  }
+    
+    public ResourceMeta getResourceMeta() {
+      return resourceMeta;
+    }
+    
+    public void setResorceMeta(ResourceMeta resourceMeta) {
+      this.resourceMeta = resourceMeta;
+    }
 
     public Seriality getSeriality() {
         return seriality;
     }
 
-    public void setRecordType(RecordType recordType) {
-        this.recordType = recordType;
-    }
-
     public void setSeriality(Seriality seriality) {
         this.seriality = seriality;
     }
-
+    
     @Override
     public int hashCode() {
       final int prime = 31;
@@ -234,6 +246,7 @@ public class Bib {
       result = prime * result + ((publicationDate == null) ? 0 : publicationDate.hashCode());
       result = prime * result + ((publisher == null) ? 0 : publisher.hashCode());
       result = prime * result + ((recordType == null) ? 0 : recordType.hashCode());
+      result = prime * result + ((resourceMeta == null) ? 0 : resourceMeta.hashCode());
       result = prime * result + ((seriality == null) ? 0 : seriality.hashCode());
       result = prime * result + ((title == null) ? 0 : title.hashCode());
       result = prime * result + ((marcUrl == null) ? 0 : title.hashCode());
@@ -311,6 +324,11 @@ public class Bib {
         return false;
       if (recordType != other.recordType)
         return false;
+      if (resourceMeta == null) {
+        if (other.resourceMeta != null)
+          return false;
+      } else if (!resourceMeta.equals(other.resourceMeta))
+        return false;
       if (seriality != other.seriality)
         return false;
       if (title == null) {
@@ -340,7 +358,7 @@ public class Bib {
         return false;
       return true;
     }
-    
+
     @Override
     public String toString() {
       return JSON.serialize(this);
