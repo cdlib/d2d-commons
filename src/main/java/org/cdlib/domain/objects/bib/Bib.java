@@ -1,5 +1,6 @@
 package org.cdlib.domain.objects.bib;
 
+import java.net.URL;
 import java.util.Objects;
 import javax.validation.constraints.NotNull;
 import org.cdlib.util.JSON;
@@ -15,7 +16,7 @@ public class Bib {
     private OclcNumber oclcNumber;
     private String authorName;
     @NotNull(message = "Title is required.")
-    private String title;
+    private Title title;
     private String publisher;
     private String placeOfPublication;
     private String publicationDate;
@@ -25,6 +26,10 @@ public class Bib {
     private String corporateAuthor;
     private String dissertationNumber;
     private String ericIdentifier;
+    private URL marcUrl;
+    private String language;
+    private String govDocNumber; 
+    private String lccn;
     @NotNull(message = "RecordType is required.")
     private RecordType recordType;
     @NotNull(message = "Seriality is required.")
@@ -47,6 +52,10 @@ public class Bib {
         this.corporateAuthor = source.corporateAuthor;
         this.dissertationNumber = source.dissertationNumber;
         this.ericIdentifier = source.ericIdentifier;
+        this.marcUrl = source.marcUrl;
+        this.language = source.language;
+        this.govDocNumber = source.govDocNumber;
+        this.lccn = source.lccn; 
         this.recordType = source.recordType;
         this.seriality = source.seriality;
         this.carrier = source.carrier;
@@ -80,11 +89,11 @@ public class Bib {
       this.carrier = carrier;
     }
 
-    public String getTitle() {
+    public Title getTitle() {
         return title;
     }
 
-    public void setTitle(String title) {
+    public void setTitle(Title title) {
         this.title = title;
     }
 
@@ -159,7 +168,39 @@ public class Bib {
     public void setEricIdentifier(String ericIdentifier) {
         this.ericIdentifier = ericIdentifier;
     }
+    
+    public URL getMarcUrl() {
+        return marcUrl;
+    }
+    
+    public void setMarcUrl(URL marcUrl) {
+        this.marcUrl = marcUrl; 
+    }
+    
+    public String getLanguage() {
+        return language;
+    }
+    
+    public void setLanguage(String language) {
+        this.language = language; 
+    }
 
+    public String getGovDocNumber() {
+        return govDocNumber;
+    }
+    
+    public void setGovDocNumber(String govDocNumber) {
+        this.govDocNumber = govDocNumber; 
+    }
+    
+    public String getLccn() {
+        return lccn;
+    }
+    
+    public void setLccn(String lccn) {
+        this.lccn = lccn; 
+    }
+    
     public RecordType getRecordType() {
         return recordType;
     }
@@ -195,6 +236,10 @@ public class Bib {
       result = prime * result + ((recordType == null) ? 0 : recordType.hashCode());
       result = prime * result + ((seriality == null) ? 0 : seriality.hashCode());
       result = prime * result + ((title == null) ? 0 : title.hashCode());
+      result = prime * result + ((marcUrl == null) ? 0 : title.hashCode());
+      result = prime * result + ((language == null) ? 0 : language.hashCode());
+      result = prime * result + ((govDocNumber == null) ? 0 : govDocNumber.hashCode());
+      result = prime * result + ((lccn == null) ? 0 : lccn.hashCode());
       return result;
     }
 
@@ -272,6 +317,26 @@ public class Bib {
         if (other.title != null)
           return false;
       } else if (!title.equals(other.title))
+        return false;
+      if (marcUrl == null) {
+        if (other.marcUrl != null)
+          return false;
+      } else if (!marcUrl.equals(other.marcUrl))
+        return false;
+      if (language == null) {
+        if (other.language != null)
+          return false;
+      } else if (!language.equals(other.language))
+        return false;
+      if (govDocNumber == null) {
+        if (other.govDocNumber != null)
+          return false;
+      } else if (!govDocNumber.equals(other.govDocNumber))
+        return false;
+      if (lccn == null) {
+        if (other.lccn != null)
+          return false;
+      } else if (!lccn.equals(other.lccn))
         return false;
       return true;
     }
