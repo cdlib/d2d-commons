@@ -43,14 +43,13 @@ public class HttpClientFacadeImpl implements HttpClientFacade {
       httpPost.setEntity(requestEntity);
       HttpResponse response = httpClient.execute(httpPost);
       if (response.getStatusLine().getStatusCode() < 200 || response.getStatusLine().getStatusCode() > 399) {
-        LOGGER.error("Response status line = " + response.getStatusLine() + ", code = " + response.getStatusLine().getStatusCode() + ", from URL " + url + " post " + post);
-        throw new WebException(response.getStatusLine().getReasonPhrase(), response);
+       throw new WebException(response.getStatusLine().getReasonPhrase(), response);
       }
       HttpEntity entity = response.getEntity();
       result = EntityUtils.toString(entity, "utf-8");
       EntityUtils.consume(entity);
     } catch (IOException | UnsupportedCharsetException | ParseException e) {
-      LOGGER.error(e.toString());
+      // TODO throw an exception
       return "";
     } finally {
       httpPost.releaseConnection();
@@ -61,29 +60,26 @@ public class HttpClientFacadeImpl implements HttpClientFacade {
 
   @Override
   public String get(String url) {
-    LOGGER.debug("URLClientImpl doURLGet: url=" + url + " timeout=" + DEFAULT_TIMEOUT);
     String result = "";
     RequestConfig config = RequestConfig.custom().setConnectTimeout(DEFAULT_TIMEOUT).setSocketTimeout(DEFAULT_TIMEOUT).build();
     HttpGet httpGet = new HttpGet(url);
-
+    
     try (CloseableHttpClient httpClient = HttpClientBuilder.create().setDefaultRequestConfig(config).build()) {
       HttpResponse response = httpClient.execute(httpGet);
       if (response.getStatusLine().getStatusCode() != 200) {
-        LOGGER.error("Response status line = " + response.getStatusLine() + ", code = " + response.getStatusLine().getStatusCode() + ", from url " + url);
         throw new WebException(response.getStatusLine().getReasonPhrase(), response);
       }
       HttpEntity entity = response.getEntity();
       result = EntityUtils.toString(entity, "utf-8");
       EntityUtils.consume(entity);
     } catch (IOException e) {
-      LOGGER.error("While getting url " + url + " error: " + e.toString());
       throw new WebException(e.getMessage(), e, 500);
     } catch (ParseException e) {
-      LOGGER.error("While getting url " + url + " error: " + e.toString());
       throw new WebException(e.getMessage(), e, 400);
     }
+    
     return result;
-
+    
   }
 
 }

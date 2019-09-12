@@ -5,7 +5,7 @@ import java.util.List;
 import org.cdlib.util.CollectionUtil;
 import org.cdlib.util.JSON;
 
-public class ISBN {
+public class ISBN implements Identifier {
 
   private List<String> values = new ArrayList<String>();
   
@@ -16,7 +16,7 @@ public class ISBN {
   }
   
   public String getValue() {
-    if (values == null || values.isEmpty()) {
+    if (values.isEmpty()) {
       return null;
     }
     return values.get(0);
@@ -27,7 +27,7 @@ public class ISBN {
   }
 
   public void setValues(List<String> values) {
-    this.values = values;
+    this.values = new ArrayList<String>(values);
   }
 
   @Override

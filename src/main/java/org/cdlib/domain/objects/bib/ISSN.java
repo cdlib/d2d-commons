@@ -49,15 +49,15 @@ public class ISSN implements Identifier {
   }
   
   public void setPrecedingValues(List<String> precedingValues) {
-    this.precedingValues = precedingValues;
+    this.precedingValues = new ArrayList<String>(precedingValues);
   }
 
   public void setSucceedingValues(List<String> succeedingValues) {
-    this.succeedingValues = succeedingValues;
+    this.succeedingValues = new ArrayList<String>(succeedingValues);
   }
 
   public void setValues(List<String> values) {
-    this.values = values;
+    this.values = new ArrayList<String>(values);
   }
 
   @Override
