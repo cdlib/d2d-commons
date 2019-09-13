@@ -14,8 +14,8 @@ import org.cdlib.util.JSON;
 public class Bib {
 
     private OclcNumber oclcNumber;
-    private String authorName;
-    
+    private Author author;
+
     @NotNull(message = "Title is required.")
     private Title title;
     private String publisher;
@@ -24,7 +24,6 @@ public class Bib {
     private ISSN issn;
     private ISBN isbn;
     private String edition;
-    private String corporateAuthor;
     private String dissertationNumber;
     private String ericIdentifier;
     private URL marcUrl;
@@ -43,7 +42,7 @@ public class Bib {
     }
 
     public Bib(Bib source) {
-        this.authorName = source.authorName;
+        this.author = source.author;
         this.oclcNumber = source.oclcNumber;
         this.title = source.title;
         this.publisher = source.publisher;
@@ -52,7 +51,6 @@ public class Bib {
         this.issn = source.issn;
         this.isbn = source.isbn;
         this.edition = source.edition;
-        this.corporateAuthor = source.corporateAuthor;
         this.dissertationNumber = source.dissertationNumber;
         this.ericIdentifier = source.ericIdentifier;
         this.marcUrl = source.marcUrl;
@@ -77,12 +75,12 @@ public class Bib {
         this.oclcNumber = oclcNumber;
     }
 
-    public String getAuthorName() {
-        return authorName;
+    public Author getAuthor() {
+        return author;
     }
 
-    public void setAuthorName(String authorName) {
-        this.authorName = authorName;
+    public void setAuthor(Author author) {
+        this.author = author;
     }
     
     public Carrier getCarrier() {
@@ -147,14 +145,6 @@ public class Bib {
 
     public void setEdition(String edition) {
         this.edition = edition;
-    }
-
-    public String getCorporateAuthor() {
-        return corporateAuthor;
-    }
-
-    public void setCorporateAuthor(String corporateAuthor) {
-        this.corporateAuthor = corporateAuthor;
     }
 
     public String getDissertationNumber() {
@@ -231,132 +221,126 @@ public class Bib {
     
     @Override
     public int hashCode() {
-      final int prime = 31;
-      int result = 1;
-      result = prime * result + ((authorName == null) ? 0 : authorName.hashCode());
-      result = prime * result + ((carrier == null) ? 0 : carrier.hashCode());
-      result = prime * result + ((corporateAuthor == null) ? 0 : corporateAuthor.hashCode());
-      result = prime * result + ((dissertationNumber == null) ? 0 : dissertationNumber.hashCode());
-      result = prime * result + ((edition == null) ? 0 : edition.hashCode());
-      result = prime * result + ((ericIdentifier == null) ? 0 : ericIdentifier.hashCode());
-      result = prime * result + ((isbn == null) ? 0 : isbn.hashCode());
-      result = prime * result + ((issn == null) ? 0 : issn.hashCode());
-      result = prime * result + ((oclcNumber == null) ? 0 : oclcNumber.hashCode());
-      result = prime * result + ((placeOfPublication == null) ? 0 : placeOfPublication.hashCode());
-      result = prime * result + ((publicationDate == null) ? 0 : publicationDate.hashCode());
-      result = prime * result + ((publisher == null) ? 0 : publisher.hashCode());
-      result = prime * result + ((recordType == null) ? 0 : recordType.hashCode());
-      result = prime * result + ((resourceMeta == null) ? 0 : resourceMeta.hashCode());
-      result = prime * result + ((seriality == null) ? 0 : seriality.hashCode());
-      result = prime * result + ((title == null) ? 0 : title.hashCode());
-      result = prime * result + ((marcUrl == null) ? 0 : title.hashCode());
-      result = prime * result + ((language == null) ? 0 : language.hashCode());
-      result = prime * result + ((govDocNumber == null) ? 0 : govDocNumber.hashCode());
-      result = prime * result + ((lccn == null) ? 0 : lccn.hashCode());
-      return result;
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((author == null) ? 0 : author.hashCode());
+        result = prime * result + ((carrier == null) ? 0 : carrier.hashCode());
+        result = prime * result + ((dissertationNumber == null) ? 0 : dissertationNumber.hashCode());
+        result = prime * result + ((edition == null) ? 0 : edition.hashCode());
+        result = prime * result + ((ericIdentifier == null) ? 0 : ericIdentifier.hashCode());
+        result = prime * result + ((govDocNumber == null) ? 0 : govDocNumber.hashCode());
+        result = prime * result + ((isbn == null) ? 0 : isbn.hashCode());
+        result = prime * result + ((issn == null) ? 0 : issn.hashCode());
+        result = prime * result + ((language == null) ? 0 : language.hashCode());
+        result = prime * result + ((lccn == null) ? 0 : lccn.hashCode());
+        result = prime * result + ((marcUrl == null) ? 0 : marcUrl.hashCode());
+        result = prime * result + ((oclcNumber == null) ? 0 : oclcNumber.hashCode());
+        result = prime * result + ((placeOfPublication == null) ? 0 : placeOfPublication.hashCode());
+        result = prime * result + ((publicationDate == null) ? 0 : publicationDate.hashCode());
+        result = prime * result + ((publisher == null) ? 0 : publisher.hashCode());
+        result = prime * result + ((recordType == null) ? 0 : recordType.hashCode());
+        result = prime * result + ((resourceMeta == null) ? 0 : resourceMeta.hashCode());
+        result = prime * result + ((seriality == null) ? 0 : seriality.hashCode());
+        result = prime * result + ((title == null) ? 0 : title.hashCode());
+        return result;
     }
 
     @Override
     public boolean equals(Object obj) {
-      if (this == obj)
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Bib other = (Bib) obj;
+        if (author == null) {
+            if (other.author != null)
+                return false;
+        } else if (!author.equals(other.author))
+            return false;
+        if (carrier != other.carrier)
+            return false;
+        if (dissertationNumber == null) {
+            if (other.dissertationNumber != null)
+                return false;
+        } else if (!dissertationNumber.equals(other.dissertationNumber))
+            return false;
+        if (edition == null) {
+            if (other.edition != null)
+                return false;
+        } else if (!edition.equals(other.edition))
+            return false;
+        if (ericIdentifier == null) {
+            if (other.ericIdentifier != null)
+                return false;
+        } else if (!ericIdentifier.equals(other.ericIdentifier))
+            return false;
+        if (govDocNumber == null) {
+            if (other.govDocNumber != null)
+                return false;
+        } else if (!govDocNumber.equals(other.govDocNumber))
+            return false;
+        if (isbn == null) {
+            if (other.isbn != null)
+                return false;
+        } else if (!isbn.equals(other.isbn))
+            return false;
+        if (issn == null) {
+            if (other.issn != null)
+                return false;
+        } else if (!issn.equals(other.issn))
+            return false;
+        if (language == null) {
+            if (other.language != null)
+                return false;
+        } else if (!language.equals(other.language))
+            return false;
+        if (lccn == null) {
+            if (other.lccn != null)
+                return false;
+        } else if (!lccn.equals(other.lccn))
+            return false;
+        if (marcUrl == null) {
+            if (other.marcUrl != null)
+                return false;
+        } else if (!marcUrl.equals(other.marcUrl))
+            return false;
+        if (oclcNumber == null) {
+            if (other.oclcNumber != null)
+                return false;
+        } else if (!oclcNumber.equals(other.oclcNumber))
+            return false;
+        if (placeOfPublication == null) {
+            if (other.placeOfPublication != null)
+                return false;
+        } else if (!placeOfPublication.equals(other.placeOfPublication))
+            return false;
+        if (publicationDate == null) {
+            if (other.publicationDate != null)
+                return false;
+        } else if (!publicationDate.equals(other.publicationDate))
+            return false;
+        if (publisher == null) {
+            if (other.publisher != null)
+                return false;
+        } else if (!publisher.equals(other.publisher))
+            return false;
+        if (recordType != other.recordType)
+            return false;
+        if (resourceMeta == null) {
+            if (other.resourceMeta != null)
+                return false;
+        } else if (!resourceMeta.equals(other.resourceMeta))
+            return false;
+        if (seriality != other.seriality)
+            return false;
+        if (title == null) {
+            if (other.title != null)
+                return false;
+        } else if (!title.equals(other.title))
+            return false;
         return true;
-      if (obj == null)
-        return false;
-      if (getClass() != obj.getClass())
-        return false;
-      Bib other = (Bib) obj;
-      if (authorName == null) {
-        if (other.authorName != null)
-          return false;
-      } else if (!authorName.equals(other.authorName))
-        return false;
-      if (carrier != other.carrier)
-        return false;
-      if (corporateAuthor == null) {
-        if (other.corporateAuthor != null)
-          return false;
-      } else if (!corporateAuthor.equals(other.corporateAuthor))
-        return false;
-      if (dissertationNumber == null) {
-        if (other.dissertationNumber != null)
-          return false;
-      } else if (!dissertationNumber.equals(other.dissertationNumber))
-        return false;
-      if (edition == null) {
-        if (other.edition != null)
-          return false;
-      } else if (!edition.equals(other.edition))
-        return false;
-      if (ericIdentifier == null) {
-        if (other.ericIdentifier != null)
-          return false;
-      } else if (!ericIdentifier.equals(other.ericIdentifier))
-        return false;
-      if (isbn == null) {
-        if (other.isbn != null)
-          return false;
-      } else if (!isbn.equals(other.isbn))
-        return false;
-      if (issn == null) {
-        if (other.issn != null)
-          return false;
-      } else if (!issn.equals(other.issn))
-        return false;
-      if (oclcNumber == null) {
-        if (other.oclcNumber != null)
-          return false;
-      } else if (!oclcNumber.equals(other.oclcNumber))
-        return false;
-      if (placeOfPublication == null) {
-        if (other.placeOfPublication != null)
-          return false;
-      } else if (!placeOfPublication.equals(other.placeOfPublication))
-        return false;
-      if (publicationDate == null) {
-        if (other.publicationDate != null)
-          return false;
-      } else if (!publicationDate.equals(other.publicationDate))
-        return false;
-      if (publisher == null) {
-        if (other.publisher != null)
-          return false;
-      } else if (!publisher.equals(other.publisher))
-        return false;
-      if (recordType != other.recordType)
-        return false;
-      if (resourceMeta == null) {
-        if (other.resourceMeta != null)
-          return false;
-      } else if (!resourceMeta.equals(other.resourceMeta))
-        return false;
-      if (seriality != other.seriality)
-        return false;
-      if (title == null) {
-        if (other.title != null)
-          return false;
-      } else if (!title.equals(other.title))
-        return false;
-      if (marcUrl == null) {
-        if (other.marcUrl != null)
-          return false;
-      } else if (!marcUrl.equals(other.marcUrl))
-        return false;
-      if (language == null) {
-        if (other.language != null)
-          return false;
-      } else if (!language.equals(other.language))
-        return false;
-      if (govDocNumber == null) {
-        if (other.govDocNumber != null)
-          return false;
-      } else if (!govDocNumber.equals(other.govDocNumber))
-        return false;
-      if (lccn == null) {
-        if (other.lccn != null)
-          return false;
-      } else if (!lccn.equals(other.lccn))
-        return false;
-      return true;
     }
 
     @Override
