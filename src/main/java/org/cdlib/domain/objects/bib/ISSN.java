@@ -13,6 +13,8 @@ import org.cdlib.util.JSON;
  * 
  */
 public class ISSN implements Identifier {
+  
+  // what about linking ISSN (022$l)?
 
   private List<String> precedingValues = new ArrayList<String>();
   private List<String> succeedingValues = new ArrayList<String>();
@@ -36,6 +38,7 @@ public class ISSN implements Identifier {
   
   @NotNull
   @NotEmpty
+  // needs doc? this is unexpected; should we make some decision about which one is the true "value"
   public String getValue() {
     if (values.isEmpty()) {
       return null;
