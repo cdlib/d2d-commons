@@ -6,7 +6,7 @@ import java.util.Objects;
 import org.cdlib.domain.constraints.OCLCNumber;
 import org.cdlib.util.CollectionUtil;
 
-public class OclcNumber {
+public class OclcNumber implements Identifier {
 
   @OCLCNumber(message = "OCLC number must be in valid OCLC format.")
   private String value;
@@ -20,6 +20,7 @@ public class OclcNumber {
     formerValues = new ArrayList<>();
   }
 
+  @Override
   public String getValue() {
     return value;
   }
