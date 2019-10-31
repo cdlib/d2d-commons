@@ -5,6 +5,7 @@ public enum Carrier {
   
   ONLINE,
   PRINT,
+  MICROFORM,
   OTHER
 
 }

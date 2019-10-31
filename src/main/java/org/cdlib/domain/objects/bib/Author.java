@@ -1,31 +1,38 @@
 package org.cdlib.domain.objects.bib;
 
 import java.util.List;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import org.cdlib.util.JSON;
 
 public class Author {
   
-  private String primaryAuthor;
-  private List<String> authors;
+  private AuthorName primaryAuthor;
+  private List<AuthorName> authors;
   private String corporateAuthor;
   
-  public String getPrimaryAuthor() {
+  @NotNull
+  @NotEmpty
+  public AuthorName getPrimaryAuthor() {
     return primaryAuthor;
   }
   
-  public List<String> getAuthors() {
+  @NotNull
+  @NotEmpty
+  public List<AuthorName> getAuthors() {
     return authors;
   }
   
+  @NotEmpty
   public String getCorporateAuthor() {
     return corporateAuthor;
   }
   
-  public void setPrimaryAuthor(String primaryAuthor) {
+  public void setPrimaryAuthor(AuthorName primaryAuthor) {
     this.primaryAuthor = primaryAuthor;
   }
   
-  public void setAuthors(List<String> authors) {
+  public void setAuthors(List<AuthorName> authors) {
     this.authors = authors;
   }
   
@@ -42,7 +49,7 @@ public class Author {
     result = prime * result + ((primaryAuthor == null) ? 0 : primaryAuthor.hashCode());
     return result;
   }
-  
+
   @Override
   public boolean equals(Object obj) {
     if (this == obj)
@@ -69,7 +76,7 @@ public class Author {
       return false;
     return true;
   }
-  
+
   @Override
   public String toString() {
     return JSON.serialize(this);
