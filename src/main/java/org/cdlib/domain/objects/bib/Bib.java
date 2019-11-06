@@ -1,6 +1,8 @@
 package org.cdlib.domain.objects.bib;
 
 import java.net.URL;
+import java.util.List;
+
 import javax.validation.constraints.NotNull;
 import org.cdlib.domain.objects.meta.ResourceMeta;
 import org.cdlib.util.JSON;
@@ -14,8 +16,9 @@ import org.cdlib.util.JSON;
 public class Bib {
 
     private OclcNumber oclcNumber;
-    private Author author;
-
+    private String author;
+    private String corporateAuthor; 
+    
     @NotNull(message = "Title is required.")
     private Title title;
     private String publisher;
@@ -31,6 +34,7 @@ public class Bib {
     private String govDocNumber; 
     private String lccn;
     private ResourceMeta resourceMeta;
+    private List<CachedBib> additionalForms;
     @NotNull(message = "RecordType is required.")
     private RecordType recordType;
     
@@ -75,11 +79,11 @@ public class Bib {
         this.oclcNumber = oclcNumber;
     }
 
-    public Author getAuthor() {
+    public String getAuthor() {
         return author;
     }
 
-    public void setAuthor(Author author) {
+    public void setAuthor(String author) {
         this.author = author;
     }
     
@@ -346,6 +350,22 @@ public class Bib {
     @Override
     public String toString() {
       return JSON.serialize(this);
+    }
+
+    public String getCorporateAuthor() {
+        return corporateAuthor;
+    }
+
+    public void setCorporateAuthor(String corporateAuthor) {
+        this.corporateAuthor = corporateAuthor;
+    }
+
+    public List<CachedBib> getAdditionalForms() {
+        return additionalForms;
+    }
+
+    public void setAdditionalForms(List<CachedBib> additionalForms) {
+        this.additionalForms = additionalForms;
     }
 
 }
