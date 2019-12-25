@@ -31,7 +31,7 @@ public class JSONTest {
   public void serializesSimplePojo() {
     String result = JSON.serialize(pojo);
     assertNotNull(result);
-    assertEquals("{\"testString\":\"test String val\",\"testInt\":22}", result);
+    assertEquals("{\"testString\":\"test String val 好比不上\",\"testInt\":22}", result);
   }
 
   @Test(expected = JSONConversionException.class)
@@ -41,8 +41,9 @@ public class JSONTest {
 
   @Test
   public void serializesString() {
-    SerializablePojo obj = JSON.deserialize("{\"testString\":\"test String val\",\"testInt\":22}", SerializablePojo.class);
+    SerializablePojo obj = JSON.deserialize("{\"testString\":\"test String val 好比不上\",\"testInt\":22}", SerializablePojo.class);
     assertEquals(22, obj.getTestInt());
+    assertEquals("test String val 好比不上", obj.getTestString());
   }
 
 }

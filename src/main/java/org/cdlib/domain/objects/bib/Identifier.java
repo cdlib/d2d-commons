@@ -8,5 +8,9 @@ public interface Identifier {
   @NotNull
   @NotEmpty
   public String getValue();
+  
+  @NotNull
+  @NotEmpty
+  public String getAuthority();
 
 }

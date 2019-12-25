@@ -3,14 +3,17 @@ package org.cdlib.domain.objects.bib;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import org.cdlib.domain.constraints.OCLCNumber;
 import org.cdlib.util.CollectionUtil;
 
 public class OclcNumber implements Identifier {
 
+  private static final IdAuthority AUTHORITY = IdAuthority.OCLC;
+  private List<String> formerValues;
   @OCLCNumber(message = "OCLC number must be in valid OCLC format.")
   private String value;
-  private List<String> formerValues;
   
   public OclcNumber() {
   }
@@ -18,31 +21,6 @@ public class OclcNumber implements Identifier {
   public OclcNumber(String value) {
     this.value = value;
     formerValues = new ArrayList<>();
-  }
-
-  @Override
-  public String getValue() {
-    return value;
-  }
-
-  public void setValue(String value) {
-    this.value = value;
-  }
-
-  public List<String> getFormerValues() {
-    return CollectionUtil.dedupedList(formerValues);
-  }
-
-  public void setFormerValues(List<String> formerValues) {
-    this.formerValues = formerValues;
-  }
-
-  @Override
-  public int hashCode() {
-    int hash = 3;
-    hash = 73 * hash + Objects.hashCode(this.value);
-    hash = 73 * hash + Objects.hashCode(this.formerValues);
-    return hash;
   }
 
   @Override
@@ -64,6 +42,36 @@ public class OclcNumber implements Identifier {
       return false;
     }
     return true;
+  }
+
+  @Override
+  public @NotNull @NotEmpty String getAuthority() {
+    return AUTHORITY.getUri();
+  }
+
+  public List<String> getFormerValues() {
+    return CollectionUtil.dedupedList(formerValues);
+  }
+
+  @Override
+  public String getValue() {
+    return value;
+  }
+
+  @Override
+  public int hashCode() {
+    int hash = 3;
+    hash = 73 * hash + Objects.hashCode(this.value);
+    hash = 73 * hash + Objects.hashCode(this.formerValues);
+    return hash;
+  }
+
+  public void setFormerValues(List<String> formerValues) {
+    this.formerValues = formerValues;
+  }
+
+  public void setValue(String value) {
+    this.value = value;
   }
 
   @Override

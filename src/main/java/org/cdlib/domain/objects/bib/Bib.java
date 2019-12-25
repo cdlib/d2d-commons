@@ -1,9 +1,10 @@
 package org.cdlib.domain.objects.bib;
 
-import java.net.URI;
 import java.util.Collections;
 import java.util.List;
 import javax.validation.constraints.NotNull;
+import org.cdlib.domain.objects.Link;
+import org.cdlib.domain.objects.Summary;
 import org.cdlib.domain.objects.meta.ResourceMeta;
 import org.cdlib.util.JSON;
 
@@ -17,15 +18,14 @@ public class Bib {
   private Carrier carrier;
   private String corporateAuthor;
   private String edition;
-  private List<Identifier> identifiers;
+  private Identifiers<? extends StandardNumber> identifiers;
   private String language;
-  private URI marcURI;
-  private List<BriefBib> otherPhysicalForms;
   private String placeOfPublication;
   private String publicationDate;
   private String publisher;
   @NotNull(message = "RecordType is required.")
   private RecordType recordType;
+  private List<Link<? extends Summary, ?>> relatedResources;
   private ResourceMeta resourceMeta;
   @NotNull(message = "Seriality is required.")
   private Seriality seriality;
@@ -45,8 +45,8 @@ public class Bib {
     this.recordType = source.recordType;
     this.seriality = source.seriality;
     this.carrier = source.carrier;
-    this.identifiers = Collections.unmodifiableList(source.identifiers);
-    this.otherPhysicalForms = Collections.unmodifiableList(source.otherPhysicalForms);
+    this.identifiers = source.identifiers;
+    this.relatedResources = Collections.unmodifiableList(source.relatedResources);
     this.resourceMeta = source.resourceMeta;
   }
 
@@ -68,14 +68,6 @@ public class Bib {
 
   public String getLanguage() {
     return language;
-  }
-
-  public URI getMarcURI() {
-    return marcURI;
-  }
-
-  public List<BriefBib> getOtherPhysicalForms() {
-    return otherPhysicalForms;
   }
 
   public String getPlaceOfPublication() {
@@ -124,14 +116,6 @@ public class Bib {
 
   public void setLanguage(String language) {
     this.language = language;
-  }
-
-  public void setMarcURI(URI marcURI) {
-    this.marcURI = marcURI;
-  }
-
-  public void setOtherPhysicalForms(List<BriefBib> additionalForms) {
-    this.otherPhysicalForms = additionalForms;
   }
 
   public void setPlaceOfPublication(String placeOfPublication) {

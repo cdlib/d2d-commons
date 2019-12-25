@@ -7,8 +7,7 @@ package org.cdlib.domain.objects.bib;
  * A classification of the general type of material represented by the Bib data.
  * 
  * See https://www.loc.gov/marc/bibliographic/bdleader.html
- * 
- * @author jferrie
+ *
  */
 public enum RecordType {
   
