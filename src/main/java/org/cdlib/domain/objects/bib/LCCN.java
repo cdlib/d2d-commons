@@ -5,17 +5,20 @@ import javax.validation.constraints.NotNull;
 
 public class LCCN implements Identifier {
   
-  private String authority;
+  private static final IdAuthority AUTHORITY = IdAuthority.LOC;
   private String value;
 
-  public LCCN(String value, String authority) {
+  public LCCN(String value) {
     this.value = value;
-    this.authority = authority;
+  }
+  
+  public LCCN(LCCN source) {
+    this.value = source.value;
   }
 
   @Override
   public @NotNull @NotEmpty String getAuthority() {
-    return authority;
+    return AUTHORITY.getUri();
   }
 
   @Override
@@ -23,12 +26,33 @@ public class LCCN implements Identifier {
     return value;
   }
 
-  public void setAuthority(String authority) {
-    this.authority = authority;
-  }
-
   public void setValue(String value) {
     this.value = value;
   }
 
+  @Override
+  public int hashCode() {
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + ((value == null) ? 0 : value.hashCode());
+    return result;
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj)
+      return true;
+    if (obj == null)
+      return false;
+    if (getClass() != obj.getClass())
+      return false;
+    LCCN other = (LCCN) obj;
+    if (value == null) {
+      if (other.value != null)
+        return false;
+    } else if (!value.equals(other.value))
+      return false;
+    return true;
+  }
+  
 }

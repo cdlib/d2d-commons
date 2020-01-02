@@ -7,7 +7,7 @@ import org.cdlib.util.JSON;
 
 public class Title {
 
-  private String canonicalTitle;
+  private String mainTitle;
   private String romanizedTitle;
   private List<String> otherTitles;
   private String precedingTitle;
@@ -20,14 +20,15 @@ public class Title {
    */
   @NotNull
   @NotEmpty
-  public String getCanonicalTitle() {
-    return canonicalTitle;
+  public String getMainTitle() {
+    return mainTitle;
   }
 
   /*
    * 
    * title as transliterated into latin characters
-   * if the canonical title is in latin characters, this is the same as the canonical title
+   * if the canonical title is in latin characters, 
+   * this is the same as the canonical title
    * 
    */
   @NotNull
@@ -69,8 +70,8 @@ public class Title {
     return succeedingTitle;
   }
 
-  public void setCanonicalTitle(String canonicalTitle) {
-    this.canonicalTitle = canonicalTitle;
+  public void setMainTitle(String canonicalTitle) {
+    this.mainTitle = canonicalTitle;
   }
 
   public void setRomanizedTitle(String romanizedTitle) {
@@ -93,7 +94,7 @@ public class Title {
   public int hashCode() {
     final int prime = 31;
     int result = 1;
-    result = prime * result + ((canonicalTitle == null) ? 0 : canonicalTitle.hashCode());
+    result = prime * result + ((mainTitle == null) ? 0 : mainTitle.hashCode());
     result = prime * result + ((otherTitles == null) ? 0 : otherTitles.hashCode());
     result = prime * result + ((precedingTitle == null) ? 0 : precedingTitle.hashCode());
     result = prime * result + ((romanizedTitle == null) ? 0 : romanizedTitle.hashCode());
@@ -110,10 +111,10 @@ public class Title {
     if (getClass() != obj.getClass())
       return false;
     Title other = (Title) obj;
-    if (canonicalTitle == null) {
-      if (other.canonicalTitle != null)
+    if (mainTitle == null) {
+      if (other.mainTitle != null)
         return false;
-    } else if (!canonicalTitle.equals(other.canonicalTitle))
+    } else if (!mainTitle.equals(other.mainTitle))
       return false;
     if (otherTitles == null) {
       if (other.otherTitles != null)

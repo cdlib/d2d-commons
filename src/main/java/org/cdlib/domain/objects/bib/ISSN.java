@@ -12,9 +12,9 @@ import org.cdlib.util.JSON;
  * Represents the ISSN identifiers associated with a bibliographic resource.
  * 
  */
-public class ISSN implements StandardNumber {
+public class ISSN implements Identifier {
 
-  private static final String AUTHORITY = IdAuthority.ISSN.getUri();
+  private static final IdAuthority AUTHORITY = IdAuthority.ISSN;
   private List<String> precedingValues = new ArrayList<String>();
   private List<String> succeedingValues = new ArrayList<String>();
   private List<String> values = new ArrayList<String>();
@@ -23,6 +23,12 @@ public class ISSN implements StandardNumber {
   
   public ISSN(String value) {
     values.add(value);
+  }
+  
+  public ISSN(ISSN source) {
+    this.precedingValues = source.precedingValues;
+    this.succeedingValues = source.succeedingValues;
+    this.values = source.values;
   }
   
   @Override
@@ -54,7 +60,7 @@ public class ISSN implements StandardNumber {
   
   @Override
   public @NotNull @NotEmpty String getAuthority() {
-    return AUTHORITY;
+    return AUTHORITY.getUri();
   }
   
   @NotNull

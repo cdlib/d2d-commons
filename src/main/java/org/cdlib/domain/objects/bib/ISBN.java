@@ -7,7 +7,7 @@ import javax.validation.constraints.NotNull;
 import org.cdlib.util.CollectionUtil;
 import org.cdlib.util.JSON;
 
-public class ISBN implements StandardNumber {
+public class ISBN implements Identifier {
 
   private static final IdAuthority AUTHORITY = IdAuthority.ISBN;
   private List<String> values = new ArrayList<String>();
@@ -16,6 +16,10 @@ public class ISBN implements StandardNumber {
   
   public ISBN(String value) {
     values.add(value);
+  }
+  
+  public ISBN(ISBN source) {
+    this.values = source.values;
   }
   
   @Override

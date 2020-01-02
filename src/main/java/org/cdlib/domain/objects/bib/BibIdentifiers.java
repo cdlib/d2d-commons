@@ -1,17 +1,27 @@
 package org.cdlib.domain.objects.bib;
 
-public class Identifiers<T extends StandardNumber> {
+public class BibIdentifiers {
 
+  private ISBN isbn;
+  private ISSN issn;
   private LCCN lccn;
   private OclcNumber oclcNumber;
-  private T standardNumber;
 
-  public Identifiers() {}
-
-  public Identifiers(Identifiers<T> source) {
+  public BibIdentifiers() {}
+  
+  public BibIdentifiers(BibIdentifiers source) {
+    this.isbn = source.isbn;
+    this.issn = source.issn;
     this.lccn = source.lccn;
     this.oclcNumber = source.oclcNumber;
-    this.standardNumber = source.standardNumber;
+  }
+
+  public ISBN getIsbn() {
+    return isbn;
+  }
+
+  public ISSN getIssn() {
+    return issn;
   }
 
   public LCCN getLccn() {
@@ -22,8 +32,12 @@ public class Identifiers<T extends StandardNumber> {
     return oclcNumber;
   }
 
-  public StandardNumber getStandardNumber() {
-    return standardNumber;
+  public void setIsbn(ISBN isbn) {
+    this.isbn = isbn;
+  }
+
+  public void setIssn(ISSN issn) {
+    this.issn = issn;
   }
 
   public void setLccn(LCCN lccn) {
@@ -34,17 +48,14 @@ public class Identifiers<T extends StandardNumber> {
     this.oclcNumber = oclcNumber;
   }
 
-  public void setStandardNumber(T standardNumber) {
-    this.standardNumber = standardNumber;
-  }
-
   @Override
   public int hashCode() {
     final int prime = 31;
     int result = 1;
+    result = prime * result + ((isbn == null) ? 0 : isbn.hashCode());
+    result = prime * result + ((issn == null) ? 0 : issn.hashCode());
     result = prime * result + ((lccn == null) ? 0 : lccn.hashCode());
     result = prime * result + ((oclcNumber == null) ? 0 : oclcNumber.hashCode());
-    result = prime * result + ((standardNumber == null) ? 0 : standardNumber.hashCode());
     return result;
   }
 
@@ -56,7 +67,17 @@ public class Identifiers<T extends StandardNumber> {
       return false;
     if (getClass() != obj.getClass())
       return false;
-    Identifiers<T> other = (Identifiers<T>) obj;
+    BibIdentifiers other = (BibIdentifiers) obj;
+    if (isbn == null) {
+      if (other.isbn != null)
+        return false;
+    } else if (!isbn.equals(other.isbn))
+      return false;
+    if (issn == null) {
+      if (other.issn != null)
+        return false;
+    } else if (!issn.equals(other.issn))
+      return false;
     if (lccn == null) {
       if (other.lccn != null)
         return false;
@@ -67,14 +88,7 @@ public class Identifiers<T extends StandardNumber> {
         return false;
     } else if (!oclcNumber.equals(other.oclcNumber))
       return false;
-    if (standardNumber == null) {
-      if (other.standardNumber != null)
-        return false;
-    } else if (!standardNumber.equals(other.standardNumber))
-      return false;
     return true;
   }
-
-  
 
 }

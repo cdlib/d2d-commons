@@ -22,6 +22,11 @@ public class OclcNumber implements Identifier {
     this.value = value;
     formerValues = new ArrayList<>();
   }
+  
+  public OclcNumber(OclcNumber source) {
+    this.value = source.value;
+    this.formerValues = source.formerValues;
+  }
 
   @Override
   public boolean equals(Object obj) {
@@ -45,7 +50,7 @@ public class OclcNumber implements Identifier {
   }
 
   @Override
-  public @NotNull @NotEmpty String getAuthority() {
+  public @NotNull String getAuthority() {
     return AUTHORITY.getUri();
   }
 

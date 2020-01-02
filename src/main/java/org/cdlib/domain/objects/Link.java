@@ -1,16 +1,12 @@
 package org.cdlib.domain.objects;
 
-import java.util.Optional;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 /*
- * A permalink to a related resource.
+ * A link to a related resource.
  */
-public class Link<T extends Summary, T2> {
-  
-  @NotNull
-  private Relationship rel;
+public class Link {
   
   @NotNull
   @NotEmpty
@@ -20,45 +16,50 @@ public class Link<T extends Summary, T2> {
   @NotEmpty
   private String mimeType;
   
-  /*
-   * Summary information about the target
-   * to support decision about whether the 
-   * client needs the target resource.
-   * 
-   * This value can be null.
-   */
-  private T summary;
-  
-  private Class<T2> to;
-  
   public Link() {}
   
-  public Link(Relationship rel, String uri, String mimeType, T summary, Class<T2> linkTo) {
-    this.rel = rel;
-    this.href = uri;
-    this.mimeType = mimeType;
-    this.summary = summary;
-    this.to = linkTo;
-  }
-
-  public Relationship getRelationship() {
-    return rel;
+  public Link(Link source) {
+    this.href = source.href;
+    this.mimeType = source.mimeType;
   }
   
   public String getHref() {
     return href;
   }
   
-  public T getSummary() {
-    return summary;
-  }
-
   public String getMimeType() {
     return mimeType;
   }
-  
-  public Class<T2> to() {
-    return to;
+
+  @Override
+  public int hashCode() {
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + ((href == null) ? 0 : href.hashCode());
+    result = prime * result + ((mimeType == null) ? 0 : mimeType.hashCode());
+    return result;
   }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj)
+      return true;
+    if (obj == null)
+      return false;
+    if (getClass() != obj.getClass())
+      return false;
+    Link other = (Link) obj;
+    if (href == null) {
+      if (other.href != null)
+        return false;
+    } else if (!href.equals(other.href))
+      return false;
+    if (mimeType == null) {
+      if (other.mimeType != null)
+        return false;
+    } else if (!mimeType.equals(other.mimeType))
+      return false;
+    return true;
+  } 
 
 }

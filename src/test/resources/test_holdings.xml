@@ -682,10 +682,15 @@
         <earliestYear>1930</earliestYear>
         <latestYear>1977</latestYear>
     </testHoldingsItem>
-        <testHoldingsItem n="133">
+    <testHoldingsItem n="133">
         <holdings> v.1-17(1972/3-88/9)v.18:no.1-5(1989/0)</holdings>
         <earliestYear>1972</earliestYear>
         <latestYear>1990</latestYear>
+    </testHoldingsItem>
+        <testHoldingsItem n="134">
+        <holdings>1986-1976,1989-1993</holdings>
+        <earliestYear>1989</earliestYear>
+        <latestYear>1993</latestYear>
     </testHoldingsItem>
 </testHoldingsList>
 
