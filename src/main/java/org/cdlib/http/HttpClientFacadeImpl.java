@@ -18,6 +18,8 @@ import org.apache.logging.log4j.Logger;
 
 public class HttpClientFacadeImpl implements HttpClientFacade {
 
+  
+  @SuppressWarnings("unused")
   private static final Logger LOGGER = LogManager.getLogger(HttpClientFacadeImpl.class);
   private static final int DEFAULT_TIMEOUT = 20000;
   private static final ContentType DEFAULT_CONTENT_TYPE = ContentType.APPLICATION_FORM_URLENCODED;
