@@ -3,6 +3,10 @@ package org.cdlib.domain.objects.bib;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+/*
+ * Serializable representation of a bibliographic identifier.
+ * 
+ */
 public interface Identifier {
   
   @NotNull

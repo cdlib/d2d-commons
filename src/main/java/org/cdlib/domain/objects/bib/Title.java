@@ -5,6 +5,10 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import org.cdlib.util.JSON;
 
+/*
+ * Collects various MARC related title data.
+ * TODO: Extend to include full RDA title data?
+ */
 public class Title {
 
   private String mainTitle;
@@ -26,8 +30,8 @@ public class Title {
 
   /*
    * 
-   * title as transliterated into latin characters
-   * if the canonical title is in latin characters, 
+   * title as transliterated into Latin characters;
+   * if the canonical title is in Latin characters, 
    * this is the same as the canonical title
    * 
    */

@@ -10,6 +10,8 @@ import org.cdlib.util.JSON;
  * Serializable representation of a bibliographic Instance,
  * intended in the sense of Instance in Bibframe, similar to 
  * FRBR Manifestation.
+ * 
+ * Typically this will correspond to a MARC Bib record.
  *
  */
 public class Bib {
