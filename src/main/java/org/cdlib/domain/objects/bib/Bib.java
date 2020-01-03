@@ -42,6 +42,7 @@ public class Bib {
     this.language = source.language;
     this.marc = source.marc;
     this.otherForms = source.otherForms;
+    this.publicationEvent = source.publicationEvent;
     this.recordType = source.recordType;
     this.resourceMeta = source.resourceMeta;
     this.seriality = source.seriality;
