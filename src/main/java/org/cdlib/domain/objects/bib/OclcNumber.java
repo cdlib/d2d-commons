@@ -12,6 +12,9 @@ public class OclcNumber implements Identifier {
 
   private static final IdAuthority AUTHORITY = IdAuthority.OCLC;
   private List<String> formerValues;
+  
+  @NotNull
+  @NotEmpty
   @OCLCNumber(message = "OCLC number must be in valid OCLC format.")
   private String value;
   
