@@ -5,8 +5,11 @@ import javax.validation.constraints.NotNull;
 /*
  * Brings together all bibliographic identifiers.
  * 
- * The identifiers are all complex objects that implement Identifier,
- * and are guaranteed to be not null.
+ * Any identifier can be null, meaning that a Bib 
+ * lacks an identifier of that type.
+ * 
+ * If any identifier is not null, then it must have a value 
+ * and an authority.
  */
 public class BibIdentifiers {
 
@@ -16,10 +19,7 @@ public class BibIdentifiers {
   private OclcNumber oclcNumber;
 
   public BibIdentifiers() {
-    isbn = new ISBN();
-    issn = new ISSN();
-    lccn = new LCCN();
-    oclcNumber = new OclcNumber();
+    
   }
   
   public BibIdentifiers(BibIdentifiers source) {

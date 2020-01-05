@@ -1,5 +1,6 @@
 package org.cdlib.domain.objects.bib;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -16,6 +17,10 @@ public class Title {
   private List<String> otherTitles;
   private String precedingTitle;
   private String succeedingTitle;
+  
+  public Title() {
+    otherTitles = new ArrayList<>();
+  }
 
   /*
    * 
