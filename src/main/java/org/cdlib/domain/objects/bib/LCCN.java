@@ -7,6 +7,8 @@ public class LCCN implements Identifier {
   
   private static final IdAuthority AUTHORITY = IdAuthority.LOC;
   private String value;
+  
+  public LCCN() {}
 
   public LCCN(String value) {
     this.value = value;

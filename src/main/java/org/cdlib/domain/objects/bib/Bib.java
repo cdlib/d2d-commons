@@ -1,5 +1,6 @@
 package org.cdlib.domain.objects.bib;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.validation.constraints.NotNull;
 import org.cdlib.domain.objects.Link;
@@ -11,7 +12,15 @@ import org.cdlib.util.JSON;
  * intended in the sense of Instance in Bibframe, similar to 
  * FRBR Manifestation.
  * 
- * Typically this will correspond to a MARC Bib record.
+ * This class models a simplified, pragmatic version of a 
+ * MARC record, and includes a link back to the corresponding 
+ * MARC record if required data is not available in the Bib.
+ * 
+ * The Bib article is hierarchical and guarantees that complex
+ * objects that it includes are not null, to relieve the client of the 
+ * burden of performing null checks on these objects.
+ * 
+ * Most simple objects (such as strings and Enum values) can be null.
  *
  */
 public class Bib {
@@ -20,20 +29,31 @@ public class Bib {
   private Carrier carrier;
   private String corporateAuthor;
   private String edition;
+  @NotNull
   private BibIdentifiers identifiers;
   private String language;
+  @NotNull
   private Link marc;
+  @NotNull
   private List<Link> otherForms;
+  @NotNull(message = "PublicationEvent required")
   private PublicationEvent publicationEvent;
-  @NotNull(message = "RecordType is required.")
   private RecordType recordType;
+  @NotNull
   private ResourceMeta resourceMeta;
   @NotNull(message = "Seriality is required.")
   private Seriality seriality;
   @NotNull(message = "Title is required.")
   private Title title;
   
-  public Bib() {}
+  public Bib() {
+    identifiers = new BibIdentifiers();
+    otherForms = new ArrayList<>();
+    publicationEvent = new PublicationEvent();
+    marc = new Link();
+    resourceMeta = new ResourceMeta();;
+    title = new Title();
+  }
   
   public Bib(Bib source) {
     this.author = source.author;

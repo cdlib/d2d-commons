@@ -1,5 +1,13 @@
 package org.cdlib.domain.objects.bib;
 
+import javax.validation.constraints.NotNull;
+
+/*
+ * Brings together all bibliographic identifiers.
+ * 
+ * The identifiers are all complex objects that implement Identifier,
+ * and are guaranteed to be not null.
+ */
 public class BibIdentifiers {
 
   private ISBN isbn;
@@ -7,7 +15,12 @@ public class BibIdentifiers {
   private LCCN lccn;
   private OclcNumber oclcNumber;
 
-  public BibIdentifiers() {}
+  public BibIdentifiers() {
+    isbn = new ISBN();
+    issn = new ISSN();
+    lccn = new LCCN();
+    oclcNumber = new OclcNumber();
+  }
   
   public BibIdentifiers(BibIdentifiers source) {
     this.isbn = source.isbn;
@@ -16,19 +29,19 @@ public class BibIdentifiers {
     this.oclcNumber = source.oclcNumber;
   }
 
-  public ISBN getIsbn() {
+  public @NotNull ISBN getIsbn() {
     return isbn;
   }
 
-  public ISSN getIssn() {
+  public @NotNull ISSN getIssn() {
     return issn;
   }
 
-  public LCCN getLccn() {
+  public @NotNull LCCN getLccn() {
     return lccn;
   }
 
-  public OclcNumber getOclcNumber() {
+  public @NotNull OclcNumber getOclcNumber() {
     return oclcNumber;
   }
 

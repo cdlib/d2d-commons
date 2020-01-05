@@ -19,7 +19,8 @@ public class Title {
 
   /*
    * 
-   * title printed on the bibliographic instance, in the original character set
+   * Title printed on the bibliographic instance, 
+   * in the original character set
    * 
    */
   @NotNull
