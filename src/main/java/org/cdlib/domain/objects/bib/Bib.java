@@ -16,11 +16,13 @@ import org.cdlib.util.JSON;
  * MARC record, and includes a link back to the corresponding 
  * MARC record if required data is not available in the Bib.
  * 
- * The Bib article is hierarchical and guarantees that complex
- * objects that it includes are not null, to relieve the client of the 
+ * The Bib article guarantees that complex
+ * objects (objects that are composed of other objects) 
+ * that it includes are not null, to relieve the client of the 
  * burden of performing null checks on these objects.
  * 
- * Most simple objects (such as strings and Enum values) can be null.
+ * Most simple objects (such as strings and Enum values) 
+ * can be null.
  *
  */
 public class Bib {

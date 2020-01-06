@@ -40,7 +40,7 @@ public class ISBN implements Identifier {
   }
 
   @Override
-  public @NotNull @NotEmpty String getAuthority() {
+  public String getAuthority() {
     return AUTHORITY.getUri();
   }
 
