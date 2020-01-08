@@ -1,5 +1,6 @@
 package org.cdlib.domain.objects.bib;
 
+import java.util.List;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
@@ -7,6 +8,7 @@ public class LCCN implements Identifier {
   
   private static final IdAuthority AUTHORITY = IdAuthority.LOC;
   private String value;
+  private List<String> alternateValues;
   
   public LCCN() {}
 
@@ -56,5 +58,14 @@ public class LCCN implements Identifier {
       return false;
     return true;
   }
-  
+
+  @Override
+  public List<String> getAlternateValues() {
+    return alternateValues;
+  }
+
+  public void setAlternateValues(List<String> alternateValues) {
+    this.alternateValues = alternateValues;
+  }
+
 }

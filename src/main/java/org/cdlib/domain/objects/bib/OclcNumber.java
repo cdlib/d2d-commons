@@ -11,7 +11,7 @@ import org.cdlib.util.CollectionUtil;
 public class OclcNumber implements Identifier {
 
   private static final IdAuthority AUTHORITY = IdAuthority.OCLC;
-  private List<String> formerValues;
+  private List<String> altValues;
   
   @NotNull
   @NotEmpty
@@ -23,12 +23,12 @@ public class OclcNumber implements Identifier {
 
   public OclcNumber(String value) {
     this.value = value;
-    formerValues = new ArrayList<>();
+    altValues = new ArrayList<>();
   }
   
   public OclcNumber(OclcNumber source) {
     this.value = source.value;
-    this.formerValues = source.formerValues;
+    this.altValues = source.altValues;
   }
 
   @Override
@@ -46,7 +46,7 @@ public class OclcNumber implements Identifier {
     if (!Objects.equals(this.value, other.value)) {
       return false;
     }
-    if (!Objects.equals(this.formerValues, other.formerValues)) {
+    if (!Objects.equals(this.altValues, other.altValues)) {
       return false;
     }
     return true;
@@ -57,8 +57,8 @@ public class OclcNumber implements Identifier {
     return AUTHORITY.getUri();
   }
 
-  public List<String> getFormerValues() {
-    return CollectionUtil.dedupedList(formerValues);
+  public List<String> getAlternateValues() {
+    return CollectionUtil.dedupedList(altValues);
   }
 
   @Override
@@ -70,12 +70,12 @@ public class OclcNumber implements Identifier {
   public int hashCode() {
     int hash = 3;
     hash = 73 * hash + Objects.hashCode(this.value);
-    hash = 73 * hash + Objects.hashCode(this.formerValues);
+    hash = 73 * hash + Objects.hashCode(this.altValues);
     return hash;
   }
 
-  public void setFormerValues(List<String> formerValues) {
-    this.formerValues = formerValues;
+  public void setAlternateValues(List<String> altValues) {
+    this.altValues = altValues;
   }
 
   public void setValue(String value) {
@@ -84,7 +84,7 @@ public class OclcNumber implements Identifier {
 
   @Override
   public String toString() {
-    return "OclcNumber{" + "value=" + value + ", formerValues=" + formerValues + '}';
+    return "OclcNumber{" + "value=" + value + ", formerValues=" + altValues + '}';
   }
 
 }

@@ -24,7 +24,7 @@ import org.cdlib.util.JSON;
  * Most simple objects (such as strings and Enum values) 
  * can be null.
  * 
- * [Series entry? Going from monograph record to serial record, 
+ * TODO: [Series entry? Going from monograph record to serial record, 
  * in both 490 and 830 -- $a and $v (also ISSN in $x)
  * different subfields to indicate monographic series]
  * 

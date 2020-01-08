@@ -2,12 +2,8 @@ package org.cdlib.domain.objects.bib;
 
 public class PublicationEvent {
   
-  // 008 -- first date: can use object
-  // call it year?? Can be "unknown", e.g. 192U.
-  // Indicate somehow that the date is unknown?
-  
-  // 260 gives strings for place and publisher
-  // 008 gives you country code/state
+  // 008 -- first date
+  // 260 gives strings for place and publisher (use)
   private String date;
   private String place;
   private String publisher;

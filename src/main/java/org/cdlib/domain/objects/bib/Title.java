@@ -14,10 +14,8 @@ public class Title {
 
   // 245
   private String mainTitle;
-  private String romanizedTitle;
+  private String nonRomanizedTitle;
   private List<String> otherTitles;
-  private String precedingTitle;
-  private String succeedingTitle;
   
   public Title() {
     otherTitles = new ArrayList<>();
@@ -44,8 +42,8 @@ public class Title {
    */
   @NotNull
   @NotEmpty
-  public String getRomanizedTitle() {
-    return romanizedTitle;
+  public String getNonRomanizedTitle() {
+    return nonRomanizedTitle;
   }
 
   /*
@@ -59,57 +57,27 @@ public class Title {
     return otherTitles;
   }
 
-  /*
-   * 
-   * the preceding title of a continuing resource
-   * this value may be null, and must not be an empty string
-   * 
-   */
-  @NotEmpty
-  public String getPrecedingTitle() {
-    return precedingTitle;
-  }
-
-  /*
-   * 
-   * the succeeding title of a continuing resource
-   * this value may be null, and must not be an empty string
-   * 
-   */
-  @NotEmpty
-  public String getSucceedingTitle() {
-    return succeedingTitle;
-  }
 
   public void setMainTitle(String canonicalTitle) {
     this.mainTitle = canonicalTitle;
   }
 
-  public void setRomanizedTitle(String romanizedTitle) {
-    this.romanizedTitle = romanizedTitle;
+  public void setNonRomanizedTitle(String romanizedTitle) {
+    this.nonRomanizedTitle = romanizedTitle;
   }
 
   public void setOtherTitles(List<String> otherTitles) {
     this.otherTitles = otherTitles;
   }
-
-  public void setPrecedingTitle(String precedingTitle) {
-    this.precedingTitle = precedingTitle;
-  }
-
-  public void setSucceedingTitle(String succeedingTitle) {
-    this.succeedingTitle = succeedingTitle;
-  }
+  
 
   @Override
   public int hashCode() {
     final int prime = 31;
     int result = 1;
     result = prime * result + ((mainTitle == null) ? 0 : mainTitle.hashCode());
+    result = prime * result + ((nonRomanizedTitle == null) ? 0 : nonRomanizedTitle.hashCode());
     result = prime * result + ((otherTitles == null) ? 0 : otherTitles.hashCode());
-    result = prime * result + ((precedingTitle == null) ? 0 : precedingTitle.hashCode());
-    result = prime * result + ((romanizedTitle == null) ? 0 : romanizedTitle.hashCode());
-    result = prime * result + ((succeedingTitle == null) ? 0 : succeedingTitle.hashCode());
     return result;
   }
 
@@ -127,25 +95,15 @@ public class Title {
         return false;
     } else if (!mainTitle.equals(other.mainTitle))
       return false;
+    if (nonRomanizedTitle == null) {
+      if (other.nonRomanizedTitle != null)
+        return false;
+    } else if (!nonRomanizedTitle.equals(other.nonRomanizedTitle))
+      return false;
     if (otherTitles == null) {
       if (other.otherTitles != null)
         return false;
     } else if (!otherTitles.equals(other.otherTitles))
-      return false;
-    if (precedingTitle == null) {
-      if (other.precedingTitle != null)
-        return false;
-    } else if (!precedingTitle.equals(other.precedingTitle))
-      return false;
-    if (romanizedTitle == null) {
-      if (other.romanizedTitle != null)
-        return false;
-    } else if (!romanizedTitle.equals(other.romanizedTitle))
-      return false;
-    if (succeedingTitle == null) {
-      if (other.succeedingTitle != null)
-        return false;
-    } else if (!succeedingTitle.equals(other.succeedingTitle))
       return false;
     return true;
   }
