@@ -21,14 +21,14 @@ public class OclcNumber implements Identifier {
   public OclcNumber() {
   }
 
-  public OclcNumber(String value) {
-    this.value = value;
-    altValues = new ArrayList<>();
-  }
-  
   public OclcNumber(OclcNumber source) {
     this.value = source.value;
     this.altValues = source.altValues;
+  }
+  
+  public OclcNumber(String value) {
+    this.value = value;
+    altValues = new ArrayList<>();
   }
 
   @Override
@@ -52,13 +52,13 @@ public class OclcNumber implements Identifier {
     return true;
   }
 
+  public List<String> getAlternateValues() {
+    return CollectionUtil.dedupedList(altValues);
+  }
+
   @Override
   public @NotNull String getAuthority() {
     return AUTHORITY.getUri();
-  }
-
-  public List<String> getAlternateValues() {
-    return CollectionUtil.dedupedList(altValues);
   }
 
   @Override
