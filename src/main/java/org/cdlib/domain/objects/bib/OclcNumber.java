@@ -11,15 +11,14 @@ import org.cdlib.util.CollectionUtil;
 public class OclcNumber implements Identifier {
 
   private static final IdAuthority AUTHORITY = IdAuthority.OCLC;
-  private List<String> altValues;
+  private List<String> altValues = new ArrayList<>();
   
   @NotNull
   @NotEmpty
   @OCLCNumber(message = "OCLC number must be in valid OCLC format.")
   private String value;
   
-  public OclcNumber() {
-  }
+  public OclcNumber() {}
 
   public OclcNumber(OclcNumber source) {
     this.value = source.value;
@@ -28,7 +27,6 @@ public class OclcNumber implements Identifier {
   
   public OclcNumber(String value) {
     this.value = value;
-    altValues = new ArrayList<>();
   }
 
   @Override
