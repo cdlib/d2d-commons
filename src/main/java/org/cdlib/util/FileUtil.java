@@ -54,6 +54,14 @@ public class FileUtil {
       throw new IllegalArgumentException("Class path " + pathOnClasspath + " is not writable.", e);
     }
   }
+  
+  public static void writeJsonToClasspath(String pathOnClasspath, Object pojo) {
+    write(pathOnClasspath, JSON.serialize(pojo));
+  }
+  
+  public static void writeJsonToPath(Path filePath, Object pojo) {
+    write(filePath, JSON.serialize(pojo));
+  }
 
   private static String buildString(List<String> inputList) {
     StringBuilder builder = new StringBuilder();
