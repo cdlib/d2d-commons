@@ -1,11 +1,43 @@
 package org.cdlib.holdings;
 
+import static org.cdlib.holdings.Holdings.DOUBLED_2D_YEAR_PAT;
+import static org.cdlib.holdings.Holdings.DOUBLED_2D_YEAR_TO_CURRENT_PAT;
+import static org.cdlib.holdings.Holdings.DOUBLED_ALL_SHORT_RANGE_PAT;
+import static org.cdlib.holdings.Holdings.DOUBLED_BOTH_2D_YEAR_RANGE_PAT;
+import static org.cdlib.holdings.Holdings.DOUBLED_BOTH_LEFT_2D_YEAR_RANGE_PAT;
+import static org.cdlib.holdings.Holdings.DOUBLED_BOTH_RIGHT_2D_YEAR_RANGE_PAT;
+import static org.cdlib.holdings.Holdings.DOUBLED_LEFT_2D_SHORT_RIGHT_PAT;
+import static org.cdlib.holdings.Holdings.DOUBLED_LEFT_2D_YEAR_RANGE_PAT;
+import static org.cdlib.holdings.Holdings.DOUBLED_LEFT_EXT_RANGE_PAT;
+import static org.cdlib.holdings.Holdings.DOUBLED_LEFT_YEAR_RANGE_PAT;
+import static org.cdlib.holdings.Holdings.DOUBLED_PAREN_TO_CURRENT_PAT;
+import static org.cdlib.holdings.Holdings.DOUBLED_RIGHT_2D_EXT_RANGE_PAT;
+import static org.cdlib.holdings.Holdings.DOUBLED_RIGHT_2D_YEAR_RANGE_PAT;
+import static org.cdlib.holdings.Holdings.DOUBLED_RIGHT_EXT_RANGE_PAT;
+import static org.cdlib.holdings.Holdings.DOUBLED_RIGHT_YEAR_RANGE_PAT;
+import static org.cdlib.holdings.Holdings.DOUBLED_YEAR_PAT;
+import static org.cdlib.holdings.Holdings.DOUBLED_YEAR_RANGE_PAT;
+import static org.cdlib.holdings.Holdings.DOUBLED_YEAR_TO_CURRENT_PAT;
+import static org.cdlib.holdings.Holdings.EXT_RANGE_PAT;
+import static org.cdlib.holdings.Holdings.NORMAL_2D_YEAR_RANGE_PAT;
+import static org.cdlib.holdings.Holdings.NORMAL_2D_YEAR_RANGE_W_WHITESPACE_PAT;
+import static org.cdlib.holdings.Holdings.NORMAL_RANGE_PAT;
+import static org.cdlib.holdings.Holdings.NORMAL_RANGE_W_WHITESPACE_PAT;
+import static org.cdlib.holdings.Holdings.NORMAL_YEAR_TO_CURRENT_PAT;
+import static org.cdlib.holdings.Holdings.PAREN_RANGE_PAT;
+import static org.cdlib.holdings.Holdings.PAREN_RANGE_TO_CURRENT_PAT;
+import static org.cdlib.holdings.Holdings.PAREN_SINGLE_YEAR_PAT;
+import static org.cdlib.holdings.Holdings.SINGLE_YEAR_PAT;
+import static org.cdlib.holdings.Holdings.STOP_WORDS;
+import static org.cdlib.holdings.Holdings.TWO_COLON_RANGE_PAT;
+import static org.cdlib.holdings.Holdings.TWO_PAREN_RANGE_PAT;
+import static org.cdlib.holdings.Holdings.VOL_OR_N_W_WHITESPACE_PAT;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import static org.cdlib.holdings.Holdings.*;
+import org.apache.log4j.Logger;
 
 /**
  * Implementation of HoldingsParser that identifies discrete ranges of holdings years. This enables
