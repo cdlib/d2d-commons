@@ -11,10 +11,13 @@ package org.cdlib.domain.objects.bib;
  */
 public enum RecordType {
   
-  LANGUAGE_MATERIAL,
-  NOTATED_MUSIC,
-  CARTOGRAPHIC_MATERIAL,
-  NON_MUSICAL_SOUND_RECORDING,
+  BOOK,
+  MUSIC,
+  MAP,
+  COMPUTER_FILE,
+  SERIAL,
+  VISUAL_MATERIALS,
+  MIXED_MATERIALS,
   OTHER;
 
 }

@@ -57,6 +57,10 @@ public class ISSN implements Identifier {
     return value;
   }
   
+  public void setValue(String value) {
+    this.value = value;
+  }
+  
   @Override
   @NotNull
   public List<String> getAlternateValues() {
