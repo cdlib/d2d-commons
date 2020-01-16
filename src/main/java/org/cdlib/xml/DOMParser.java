@@ -5,8 +5,7 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -26,7 +25,7 @@ import org.w3c.dom.Text;
 
 public class DOMParser {
 
-    private static Logger LOGGER = LogManager.getLogger(DOMParser.class);
+    private static Logger LOGGER = Logger.getLogger(DOMParser.class);
 
     public DocumentBuilder db = null;
 
