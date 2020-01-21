@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<record xmlns="http://www.loc.gov/MARC21/slim">
+    <leader>00000cas a2200000 a 4500</leader>
+    <controlfield tag="001">1755507</controlfield>
+    <controlfield tag="008">751101c18239999enkwr p       0   a0eng  </controlfield>
+    <datafield ind1=" " ind2=" " tag="010">
+      <subfield code="a">sf 82002015 </subfield>
+    </datafield>
+    <datafield ind1=" " ind2=" " tag="040">
+      <subfield code="a">DLC</subfield>
+      <subfield code="b">eng</subfield>
+      <subfield code="c">MUL</subfield>
+      <subfield code="d">OCL</subfield>
+      <subfield code="d">COO</subfield>
+      <subfield code="d">HUL</subfield>
+      <subfield code="d">NYG</subfield>
+      <subfield code="d">DLC</subfield>
+      <subfield code="d">SER</subfield>
+      <subfield code="d">RCS</subfield>
+      <subfield code="d">AIP</subfield>
+      <subfield code="d">DLC</subfield>
+      <subfield code="d">AIP</subfield>
+      <subfield code="d">IUL</subfield>
+      <subfield code="d">NSD</subfield>
+      <subfield code="d">DLC</subfield>
+      <subfield code="d">NST</subfield>
+      <subfield code="d">NSD</subfield>
+      <subfield code="d">NST</subfield>
+      <subfield code="d">HUL</subfield>
+      <subfield code="d">NST</subfield>
+      <subfield code="d">EBZ</subfield>
+      <subfield code="d">NLM</subfield>
+      <subfield code="d">OCLCQ</subfield>
+      <subfield code="d">MUQ</subfield>
+      <subfield code="d">GUA</subfield>
+      <subfield code="d">OCLCQ</subfield>
+      <subfield code="d">EEM</subfield>
+      <subfield code="d">OCLCQ</subfield>
+      <subfield code="d">UKMGB</subfield>
+      <subfield code="d">OCLCQ</subfield>
+      <subfield code="d">OCLCF</subfield>
+      <subfield code="d">OCLCO</subfield>
+      <subfield code="d">EUW</subfield>
+      <subfield code="d">OCLCO</subfield>
+      <subfield code="d">OCLCQ</subfield>
+      <subfield code="d">OCLCO</subfield>
+      <subfield code="d">PRB</subfield>
+      <subfield code="d">GILDS</subfield>
+      <subfield code="d">OCLCQ</subfield>
+      <subfield code="d">OCLCO</subfield>
+      <subfield code="d">CNO</subfield>
+      <subfield code="d">OCLCQ</subfield>
+      <subfield code="d">OCLCA</subfield>
+    </datafield>
+    <datafield ind1=" " ind2=" " tag="012">
+      <subfield code="b">3</subfield>
+      <subfield code="i">8812</subfield>
+    </datafield>
+    <datafield ind1="7" ind2=" " tag="016">
+      <subfield code="a">2985213R</subfield>
+      <subfield code="2">DNLM</subfield>
+    </datafield>
+    <datafield ind1="7" ind2=" " tag="016">
+      <subfield code="a">L01840000</subfield>
+      <subfield code="2">DNLM</subfield>
+    </datafield>
+    <datafield ind1="7" ind2=" " tag="016">
+      <subfield code="a">014503617</subfield>
+      <subfield code="2">Uk</subfield>
+    </datafield>
+    <datafield ind1=" " ind2=" " tag="019">
+      <subfield code="a">51394859</subfield>
+      <subfield code="a">185058220</subfield>
+      <subfield code="a">1064218671</subfield>
+    </datafield>
+    <datafield ind1=" " ind2=" " tag="022">
+      <subfield code="a">0140-6736</subfield>
+      <subfield code="l">0140-6736</subfield>
+      <subfield code="z">0023-7507</subfield>
+      <subfield code="2">2</subfield>
+    </datafield>
+    <datafield ind1="1" ind2=" " tag="029">
+      <subfield code="a">AU@</subfield>
+      <subfield code="b">000000911420</subfield>
+    </datafield>
+    <datafield ind1="1" ind2=" " tag="029">
+      <subfield code="a">AU@</subfield>
+      <subfield code="b">000009157494</subfield>
+    </datafield>
+    <datafield ind1="1" ind2=" " tag="029">
+      <subfield code="a">AU@</subfield>
+      <subfield code="b">000026073912</subfield>
+    </datafield>
+    <datafield ind1="1" ind2=" " tag="029">
+      <subfield code="a">AU@</subfield>
+      <subfield code="b">000053142105</subfield>
+    </datafield>
+    <datafield ind1="1" ind2=" " tag="029">
+      <subfield code="a">NLM</subfield>
+      <subfield code="b">2985213R</subfield>
+    </datafield>
+    <datafield ind1="1" ind2=" " tag="029">
+      <subfield code="a">NZ1</subfield>
+      <subfield code="b">4848784</subfield>
+    </datafield>
+    <datafield ind1="1" ind2=" " tag="029">
+      <subfield code="a">NZ1</subfield>
+      <subfield code="b">780160</subfield>
+    </datafield>
+    <datafield ind1="1" ind2=" " tag="029">
+      <subfield code="a">ZWZ</subfield>
+      <subfield code="b">039075990</subfield>
+    </datafield>
+    <datafield ind1="1" ind2=" " tag="029">
+      <subfield code="a">UKMGB</subfield>
+      <subfield code="b">014503617</subfield>
+    </datafield>
+    <datafield ind1=" " ind2=" " tag="030">
+      <subfield code="a">LANCAO</subfield>
+    </datafield>
+    <datafield ind1=" " ind2=" " tag="042">
+      <subfield code="a">pcc</subfield>
+      <subfield code="a">nsdp</subfield>
+    </datafield>
+    <datafield ind1="0" ind2="0" tag="050">
+      <subfield code="a">R31</subfield>
+      <subfield code="b">.L3</subfield>
+    </datafield>
+    <datafield ind1="0" ind2="0" tag="060">
+      <subfield code="a">W1</subfield>
+      <subfield code="b">LA453</subfield>
+    </datafield>
+    <datafield ind1="0" ind2="4" tag="082">
+      <subfield code="a">610.5</subfield>
+      <subfield code="b">qL247</subfield>
+    </datafield>
+    <datafield ind1="0" ind2=" " tag="130">
+      <subfield code="a">Lancet (London, England)</subfield>
+    </datafield>
+    <datafield ind1="1" ind2=" " tag="210">
+      <subfield code="a">Lancet</subfield>
+      <subfield code="b">(Br. ed.)</subfield>
+    </datafield>
+    <datafield ind1=" " ind2="0" tag="222">
+      <subfield code="a">Lancet</subfield>
+      <subfield code="b">(British edition)</subfield>
+    </datafield>
+    <datafield ind1="1" ind2="4" tag="245">
+      <subfield code="a">The lancet.</subfield>
+    </datafield>
+    <datafield ind1=" " ind2=" " tag="260">
+      <subfield code="a">London :</subfield>
+      <subfield code="b">J. Onwhyn,</subfield>
+      <subfield code="c">1823-</subfield>
+    </datafield>
+    <datafield ind1=" " ind2=" " tag="300">
+      <subfield code="a">volumes :</subfield>
+      <subfield code="b">illustrations ;</subfield>
+      <subfield code="c">22-27 cm</subfield>
+    </datafield>
+    <datafield ind1=" " ind2=" " tag="310">
+      <subfield code="a">Weekly</subfield>
+    </datafield>
+    <datafield ind1=" " ind2=" " tag="336">
+      <subfield code="a">text</subfield>
+      <subfield code="b">txt</subfield>
+      <subfield code="2">rdacontent</subfield>
+    </datafield>
+    <datafield ind1=" " ind2=" " tag="337">
+      <subfield code="a">unmediated</subfield>
+      <subfield code="b">n</subfield>
+      <subfield code="2">rdamedia</subfield>
+    </datafield>
+    <datafield ind1=" " ind2=" " tag="338">
+      <subfield code="a">volume</subfield>
+      <subfield code="b">nc</subfield>
+      <subfield code="2">rdacarrier</subfield>
+    </datafield>
+    <datafield ind1="0" ind2=" " tag="362">
+      <subfield code="a">Vol. 1, no. 1 (Oct. 5, 1823)-</subfield>
+    </datafield>
+    <datafield ind1=" " ind2=" " tag="500">
+      <subfield code="a">Imprint varies.</subfield>
+    </datafield>
+    <datafield ind1=" " ind2=" " tag="500">
+      <subfield code="a">Beginning with volumes for 1966, the LC set is comprised of a mixture of issues from the London and North American editions.</subfield>
+      <subfield code="5">DLC</subfield>
+    </datafield>
+    <datafield ind1="2" ind2=" " tag="510">
+      <subfield code="a">Chemical abstracts</subfield>
+      <subfield code="x">0009-2258</subfield>
+    </datafield>
+    <datafield ind1=" " ind2=" " tag="515">
+      <subfield code="a">Volume designation varies: from 1823-1827 called v. 1-12; from 1827-1907 issued in 2 unnumbered vols. per year; from 1907-1960 called v. 174-279; from 1960-1989 issued in two unnumbered volumes per year; from 1990- called v. 335, no. 8680-</subfield>
+    </datafield>
+    <datafield ind1=" " ind2=" " tag="580">
+      <subfield code="a">Issued 1842-1901 also in an American edition (called: London lancet, 1842-1892; Lancet, 1895-1897; and: New York lancet, 1898-1901); issued in a North American edition, July 2, 1966-</subfield>
+    </datafield>
+    <datafield ind1=" " ind2=" " tag="580">
+      <subfield code="a">Selected articles are also published at monthly intervals in Spanish, Italian, German, and French editions of the Lancet.</subfield>
+    </datafield>
+    <datafield ind1=" " ind2=" " tag="588">
+      <subfield code="a">Latest issue consulted: Vol. 363, no. 9402 (3 Jan. 2004).</subfield>
+    </datafield>
+    <datafield ind1=" " ind2="0" tag="650">
+      <subfield code="a">Medicine</subfield>
+      <subfield code="v">Periodicals.</subfield>
+    </datafield>
+    <datafield ind1=" " ind2="2" tag="650">
+      <subfield code="a">Medicine.</subfield>
+    </datafield>
+    <datafield ind1=" " ind2="6" tag="650">
+      <subfield code="a">Médecine</subfield>
+      <subfield code="v">Périodiques.</subfield>
+    </datafield>
+    <datafield ind1=" " ind2="7" tag="650">
+      <subfield code="a">Medicine.</subfield>
+      <subfield code="2">fast</subfield>
+      <subfield code="0">(OCoLC)fst01014893</subfield>
+    </datafield>
+    <datafield ind1=" " ind2="2" tag="655">
+      <subfield code="a">Periodical.</subfield>
+    </datafield>
+    <datafield ind1=" " ind2="7" tag="655">
+      <subfield code="a">Periodicals.</subfield>
+      <subfield code="2">fast</subfield>
+      <subfield code="0">(OCoLC)fst01411641</subfield>
+    </datafield>
+    <datafield ind1=" " ind2="7" tag="655">
+      <subfield code="a">Periodicals.</subfield>
+      <subfield code="2">rbgenr</subfield>
+    </datafield>
+    <datafield ind1="1" ind2=" " tag="775">
+      <subfield code="t">London lancet</subfield>
+      <subfield code="g">1842-1892</subfield>
+      <subfield code="w">(OCoLC)3489129</subfield>
+    </datafield>
+    <datafield ind1="1" ind2=" " tag="775">
+      <subfield code="t">Lancet (New York, N.Y.)</subfield>
+      <subfield code="g">1895-1897</subfield>
+      <subfield code="x">1050-5911</subfield>
+      <subfield code="w">(DLC)sn 90002281</subfield>
+      <subfield code="w">(OCoLC)1771102</subfield>
+    </datafield>
+    <datafield ind1="1" ind2=" " tag="775">
+      <subfield code="t">New York lancet (New York, N.Y. : 1898)</subfield>
+      <subfield code="g">1898-1901</subfield>
+      <subfield code="x">1050-124X</subfield>
+      <subfield code="w">(DLC)sn 90002467</subfield>
+      <subfield code="w">(OCoLC)10426217</subfield>
+    </datafield>
+    <datafield ind1="1" ind2=" " tag="775">
+      <subfield code="t">Lancet (North American ed.)</subfield>
+      <subfield code="g">2 July 1966-</subfield>
+      <subfield code="x">0099-5355</subfield>
+      <subfield code="w">(DLC)   82643641</subfield>
+      <subfield code="w">(OCoLC)2141608</subfield>
+    </datafield>
+    <datafield ind1="1" ind2=" " tag="776">
+      <subfield code="t">Lancet (London, England : Online)</subfield>
+      <subfield code="x">1474-547X</subfield>
+      <subfield code="w">(DLC)  2004233008</subfield>
+      <subfield code="w">(OCoLC)41092744</subfield>
+    </datafield>
+    <datafield ind1="0" ind2="8" tag="776">
+      <subfield code="i">Online version:</subfield>
+      <subfield code="t">Lancet (London, England)</subfield>
+      <subfield code="w">(OCoLC)742435821</subfield>
+    </datafield>
+    <datafield ind1=" " ind2=" " tag="850">
+      <subfield code="a">CLU</subfield>
+      <subfield code="a">CaMWU</subfield>
+      <subfield code="a">CaOSul</subfield>
+      <subfield code="a">CoU</subfield>
+      <subfield code="a">CtHT</subfield>
+      <subfield code="a">CtY</subfield>
+      <subfield code="a">DLC</subfield>
+      <subfield code="a">DNLM</subfield>
+      <subfield code="a">GU</subfield>
+      <subfield code="a">ICRL</subfield>
+      <subfield code="a">InU</subfield>
+      <subfield code="a">MBCo</subfield>
+      <subfield code="a">MiU</subfield>
+      <subfield code="a">MnSU</subfield>
+      <subfield code="a">N</subfield>
+      <subfield code="a">NIC</subfield>
+      <subfield code="a">OCU</subfield>
+      <subfield code="a">PPiU</subfield>
+      <subfield code="a">PU</subfield>
+      <subfield code="a">TxDaM</subfield>
+      <subfield code="a">TxLT</subfield>
+      <subfield code="a">TxU</subfield>
+      <subfield code="a">ViBlbV</subfield>
+      <subfield code="a">WaU</subfield>
+    </datafield>
+    <datafield ind1="4" ind2="1" tag="856">
+      <subfield code="u">http://www.thelancet.com/</subfield>
+    </datafield>
+    <datafield ind1="4" ind2="1" tag="856">
+      <subfield code="u">http://www.sciencedirect.com/science/journal/01406736</subfield>
+    </datafield>
+  </record>
