@@ -25,6 +25,22 @@ public class MarcHelperTest {
   public void leadercharBadIndex_throwException() throws MarcDataReferenceException {
     assertEquals('c', marcHelper.leaderChar(90));
   }
+  
+  @Test
+  public void leaderSegment_happyPath() throws MarcDataReferenceException {
+    char[] expected = {'c', 'a', 'm'};
+    assertArrayEquals(expected, marcHelper.leaderSegment(5, 8));
+  }
+  
+  @Test(expected = MarcDataReferenceException.class)
+  public void leaderSegmentBadIndex_throwsException() throws MarcDataReferenceException {
+    marcHelper.leaderSegment(8, 5);
+  }
+  
+  @Test(expected = MarcDataReferenceException.class)
+  public void leaderSegmentBadIndex2_throwsException() throws MarcDataReferenceException {
+    marcHelper.leaderSegment(100, 101);
+  }
 
   @Test
   public void controlFieldChar_happyPath() throws MarcDataReferenceException {
@@ -44,11 +60,7 @@ public class MarcHelperTest {
   @Test
   public void controlFieldSegment_happyPath() throws MarcDataReferenceException {
     char[] expected = {'7', '5', '1'};
-    char[] actual = marcHelper.controlFieldSegment("001", 0, 3);
-    for (int i = 0; i < expected.length; i++) {
-      assertEquals(expected[i], actual[i]);
-    }
-    assertEquals(3, marcHelper.controlFieldSegment("001", 0, 3).length);
+    assertArrayEquals(expected, marcHelper.controlFieldSegment("001", 0, 3));
   }
   
   @Test(expected = MarcDataReferenceException.class)
@@ -58,7 +70,7 @@ public class MarcHelperTest {
   
   @Test(expected = MarcDataReferenceException.class)
   public void controlFieldSegmentBadField_throwsException() throws MarcDataReferenceException {
-    marcHelper.controlFieldSegment("999", 0, 1);
+    marcHelper.controlFieldSegment("245", 0, 1);
   }
 
   @Test(expected = MarcDataReferenceException.class)

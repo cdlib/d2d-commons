@@ -49,12 +49,7 @@ public class Marc4jHelper {
    * Returns the character at the specified index of the specified MARC control field.
    */
   public char controlFieldChar(String field, int index) throws MarcDataReferenceException {
-    VariableField varField = record.getVariableField(field);
-    if (varField == null || !(varField instanceof ControlField)) {
-      throw new MarcDataReferenceException("Record has no control field " + field);
-    }
-    ControlField ctrlField = (ControlField) record.getVariableField(field);
-    String ctrlFieldStr = ctrlField.getData();
+    String ctrlFieldStr = controlFieldVal(field);
     try {
       return ctrlFieldStr.charAt(index);
     } catch (StringIndexOutOfBoundsException e) {
@@ -62,20 +57,36 @@ public class Marc4jHelper {
     }
   }
 
-  public char[] controlFieldSegment(String field, int start, int end) throws MarcDataReferenceException {
-    String ctrlFieldStr = "";
-    ControlField ctrlField = (ControlField) record.getVariableField(field);
-    if (ctrlField == null) {
-      throw new MarcDataReferenceException(String.format("No field %s found", field));
-    }
-    ctrlFieldStr = ctrlField.getData();
+  /*
+   * Returns a segment of a control field value.
+   * 
+   * For example, if control field has value "cats"
+   * 
+   * If index = 1 and ubound = 3 the method returns {'a','t'}
+   *  
+   */
+  public char[] controlFieldSegment(String field, int index, int ubound) throws MarcDataReferenceException {
+    String ctrlFieldStr = controlFieldVal(field);
+    return fromSegment(ctrlFieldStr, index, ubound);
+  }
+  
+  private char[] fromSegment(String ctrlFieldStr, int index, int ubound) throws MarcDataReferenceException {
     String segment = "";
     try {
-      segment = ctrlFieldStr.substring(start, end);
+      segment = ctrlFieldStr.substring(index, ubound);
     } catch (StringIndexOutOfBoundsException e) {
-      throw new MarcDataReferenceException(String.format("No segment found starting at %s through %s in control field %s", start, end, field));
+      throw new MarcDataReferenceException(String.format("No segment found starting at %s through %s ", index, ubound));
     }
     return segment.toCharArray();
+  }
+  
+  public String controlFieldVal(String field) throws MarcDataReferenceException {
+    VariableField varField = record.getVariableField(field);
+    if (varField == null || !(varField instanceof ControlField)) {
+      throw new MarcDataReferenceException("Record has no control field " + field);
+    }
+    ControlField ctrlField = (ControlField) varField;
+    return ctrlField.getData();
   }
 
   /*
@@ -88,6 +99,11 @@ public class Marc4jHelper {
     } catch (StringIndexOutOfBoundsException e) {
       throw new MarcDataReferenceException("char at leader index " + index + " not found.", e);
     }
+  }
+  
+  public char[] leaderSegment(int index, int ubound) throws MarcDataReferenceException {
+    String leader = record.getLeader().marshal();
+    return fromSegment(leader, index, ubound);
   }
 
   /*
