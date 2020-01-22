@@ -1,8 +1,8 @@
 package org.cdlib.util;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.*;
+import java.util.List;
+import java.util.Optional;
 import org.cdlib.util.marc2.MarcRecordHelper;
 import org.junit.Before;
 import org.junit.Test;
@@ -129,38 +129,73 @@ public class MarcHelperTest {
 
   @Test
   public void subfield_happyPath() {
-    assertEquals("(William Butler),", marcHelper.subfieldVal("100", "q").get());
+    assertEquals("(William Butler),", marcHelper.subfieldVal("100", 'q').get());
+  }
+  
+  @Test
+  public void subfieldRepeating_getFirstValue() {
+    assertEquals("OCLCO", marcHelper.subfieldVal("040", 'd').get());
   }
 
   @Test
   public void noSuchField_emptyOptional() {
-    assertFalse(marcHelper.subfieldVal("999", "a").isPresent());
+    assertFalse(marcHelper.subfieldVal("999", 'a').isPresent());
   }
 
   @Test
   public void noSuchSubfield_emptyOptional() {
-    assertFalse(marcHelper.subfieldVal("100", "z").isPresent());
+    assertFalse(marcHelper.subfieldVal("100", 'z').isPresent());
   }
   
   @Test(expected = IllegalArgumentException.class)
   public void fieldTagEmpty_illegal() {
-    marcHelper.subfieldVal("", "z");
+    marcHelper.subfieldVal("", 'z');
   }
   
   @Test(expected = NullPointerException.class)
   public void fieldTagNull_illegal() {
-    marcHelper.subfieldVal(null, "z");
+    marcHelper.subfieldVal(null, 'z');
   }
   
-  @Test(expected = IllegalArgumentException.class)
-  public void subfieldEmpty_illegal() {
-    marcHelper.subfieldVal("245", "");
+  @Test
+  public void subfields_happyPath() {
+    Optional<List<String>> result = marcHelper.subfieldVals("020", 'a');
+    assertTrue(result.isPresent());
+    List<String> innerResult = result.get();
+    assertEquals("9781847171481", innerResult.get(0));
+    assertEquals("1847171486", innerResult.get(1));
   }
   
-  @Test(expected = NullPointerException.class)
-  public void subfieldTagNull_illegal() {
-    marcHelper.subfieldVal("245", null);
+  @Test
+  public void subfields_happyPath1() {
+    Optional<List<String>> result = marcHelper.subfieldVals("100", 'q');
+    assertTrue(result.isPresent());
+  }
+  
+  @Test
+  public void multipleSubfield_getAll() {
+    Optional<List<String>> result = marcHelper.subfieldVals("040", 'd');
+    assertTrue(result.isPresent());
+    assertEquals(3, result.get().size());
   }
 
+  @Test
+  public void subfieldsNoField_emptyOptional() {
+    Optional<List<String>> result = marcHelper.subfieldVals("900", 'a');
+    assertFalse(result.isPresent());
+  }
+  
+  @Test
+  public void subfieldsNotDataField_emptyOptional() {
+    Optional<List<String>> result = marcHelper.subfieldVals("001", 'a');
+    assertFalse(result.isPresent());
+  }
+  
+  @Test
+  public void subfieldsMissing_emptyOptional() {
+    Optional<List<String>> result = marcHelper.subfieldVals("100", 'z');
+    assertFalse(result.isPresent());
+  }
+  
 
 }

@@ -5,6 +5,8 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 import org.cdlib.util.DeserializationException;
 import org.marc4j.MarcException;
 import org.marc4j.MarcXmlReader;
@@ -12,7 +14,6 @@ import org.marc4j.marc.ControlField;
 import org.marc4j.marc.DataField;
 import org.marc4j.marc.Record;
 import org.marc4j.marc.Subfield;
-import org.marc4j.marc.VariableField;
 
 /*
  * A wrapper class around a Marc4J record.
@@ -20,12 +21,12 @@ import org.marc4j.marc.VariableField;
  * This class provides method that simplifies and limits the boilerplate of direct calls to the
  * Marc4J Record methods.
  * 
- * This class sticks to the mechanics of extracting data from the MARC record
- * and avoids semantics (so it would not have getTitle or getControlNumber, for example).
+ * This class sticks to the mechanics of extracting data from the MARC record and avoids semantics
+ * (so it would not have getTitle or getControlNumber, for example).
  * 
- * The methods return Optional<T>, which is empty if the MARC record lacks the field or subfield specified,
- * but will throw IllegalArgumentException if the arguments are invalid (such as negative integer indexes, or empty
- * tag or subfield names.
+ * The methods return Optional<T>, which is empty if the MARC record lacks the field or subfield
+ * specified, but will throw IllegalArgumentException if the arguments are invalid (such as negative
+ * integer indexes, or empty tag or subfield names.
  * 
  */
 public class MarcRecordHelper {
@@ -43,7 +44,7 @@ public class MarcRecordHelper {
       throw new DeserializationException("Failure to parse marcXml " + marcXml, e, marcXml);
     }
   }
-  
+
   private Record asRecord(String marcXml) {
     Record marcRecord = null;
     InputStream is = new ByteArrayInputStream(marcXml.getBytes());
@@ -56,6 +57,8 @@ public class MarcRecordHelper {
 
   /*
    * Optionally returns the character at the specified index of the specified MARC control field.
+   * 
+   * If the control field repeats, the character is from the first field found.
    */
   public Optional<Character> controlFieldChar(String tag, int index) {
     if (index < 0) {
@@ -64,16 +67,7 @@ public class MarcRecordHelper {
     if (tag.isEmpty()) {
       throw new IllegalArgumentException("Tag cannot be empty.");
     }
-    Optional<String> fieldValOpt = controlFieldVal(tag);
-    if (fieldValOpt.isPresent()) {
-      String fieldVal = fieldValOpt.get();
-      if (index + 1 > fieldVal.length()) {
-        return Optional.empty();
-      }
-      return Optional.of(fieldValOpt.get().charAt(index));
-    } else {
-      return Optional.empty();
-    }
+    return controlFieldVal(tag).map(s -> s.charAt(index));
   }
 
   /*
@@ -109,12 +103,15 @@ public class MarcRecordHelper {
     if (tag.isEmpty()) {
       throw new IllegalArgumentException("Tag cannot be empty.");
     }
-    VariableField varField = record.getVariableField(tag);
-    if (varField == null || !(varField instanceof ControlField)) {
+    List<ControlField> controlFields = record.getControlFields();
+    Optional<ControlField> controlField = controlFields.stream()
+        .filter(cf -> cf.getTag().contentEquals(tag))
+        .findFirst();
+   
+    if (!controlField.isPresent()) {
       return Optional.empty();
     }
-    ControlField ctrlField = (ControlField) varField;
-    return Optional.of(ctrlField.getData());
+    return Optional.ofNullable(controlField.get().getData());
   }
 
   /*
@@ -140,15 +137,15 @@ public class MarcRecordHelper {
    * Returns the first value of a list of subfields values. Normally this would be used with
    * non-repeating fields.
    */
-  public Optional<String> subfieldVal(String tag, String subfield) {
-    if (tag.isEmpty() || subfield.isEmpty()) {
-      throw new IllegalArgumentException("arguments cannot be empty");
+  public Optional<String> subfieldVal(String tag, char subfieldCode) {
+    if (tag.isEmpty()) {
+      throw new IllegalArgumentException("tag cannot be empty");
     }
-    Optional<List<String>> valuesOpt = subfieldVals(tag, subfield);
+    Optional<List<String>> valuesOpt = subfieldVals(tag, subfieldCode);
     if (!valuesOpt.isPresent()) {
       return Optional.empty();
     }
-    List<String> values = subfieldVals(tag, subfield).get();
+    List<String> values = subfieldVals(tag, subfieldCode).get();
     if (values.isEmpty()) {
       return Optional.empty();
     }
@@ -158,28 +155,34 @@ public class MarcRecordHelper {
   /*
    * Returns a list of values for a specific subfield of a specific field.
    * 
-   * Normally this would be used with repeating fields.
+   * Normally this would be used with repeating fields and repeating subfields.
    * 
    * Returns an empty List if no values are found.
    */
-  public Optional<List<String>> subfieldVals(String tag, String subfieldName) {
+  public Optional<List<String>> subfieldVals(String tag, char subfieldCode) {
     List<String> fieldValues = new ArrayList<String>();
-    List<VariableField> dataFields = record.getVariableFields(tag);
-
-    if (!dataFields.isEmpty()) {
-      for (VariableField field : dataFields) {
-        DataField df = (DataField) field;
-        List<Subfield> subfields = df.getSubfields(subfieldName);
-        if (!subfields.isEmpty()) {
-          for (Subfield sf : subfields) {
-            fieldValues.add(sf.getData().trim());
-          }
+    
+    List<DataField> dataFields = record.getDataFields().stream()
+        .filter(hasTagAndSubfield(tag, subfieldCode))
+        .collect(Collectors.toList());
+    
+    for (DataField field : dataFields) {
+      List<Subfield> subfields = field.getSubfields(subfieldCode);
+      for (Subfield sb : subfields) {
+        if (sb != null) {
+          fieldValues.add(sb.getData().trim());
         }
       }
-    } else {
+    }
+    if (fieldValues.isEmpty()) {
       return Optional.empty();
     }
     return Optional.of(fieldValues);
   }
+  
+  private static Predicate<DataField> hasTagAndSubfield(String tag, char subfieldCode) {
+    return df -> df.getTag().equals(tag) && !df.getSubfields(subfieldCode).isEmpty();
+  }
+
 
 }
