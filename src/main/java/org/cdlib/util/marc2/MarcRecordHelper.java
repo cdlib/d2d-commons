@@ -19,6 +19,14 @@ import org.marc4j.marc.VariableField;
  * 
  * This class provides method that simplifies and limits the boilerplate of direct calls to the
  * Marc4J Record methods.
+ * 
+ * This class sticks to the mechanics of extracting data from the MARC record
+ * and avoids semantics (so it would not have getTitle or getControlNumber, for example).
+ * 
+ * The methods return Optional<T>, which is empty if the MARC record lacks the field or subfield specified,
+ * but will throw IllegalArgumentException if the arguments are invalid (such as negative integer indexes, or empty
+ * tag or subfield names.
+ * 
  */
 public class MarcRecordHelper {
 
@@ -34,6 +42,16 @@ public class MarcRecordHelper {
     } catch (MarcException e) {
       throw new DeserializationException("Failure to parse marcXml " + marcXml, e, marcXml);
     }
+  }
+  
+  private Record asRecord(String marcXml) {
+    Record marcRecord = null;
+    InputStream is = new ByteArrayInputStream(marcXml.getBytes());
+    MarcXmlReader reader = new MarcXmlReader(is);
+    while (reader.hasNext()) {
+      marcRecord = reader.next();
+    }
+    return marcRecord;
   }
 
   /*
@@ -66,8 +84,8 @@ public class MarcRecordHelper {
    * If index = 1 and ubound = 3 the method returns {'a','t'}
    * 
    */
-  public Optional<char[]> controlFieldSegment(String field, int index, int ubound) {
-    Optional<String> ctrlFieldValOpt = controlFieldVal(field);
+  public Optional<char[]> controlFieldSegment(String tag, int index, int ubound) {
+    Optional<String> ctrlFieldValOpt = controlFieldVal(tag);
     if (!ctrlFieldValOpt.isPresent()) {
       return Optional.empty();
     }
@@ -162,16 +180,6 @@ public class MarcRecordHelper {
       return Optional.empty();
     }
     return Optional.of(fieldValues);
-  }
-
-  private Record asRecord(String marcXml) {
-    Record marcRecord = null;
-    InputStream is = new ByteArrayInputStream(marcXml.getBytes());
-    MarcXmlReader reader = new MarcXmlReader(is);
-    while (reader.hasNext()) {
-      marcRecord = reader.next();
-    }
-    return marcRecord;
   }
 
 }
