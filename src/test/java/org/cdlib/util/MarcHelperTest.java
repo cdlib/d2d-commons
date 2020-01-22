@@ -1,96 +1,165 @@
 package org.cdlib.util;
 
-import static org.junit.Assert.*;
-import org.cdlib.util.marc2.Marc4jHelper;
-import org.cdlib.util.marc2.MarcDataReferenceException;
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import org.cdlib.util.marc2.MarcRecordHelper;
 import org.junit.Before;
 import org.junit.Test;
 
 public class MarcHelperTest {
 
-  Marc4jHelper marcHelper;
+  MarcRecordHelper marcHelper;
 
   @Before
   public void init() throws DeserializationException {
     String marcXML = FileUtil.read("bib/isbn9781847171481.xml");
-    marcHelper = new Marc4jHelper(marcXML);
+    marcHelper = new MarcRecordHelper(marcXML);
   }
 
   @Test
-  public void leaderchar_happyPath() throws MarcDataReferenceException {
-    assertEquals('c', marcHelper.leaderChar(5));
+  public void leaderchar_happyPath() {
+    assertEquals(new Character('c'), marcHelper.leaderChar(5).get());
   }
-
-  @Test(expected = MarcDataReferenceException.class)
-  public void leadercharBadIndex_throwException() throws MarcDataReferenceException {
-    assertEquals('c', marcHelper.leaderChar(90));
+  
+  @Test(expected = IllegalArgumentException.class)
+  public void leadercharNegativeIndex_throwException() {
+    marcHelper.leaderChar(-1).get();
   }
   
   @Test
-  public void leaderSegment_happyPath() throws MarcDataReferenceException {
+  public void leadercharIndexOutOfRange_emptyOptional() {
+    assertFalse(marcHelper.leaderChar(100).isPresent());
+  }
+
+  @Test
+  public void leadercharBadIndex_emptyOptional() {
+    assertFalse(marcHelper.leaderChar(90).isPresent());
+  }
+  
+  @Test
+  public void leaderSegment_happyPath() {
     char[] expected = {'c', 'a', 'm'};
-    assertArrayEquals(expected, marcHelper.leaderSegment(5, 8));
+    char[] actual =  marcHelper.leaderSegment(5, 8).get();
+    assertArrayEquals(expected, actual);
   }
   
-  @Test(expected = MarcDataReferenceException.class)
-  public void leaderSegmentBadIndex_throwsException() throws MarcDataReferenceException {
+  @Test(expected = IllegalArgumentException.class)
+  public void leaderSegmentBadArgs_throwsException() {
     marcHelper.leaderSegment(8, 5);
   }
   
-  @Test(expected = MarcDataReferenceException.class)
-  public void leaderSegmentBadIndex2_throwsException() throws MarcDataReferenceException {
-    marcHelper.leaderSegment(100, 101);
+  @Test
+  public void leaderSegmentOutOfRange_emptyOptional() {
+    assertFalse(marcHelper.leaderSegment(100, 101).isPresent());
+  }
+  
+  @Test
+  public void leaderSegmentOutOfRange2_emptyOptional() {
+    assertFalse(marcHelper.leaderSegment(0, 101).isPresent());
+  }
+  
+  @Test
+  public void controlFieldVal_happyPath() {
+    String expected = "751666086";
+    assertEquals(expected, marcHelper.controlFieldVal("001").get());
+  }
+  
+  @Test(expected = IllegalArgumentException.class)
+  public void controlFieldValEmptyTag_illegal() {
+    marcHelper.controlFieldVal("");
+  }
+  
+  @Test(expected = NullPointerException.class)
+  public void controlFieldValNullTag_illegal() {
+    marcHelper.controlFieldVal(null);
+  }
+  
+  @Test
+  public void controlFieldMissing_optionalEmpty() {
+    assertFalse(marcHelper.controlFieldVal("9999").isPresent());
+  }
+  
+  @Test
+  public void notControlField_optionalEmpty() {
+    assertFalse(marcHelper.controlFieldVal("245").isPresent());
+  }
+  
+  @Test(expected = NullPointerException.class)
+  public void nullControlField_throwsException() {
+    assertFalse(marcHelper.controlFieldVal(null).isPresent());
   }
 
   @Test
-  public void controlFieldChar_happyPath() throws MarcDataReferenceException {
-    assertEquals('2', marcHelper.controlFieldChar("008", 7));
-  }
-
-  @Test(expected = MarcDataReferenceException.class)
-  public void whenNoField_throwsException() throws MarcDataReferenceException {
-    marcHelper.controlFieldChar("9999", 3);
-  }
-
-  @Test(expected = MarcDataReferenceException.class)
-  public void whenNotControlField_throwsException() throws MarcDataReferenceException {
-    marcHelper.controlFieldChar("245", 3);
+  public void controlFieldChar_happyPath() {
+    assertEquals(new Character('2'), marcHelper.controlFieldChar("008", 7).get());
   }
 
   @Test
-  public void controlFieldSegment_happyPath() throws MarcDataReferenceException {
+  public void controlFieldCharNoField_throwsException() {
+    assertFalse(marcHelper.controlFieldChar("9999", 3).isPresent());
+  }
+
+  @Test
+  public void controlFieldCharNotControlField_throwsException() {
+    assertFalse(marcHelper.controlFieldChar("245", 3).isPresent());
+  }
+
+  @Test
+  public void controlFieldSegment_happyPath() {
     char[] expected = {'7', '5', '1'};
-    assertArrayEquals(expected, marcHelper.controlFieldSegment("001", 0, 3));
+    char[] actual = marcHelper.controlFieldSegment("001", 0, 3).get();
+    assertArrayEquals(expected, actual);
   }
   
-  @Test(expected = MarcDataReferenceException.class)
-  public void controlFieldSegmentBadRange_throwsException() throws MarcDataReferenceException {
-    marcHelper.controlFieldSegment("001", 90, 93);
+  @Test
+  public void controlFieldSegmentOutOfRange_emptyOptional() {
+    assertFalse(marcHelper.controlFieldSegment("001", 90, 93).isPresent());
   }
   
-  @Test(expected = MarcDataReferenceException.class)
-  public void controlFieldSegmentBadField_throwsException() throws MarcDataReferenceException {
-    marcHelper.controlFieldSegment("245", 0, 1);
+  @Test
+  public void controlFieldSegmentOutOfRange2_emptyOptional() {
+    assertFalse(marcHelper.controlFieldSegment("001", 0, 93).isPresent());
   }
-
-  @Test(expected = MarcDataReferenceException.class)
-  public void whenNoControlChar_throwsException() throws MarcDataReferenceException {
-    assertNull(marcHelper.controlFieldChar("008", 1000));
+  
+  @Test
+  public void controlFieldSegmentNotControlField_emptyOptional() {
+    assertFalse(marcHelper.controlFieldSegment("245", 0, 1).isPresent());
   }
 
   @Test
-  public void subfield_happyPath() throws MarcDataReferenceException {
-    assertEquals("(William Butler),", marcHelper.subfieldVal("100", "q"));
+  public void subfield_happyPath() {
+    assertEquals("(William Butler),", marcHelper.subfieldVal("100", "q").get());
   }
 
-  @Test(expected = MarcDataReferenceException.class)
-  public void noField_throwsException() throws MarcDataReferenceException {
-    marcHelper.subfieldVal("999", "a");
+  @Test
+  public void noSuchField_emptyOptional() {
+    assertFalse(marcHelper.subfieldVal("999", "a").isPresent());
   }
 
-  @Test(expected = MarcDataReferenceException.class)
-  public void noSubfield_throwsException() throws MarcDataReferenceException {
-    marcHelper.subfieldVal("100", "z");
+  @Test
+  public void noSuchSubfield_emptyOptional() {
+    assertFalse(marcHelper.subfieldVal("100", "z").isPresent());
+  }
+  
+  @Test(expected = IllegalArgumentException.class)
+  public void fieldTagEmpty_illegal() {
+    marcHelper.subfieldVal("", "z");
+  }
+  
+  @Test(expected = NullPointerException.class)
+  public void fieldTagNull_illegal() {
+    marcHelper.subfieldVal(null, "z");
+  }
+  
+  @Test(expected = IllegalArgumentException.class)
+  public void subfieldEmpty_illegal() {
+    marcHelper.subfieldVal("245", "");
+  }
+  
+  @Test(expected = NullPointerException.class)
+  public void subfieldTagNull_illegal() {
+    marcHelper.subfieldVal("245", null);
   }
 
 
