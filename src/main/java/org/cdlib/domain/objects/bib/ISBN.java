@@ -2,39 +2,55 @@ package org.cdlib.domain.objects.bib;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import org.cdlib.util.CollectionUtil;
 import org.cdlib.util.JSON;
 
-public class ISBN {
+public class ISBN implements Identifier {
 
-  private List<String> values = new ArrayList<String>();
+  private static final IdAuthority AUTHORITY = IdAuthority.ISBN;
+  private List<String> alternateValues = new ArrayList<String>();
+  private String value;
   
   public ISBN() {}
   
   public ISBN(String value) {
-    values.add(value);
+    this.value = value;
   }
   
+  public ISBN(ISBN source) {
+    this.value = source.value;
+    this.alternateValues = source.alternateValues;
+  }
+
+  @Override
+  public String getAuthority() {
+    return AUTHORITY.getUri();
+  }
+
   public String getValue() {
-    if (values == null || values.isEmpty()) {
-      return null;
-    }
-    return values.get(0);
+    return value;
+  }
+  
+  public void setValue(String value) {
+    this.value = value;
   }
 
-  public List<String> getValues() {
-    return CollectionUtil.dedupedList(values);
+  @Override
+  public List<String> getAlternateValues() {
+    return CollectionUtil.dedupedList(alternateValues);
   }
 
-  public void setValues(List<String> values) {
-    this.values = values;
+  public void setAlternateValues(List<String> values) {
+    this.alternateValues = new ArrayList<String>(values);
   }
-
+  
   @Override
   public int hashCode() {
     final int prime = 31;
     int result = 1;
-    result = prime * result + ((values == null) ? 0 : values.hashCode());
+    result = prime * result + ((alternateValues == null) ? 0 : alternateValues.hashCode());
     return result;
   }
 
@@ -47,10 +63,10 @@ public class ISBN {
     if (getClass() != obj.getClass())
       return false;
     ISBN other = (ISBN) obj;
-    if (values == null) {
-      if (other.values != null)
+    if (alternateValues == null) {
+      if (other.alternateValues != null)
         return false;
-    } else if (!values.equals(other.values))
+    } else if (!alternateValues.equals(other.alternateValues))
       return false;
     return true;
   }
@@ -59,7 +75,5 @@ public class ISBN {
   public String toString() {
     return JSON.serialize(this);
   }
-  
-  
 
 }

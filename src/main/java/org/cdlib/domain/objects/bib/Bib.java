@@ -1,301 +1,192 @@
 package org.cdlib.domain.objects.bib;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.validation.constraints.NotNull;
+import org.cdlib.domain.objects.Link;
 import org.cdlib.domain.objects.meta.ResourceMeta;
 import org.cdlib.util.JSON;
 
 /**
- * Bibliographic data about an item that is requested.
+ * Serializable representation of a bibliographic Instance,
+ * intended in the sense of Instance in Bibframe, similar to 
+ * FRBR Manifestation.
+ * 
+ * This class models a simplified, pragmatic version of a 
+ * MARC record, and includes a link back to the corresponding 
+ * MARC record if required data is not available in the Bib.
+ * 
+ * The Bib article guarantees that complex
+ * objects (objects that are composed of other objects) 
+ * that it includes are not null, to relieve the client of the 
+ * burden of performing null checks on these objects.
+ * 
+ * Most simple objects (such as strings and Enum values) 
+ * can be null.
+ * 
+ * TODO: [Series entry? Going from monograph record to serial record, 
+ * in both 490 and 830 -- $a and $v (also ISSN in $x)
+ * different subfields to indicate monographic series]
+ * 
  *
- * This information is directly related to data available in a MARC Bib record
- * for the item requested.
  */
 public class Bib {
 
-    private OclcNumber oclcNumber;
-    private String authorName;
-    
-    @NotNull(message = "Title is required.")
-    private String title;
-    private String publisher;
-    private String placeOfPublication;
-    private String publicationDate;
-    private ISSN issn;
-    private ISBN isbn;
-    private String edition;
-    private String corporateAuthor;
-    private String dissertationNumber;
-    private String ericIdentifier;
-    private ResourceMeta resourceMeta;
-    private RecordType recordType;
-    
-    @NotNull(message = "Seriality is required.")
-    private Seriality seriality;
-    private Carrier carrier;
-
-    public Bib() {
-    }
-
-    public Bib(Bib source) {
-        this.authorName = source.authorName;
-        this.oclcNumber = source.oclcNumber;
-        this.title = source.title;
-        this.publisher = source.publisher;
-        this.placeOfPublication = source.placeOfPublication;
-        this.publicationDate = source.publicationDate;
-        this.issn = source.issn;
-        this.isbn = source.isbn;
-        this.edition = source.edition;
-        this.corporateAuthor = source.corporateAuthor;
-        this.dissertationNumber = source.dissertationNumber;
-        this.ericIdentifier = source.ericIdentifier;
-        this.recordType = source.recordType;
-        this.seriality = source.seriality;
-        this.carrier = source.carrier;
-        this.resourceMeta = source.resourceMeta;
-    }
-
-    public Bib(OclcNumber oclcNumber) {
-        this.oclcNumber = oclcNumber;
-    }
-
-    public OclcNumber getOclcNumber() {
-        return oclcNumber;
-    }
-
-    public void setOclcNumber(OclcNumber oclcNumber) {
-        this.oclcNumber = oclcNumber;
-    }
-
-    public String getAuthorName() {
-        return authorName;
-    }
-
-    public void setAuthorName(String authorName) {
-        this.authorName = authorName;
-    }
-    
-    public Carrier getCarrier() {
-      return carrier;
-    }
-    
-    public void setCarrier(Carrier carrier) {
-      this.carrier = carrier;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getPublisher() {
-        return publisher;
-    }
-
-    public void setPublisher(String publisher) {
-        this.publisher = publisher;
-    }
-
-    public String getPlaceOfPublication() {
-        return placeOfPublication;
-    }
-
-    public void setPlaceOfPublication(String placeOfPublication) {
-        this.placeOfPublication = placeOfPublication;
-    }
-
-    public String getPublicationDate() {
-        return publicationDate;
-    }
-
-    public void setPublicationDate(String publicationDate) {
-        this.publicationDate = publicationDate;
-    }
-
-    public ISSN getIssn() {
-        return issn;
-    }
-
-    public void setIssn(ISSN issn) {
-        this.issn = issn;
-    }
-
-    public ISBN getIsbn() {
-        return isbn;
-    }
-
-    public void setIsbn(ISBN isbn) {
-        this.isbn = isbn;
-    }
-
-    public String getEdition() {
-        return edition;
-    }
-
-    public void setEdition(String edition) {
-        this.edition = edition;
-    }
-
-    public String getCorporateAuthor() {
-        return corporateAuthor;
-    }
-
-    public void setCorporateAuthor(String corporateAuthor) {
-        this.corporateAuthor = corporateAuthor;
-    }
-
-    public String getDissertationNumber() {
-        return dissertationNumber;
-    }
-
-    public void setDissertationNumber(String dissertationNumber) {
-        this.dissertationNumber = dissertationNumber;
-    }
-
-    public String getEricIdentifier() {
-        return ericIdentifier;
-    }
-
-    public void setEricIdentifier(String ericIdentifier) {
-        this.ericIdentifier = ericIdentifier;
-    }
-
-    public RecordType getRecordType() {
-        return recordType;
-    }
-    
-    public void setRecordType(RecordType recordType) {
-      this.recordType = recordType;
+  private String author;
+  private Carrier carrier;
+  private String corporateAuthor;
+  
+  //250$a
+  private String edition;
+  @NotNull
+  private BibIdentifiers identifiers;
+  private String language;
+  @NotNull
+  private Link marc;
+  @NotNull
+  private List<Link> otherForms;
+  @NotNull(message = "PublicationEvent required")
+  private PublicationEvent publicationEvent;
+  private RecordType recordType;
+  @NotNull
+  private ResourceMeta resourceMeta;
+  @NotNull(message = "Seriality is required.")
+  private Seriality seriality;
+  @NotNull(message = "Title is required.")
+  private Title title;
+  
+  public Bib() {
+    identifiers = new BibIdentifiers();
+    otherForms = new ArrayList<>();
+    publicationEvent = new PublicationEvent();
+    marc = new Link();
+    resourceMeta = new ResourceMeta();;
+    title = new Title();
   }
-    
-    public ResourceMeta getResourceMeta() {
-      return resourceMeta;
-    }
-    
-    public void setResorceMeta(ResourceMeta resourceMeta) {
-      this.resourceMeta = resourceMeta;
-    }
+  
+  public Bib(Bib source) {
+    this.author = source.author;
+    this.carrier = source.carrier;
+    this.corporateAuthor = source.corporateAuthor;
+    this.edition = source.edition;
+    this.identifiers = source.identifiers;
+    this.language = source.language;
+    this.marc = source.marc;
+    this.otherForms = source.otherForms;
+    this.publicationEvent = source.publicationEvent;
+    this.recordType = source.recordType;
+    this.resourceMeta = source.resourceMeta;
+    this.seriality = source.seriality;
+  }
+  
+  public String getAuthor() {
+    return author;
+  }
+  public Carrier getCarrier() {
+    return carrier;
+  }
+  public String getCorporateAuthor() {
+    return corporateAuthor;
+  }
+  public String getEdition() {
+    return edition;
+  }
 
-    public Seriality getSeriality() {
-        return seriality;
-    }
+  public BibIdentifiers getIdentifiers() {
+    return identifiers;
+  }
 
-    public void setSeriality(Seriality seriality) {
-        this.seriality = seriality;
-    }
-    
-    @Override
-    public int hashCode() {
-      final int prime = 31;
-      int result = 1;
-      result = prime * result + ((authorName == null) ? 0 : authorName.hashCode());
-      result = prime * result + ((carrier == null) ? 0 : carrier.hashCode());
-      result = prime * result + ((corporateAuthor == null) ? 0 : corporateAuthor.hashCode());
-      result = prime * result + ((dissertationNumber == null) ? 0 : dissertationNumber.hashCode());
-      result = prime * result + ((edition == null) ? 0 : edition.hashCode());
-      result = prime * result + ((ericIdentifier == null) ? 0 : ericIdentifier.hashCode());
-      result = prime * result + ((isbn == null) ? 0 : isbn.hashCode());
-      result = prime * result + ((issn == null) ? 0 : issn.hashCode());
-      result = prime * result + ((oclcNumber == null) ? 0 : oclcNumber.hashCode());
-      result = prime * result + ((placeOfPublication == null) ? 0 : placeOfPublication.hashCode());
-      result = prime * result + ((publicationDate == null) ? 0 : publicationDate.hashCode());
-      result = prime * result + ((publisher == null) ? 0 : publisher.hashCode());
-      result = prime * result + ((recordType == null) ? 0 : recordType.hashCode());
-      result = prime * result + ((resourceMeta == null) ? 0 : resourceMeta.hashCode());
-      result = prime * result + ((seriality == null) ? 0 : seriality.hashCode());
-      result = prime * result + ((title == null) ? 0 : title.hashCode());
-      return result;
-    }
+  public String getLanguage() {
+    return language;
+  }
 
-    @Override
-    public boolean equals(Object obj) {
-      if (this == obj)
-        return true;
-      if (obj == null)
-        return false;
-      if (getClass() != obj.getClass())
-        return false;
-      Bib other = (Bib) obj;
-      if (authorName == null) {
-        if (other.authorName != null)
-          return false;
-      } else if (!authorName.equals(other.authorName))
-        return false;
-      if (carrier != other.carrier)
-        return false;
-      if (corporateAuthor == null) {
-        if (other.corporateAuthor != null)
-          return false;
-      } else if (!corporateAuthor.equals(other.corporateAuthor))
-        return false;
-      if (dissertationNumber == null) {
-        if (other.dissertationNumber != null)
-          return false;
-      } else if (!dissertationNumber.equals(other.dissertationNumber))
-        return false;
-      if (edition == null) {
-        if (other.edition != null)
-          return false;
-      } else if (!edition.equals(other.edition))
-        return false;
-      if (ericIdentifier == null) {
-        if (other.ericIdentifier != null)
-          return false;
-      } else if (!ericIdentifier.equals(other.ericIdentifier))
-        return false;
-      if (isbn == null) {
-        if (other.isbn != null)
-          return false;
-      } else if (!isbn.equals(other.isbn))
-        return false;
-      if (issn == null) {
-        if (other.issn != null)
-          return false;
-      } else if (!issn.equals(other.issn))
-        return false;
-      if (oclcNumber == null) {
-        if (other.oclcNumber != null)
-          return false;
-      } else if (!oclcNumber.equals(other.oclcNumber))
-        return false;
-      if (placeOfPublication == null) {
-        if (other.placeOfPublication != null)
-          return false;
-      } else if (!placeOfPublication.equals(other.placeOfPublication))
-        return false;
-      if (publicationDate == null) {
-        if (other.publicationDate != null)
-          return false;
-      } else if (!publicationDate.equals(other.publicationDate))
-        return false;
-      if (publisher == null) {
-        if (other.publisher != null)
-          return false;
-      } else if (!publisher.equals(other.publisher))
-        return false;
-      if (recordType != other.recordType)
-        return false;
-      if (resourceMeta == null) {
-        if (other.resourceMeta != null)
-          return false;
-      } else if (!resourceMeta.equals(other.resourceMeta))
-        return false;
-      if (seriality != other.seriality)
-        return false;
-      if (title == null) {
-        if (other.title != null)
-          return false;
-      } else if (!title.equals(other.title))
-        return false;
-      return true;
-    }
+  public Link getMarc() {
+    return marc;
+  }
 
-    @Override
-    public String toString() {
-      return JSON.serialize(this);
-    }
+  public List<Link> getOtherForms() {
+    return otherForms;
+  }
+
+  public PublicationEvent getPublicationEvent() {
+    return publicationEvent;
+  }
+
+  public RecordType getRecordType() {
+    return recordType;
+  }
+
+  public ResourceMeta getResourceMeta() {
+    return resourceMeta;
+  }
+
+  public Seriality getSeriality() {
+    return seriality;
+  }
+
+  public Title getTitle() {
+    return title;
+  }
+
+  public void setAuthor(String author) {
+    this.author = author;
+  }
+
+  public void setCarrier(Carrier carrier) {
+    this.carrier = carrier;
+  }
+
+  public void setCorporateAuthor(String corporateAuthor) {
+    this.corporateAuthor = corporateAuthor;
+  }
+
+  public void setEdition(String edition) {
+    this.edition = edition;
+  }
+
+  public void setIdentifiers(BibIdentifiers identifiers) {
+    this.identifiers = identifiers;
+  }
+
+  public void setLanguage(String language) {
+    this.language = language;
+  }
+
+  public void setMarc(Link marc) {
+    this.marc = marc;
+  }
+
+  public void setOtherForms(List<Link> relatedResources) {
+    this.otherForms = relatedResources;
+  }
+
+  public void setPublicationEvent(PublicationEvent publicationEvent) {
+    this.publicationEvent = publicationEvent;
+  }
+
+  public void setRecordType(RecordType recordType) {
+    this.recordType = recordType;
+  }
+
+  public void setResorceMeta(ResourceMeta resourceMeta) {
+    this.resourceMeta = resourceMeta;
+  }
+
+  public void setResourceMeta(ResourceMeta resourceMeta) {
+    this.resourceMeta = resourceMeta;
+  }
+
+  public void setSeriality(Seriality seriality) {
+    this.seriality = seriality;
+  }
+
+  public void setTitle(Title title) {
+    this.title = title;
+  }
+
+  @Override
+  public String toString() {
+    return JSON.serialize(this);
+  }
 
 }

@@ -3,8 +3,10 @@ package org.cdlib.util;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.Charset;
 import org.springframework.util.Assert;
 
 public final class JSON {
@@ -43,34 +45,30 @@ public final class JSON {
     }
   }
 
-  public static <T> T deserialize(InputStream json, Class<T> clazz) {
-    Assert.notNull(clazz);
+  public static <T> T deserialize(InputStream json, Class<T> theClass) {
+    Assert.notNull(theClass);
     Assert.notNull(json);
-    checkDeserialize(clazz);
+    checkDeserialize(theClass);
     T result = null;
     try {
-      result = objectMapper.readValue(json, clazz);
+      result = objectMapper.readValue(json, theClass);
     } catch (IOException e) {
       throw new JSONConversionException("Could not deserialize JSON", e);
     }
     return result;
   }
 
-  public static <T> T deserialize(String json, Class<T> clazz) {
-    Assert.notNull(clazz);
-    Assert.notNull(json);
-    checkDeserialize(clazz);
-    T result = null;
-    try {
-      result = objectMapper.readValue(json, clazz);
-    } catch (IOException e) {
-      throw new JSONConversionException("Could not deserialize JSON", e);
-    } catch (RuntimeException e) {
-      throw new JSONConversionException("Unexpected runtime exception caught when attempting to deserialize " + json);
-    }
-    return result;
+  public static <T> T deserialize(String json, Class<T> theClass) {
+    InputStream theStream = new ByteArrayInputStream(json.getBytes());
+    return deserialize(theStream, theClass);
+  }
+  
+  public static <T> T deserialize(String json, Class<T> theClass, Charset charset) {
+    InputStream theStream = new ByteArrayInputStream(json.getBytes(charset));
+    return deserialize(theStream, theClass);
   }
 
+  @SuppressWarnings("serial")
   public static class JSONConversionException extends RuntimeException {
 
     public JSONConversionException(String message) {

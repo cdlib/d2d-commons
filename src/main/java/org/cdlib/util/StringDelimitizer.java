@@ -7,7 +7,7 @@ import java.util.*;
  * occurences of the delimiter will be returned
  */
  
-public class StringDelimitizer implements Enumeration {
+public class StringDelimitizer implements Enumeration<Object> {
 
 	private StringTokenizer st;
 	private String delimiters;

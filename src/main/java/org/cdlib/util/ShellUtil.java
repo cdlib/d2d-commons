@@ -6,7 +6,7 @@ import java.io.InputStreamReader;
 
 /**
  *
- * @author jferrie
+ * Provides an API to some UNIX shell commands.
  */
 public class ShellUtil {
 
@@ -57,16 +57,9 @@ public class ShellUtil {
     return output.toString();
   }
 
+  @SuppressWarnings("serial")
   public static class ShellCommandException extends RuntimeException {
 
-    private static final long serialVersionUID = 1L;
-
-    /**
-     * Constructs an instance of <code>RequestException</code> with the
-     * specified detail message.
-     *
-     * @param msg the detail message.
-     */
     public ShellCommandException(String msg) {
       super(msg);
     }

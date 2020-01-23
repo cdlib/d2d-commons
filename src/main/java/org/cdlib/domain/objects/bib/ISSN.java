@@ -14,62 +14,21 @@ import org.cdlib.util.JSON;
  */
 public class ISSN implements Identifier {
 
-  private List<String> precedingValues = new ArrayList<String>();
-  private List<String> succeedingValues = new ArrayList<String>();
-  private List<String> values = new ArrayList<String>();
+  private static final IdAuthority AUTHORITY = IdAuthority.ISSN;
+  private String value;
+  private List<String> alternateValues = new ArrayList<String>();
   
   public ISSN() {}
   
+  public ISSN(ISSN source) {
+    this.value = source.value;
+    this.alternateValues = source.alternateValues;
+  }
+  
   public ISSN(String value) {
-    values.add(value);
+    this.value = value;
   }
   
-  @NotNull
-  public List<String> getPrecedingValues() {
-    return CollectionUtil.dedupedList(precedingValues);
-  }
-  
-  @NotNull
-  public List<String> getSucceedingValues() {
-    return CollectionUtil.dedupedList(succeedingValues);
-  }
-  
-  @NotNull
-  @NotEmpty
-  public String getValue() {
-    if (values.isEmpty()) {
-      return null;
-    }
-    return values.get(0);
-  }
-  
-  @NotNull
-  public List<String> getValues() {
-    return CollectionUtil.dedupedList(values);
-  }
-  
-  public void setPrecedingValues(List<String> precedingValues) {
-    this.precedingValues = precedingValues;
-  }
-
-  public void setSucceedingValues(List<String> succeedingValues) {
-    this.succeedingValues = succeedingValues;
-  }
-
-  public void setValues(List<String> values) {
-    this.values = values;
-  }
-
-  @Override
-  public int hashCode() {
-    final int prime = 31;
-    int result = 1;
-    result = prime * result + ((precedingValues == null) ? 0 : precedingValues.hashCode());
-    result = prime * result + ((succeedingValues == null) ? 0 : succeedingValues.hashCode());
-    result = prime * result + ((values == null) ? 0 : values.hashCode());
-    return result;
-  }
-
   @Override
   public boolean equals(Object obj) {
     if (this == obj)
@@ -79,24 +38,47 @@ public class ISSN implements Identifier {
     if (getClass() != obj.getClass())
       return false;
     ISSN other = (ISSN) obj;
-    if (precedingValues == null) {
-      if (other.precedingValues != null)
+    if (alternateValues == null) {
+      if (other.alternateValues != null)
         return false;
-    } else if (!precedingValues.equals(other.precedingValues))
-      return false;
-    if (succeedingValues == null) {
-      if (other.succeedingValues != null)
-        return false;
-    } else if (!succeedingValues.equals(other.succeedingValues))
-      return false;
-    if (values == null) {
-      if (other.values != null)
-        return false;
-    } else if (!values.equals(other.values))
+    } else if (!alternateValues.equals(other.alternateValues))
       return false;
     return true;
   }
   
+  @Override
+  public @NotNull @NotEmpty String getAuthority() {
+    return AUTHORITY.getUri();
+  }
+
+  @NotNull
+  @NotEmpty
+ public String getValue() {
+    return value;
+  }
+  
+  public void setValue(String value) {
+    this.value = value;
+  }
+  
+  @Override
+  @NotNull
+  public List<String> getAlternateValues() {
+    return CollectionUtil.dedupedList(alternateValues);
+  }
+
+  @Override
+  public int hashCode() {
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + ((alternateValues == null) ? 0 : alternateValues.hashCode());
+    return result;
+  }
+
+  public void setAlternateValues(List<String> values) {
+    this.alternateValues = new ArrayList<String>(values);
+  }
+
   @Override
   public String toString() {
     return JSON.serialize(this);

@@ -1,21 +1,50 @@
 package org.cdlib.holdings;
 
+import static org.cdlib.holdings.Holdings.DOUBLED_2D_YEAR_PAT;
+import static org.cdlib.holdings.Holdings.DOUBLED_2D_YEAR_TO_CURRENT_PAT;
+import static org.cdlib.holdings.Holdings.DOUBLED_ALL_SHORT_RANGE_PAT;
+import static org.cdlib.holdings.Holdings.DOUBLED_BOTH_2D_YEAR_RANGE_PAT;
+import static org.cdlib.holdings.Holdings.DOUBLED_BOTH_LEFT_2D_YEAR_RANGE_PAT;
+import static org.cdlib.holdings.Holdings.DOUBLED_BOTH_RIGHT_2D_YEAR_RANGE_PAT;
+import static org.cdlib.holdings.Holdings.DOUBLED_LEFT_2D_SHORT_RIGHT_PAT;
+import static org.cdlib.holdings.Holdings.DOUBLED_LEFT_2D_YEAR_RANGE_PAT;
+import static org.cdlib.holdings.Holdings.DOUBLED_LEFT_EXT_RANGE_PAT;
+import static org.cdlib.holdings.Holdings.DOUBLED_LEFT_YEAR_RANGE_PAT;
+import static org.cdlib.holdings.Holdings.DOUBLED_PAREN_TO_CURRENT_PAT;
+import static org.cdlib.holdings.Holdings.DOUBLED_RIGHT_2D_EXT_RANGE_PAT;
+import static org.cdlib.holdings.Holdings.DOUBLED_RIGHT_2D_YEAR_RANGE_PAT;
+import static org.cdlib.holdings.Holdings.DOUBLED_RIGHT_EXT_RANGE_PAT;
+import static org.cdlib.holdings.Holdings.DOUBLED_RIGHT_YEAR_RANGE_PAT;
+import static org.cdlib.holdings.Holdings.DOUBLED_YEAR_PAT;
+import static org.cdlib.holdings.Holdings.DOUBLED_YEAR_RANGE_PAT;
+import static org.cdlib.holdings.Holdings.DOUBLED_YEAR_TO_CURRENT_PAT;
+import static org.cdlib.holdings.Holdings.EXT_RANGE_PAT;
+import static org.cdlib.holdings.Holdings.NORMAL_2D_YEAR_RANGE_PAT;
+import static org.cdlib.holdings.Holdings.NORMAL_2D_YEAR_RANGE_W_WHITESPACE_PAT;
+import static org.cdlib.holdings.Holdings.NORMAL_RANGE_PAT;
+import static org.cdlib.holdings.Holdings.NORMAL_RANGE_W_WHITESPACE_PAT;
+import static org.cdlib.holdings.Holdings.NORMAL_YEAR_TO_CURRENT_PAT;
+import static org.cdlib.holdings.Holdings.PAREN_RANGE_PAT;
+import static org.cdlib.holdings.Holdings.PAREN_RANGE_TO_CURRENT_PAT;
+import static org.cdlib.holdings.Holdings.PAREN_SINGLE_YEAR_PAT;
+import static org.cdlib.holdings.Holdings.SINGLE_YEAR_PAT;
+import static org.cdlib.holdings.Holdings.STOP_WORDS;
+import static org.cdlib.holdings.Holdings.TWO_COLON_RANGE_PAT;
+import static org.cdlib.holdings.Holdings.TWO_PAREN_RANGE_PAT;
+import static org.cdlib.holdings.Holdings.VOL_OR_N_W_WHITESPACE_PAT;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import static org.cdlib.holdings.Holdings.*;
-
 import org.apache.log4j.Logger;
 
 /**
- * Implementation of HoldingsParser that identifies discrete ranges of holdings
- * years. This enables the parser to derive a list of years held and a list of
- * years missing.
+ * Implementation of HoldingsParser that identifies discrete ranges of holdings years. This enables
+ * the parser to derive a list of years held and a list of years missing.
  *
- * Do not instantiate this class: use the {@link Holdings} getParser method to
- * get an instance of a {@link HoldingsParser}.
+ * Do not instantiate this class: use the {@link Holdings} getParser method to get an instance of a
+ * {@link HoldingsParser}.
  *
  * @see HoldingsParser
  * @author jferrie
@@ -28,8 +57,8 @@ public class DiscreteRangeHoldingsParser implements HoldingsParser {
   private final String holdings;
 
   /**
-   * Constructor parses the holdings strings on instantiation. Do not
-   * instantiate outside of package. Use Holdings.getParser method.
+   * Constructor parses the holdings strings on instantiation. For public instantiation use
+   * Holdings.getParser method.
    *
    * The instance is immutable.
    *
@@ -62,7 +91,8 @@ public class DiscreteRangeHoldingsParser implements HoldingsParser {
   static private String closeSpaces(String holdings) {
     // close up expressions like No. 1111 -- see Redmine #5539
     // this works using back references to two capture groups in the match expression
-    // the middle capture group (\\s+) is not included in the replace expression, removing the whitespace
+    // the middle capture group (\\s+) is not included in the replace expression, removing the
+    // whitespace
     holdings = VOL_OR_N_W_WHITESPACE_PAT.matcher(holdings).replaceAll("$1$3");
     // close up expression like (1998- 2009) -- see Planio #8462
     holdings = NORMAL_RANGE_W_WHITESPACE_PAT.matcher(holdings).replaceAll("$1$3");
@@ -84,48 +114,45 @@ public class DiscreteRangeHoldingsParser implements HoldingsParser {
     return holdings;
   }
 
-  private static final Pattern[] RANGES
-          = {
-            NORMAL_RANGE_PAT,
-            PAREN_RANGE_PAT,
-            TWO_PAREN_RANGE_PAT,
-            EXT_RANGE_PAT,
-            TWO_COLON_RANGE_PAT,
-            DOUBLED_LEFT_EXT_RANGE_PAT,
-            DOUBLED_RIGHT_EXT_RANGE_PAT,
-            DOUBLED_YEAR_RANGE_PAT,
-            DOUBLED_RIGHT_YEAR_RANGE_PAT,
-            DOUBLED_LEFT_YEAR_RANGE_PAT,
-            DOUBLED_YEAR_PAT,
-            DOUBLED_RIGHT_2D_EXT_RANGE_PAT,
-            DOUBLED_2D_YEAR_PAT,
-            DOUBLED_RIGHT_2D_YEAR_RANGE_PAT,
-            DOUBLED_LEFT_2D_YEAR_RANGE_PAT,
-            DOUBLED_BOTH_2D_YEAR_RANGE_PAT,
-            DOUBLED_BOTH_LEFT_2D_YEAR_RANGE_PAT,
-            DOUBLED_BOTH_RIGHT_2D_YEAR_RANGE_PAT,
-            NORMAL_2D_YEAR_RANGE_PAT,
-            DOUBLED_ALL_SHORT_RANGE_PAT,
-            DOUBLED_LEFT_2D_SHORT_RIGHT_PAT
-          };
+  private static final Pattern[] RANGES = {
+      NORMAL_RANGE_PAT,
+      PAREN_RANGE_PAT,
+      TWO_PAREN_RANGE_PAT,
+      EXT_RANGE_PAT,
+      TWO_COLON_RANGE_PAT,
+      DOUBLED_LEFT_EXT_RANGE_PAT,
+      DOUBLED_RIGHT_EXT_RANGE_PAT,
+      DOUBLED_YEAR_RANGE_PAT,
+      DOUBLED_RIGHT_YEAR_RANGE_PAT,
+      DOUBLED_LEFT_YEAR_RANGE_PAT,
+      DOUBLED_YEAR_PAT,
+      DOUBLED_RIGHT_2D_EXT_RANGE_PAT,
+      DOUBLED_2D_YEAR_PAT,
+      DOUBLED_RIGHT_2D_YEAR_RANGE_PAT,
+      DOUBLED_LEFT_2D_YEAR_RANGE_PAT,
+      DOUBLED_BOTH_2D_YEAR_RANGE_PAT,
+      DOUBLED_BOTH_LEFT_2D_YEAR_RANGE_PAT,
+      DOUBLED_BOTH_RIGHT_2D_YEAR_RANGE_PAT,
+      NORMAL_2D_YEAR_RANGE_PAT,
+      DOUBLED_ALL_SHORT_RANGE_PAT,
+      DOUBLED_LEFT_2D_SHORT_RIGHT_PAT
+  };
 
-  private static final Pattern[] TO_CURRENT_RANGES
-          = {NORMAL_YEAR_TO_CURRENT_PAT,
-            DOUBLED_YEAR_TO_CURRENT_PAT,
-            DOUBLED_2D_YEAR_TO_CURRENT_PAT,
-            PAREN_RANGE_TO_CURRENT_PAT,
-            DOUBLED_PAREN_TO_CURRENT_PAT
-          };
+  private static final Pattern[] TO_CURRENT_RANGES = {NORMAL_YEAR_TO_CURRENT_PAT,
+      DOUBLED_YEAR_TO_CURRENT_PAT,
+      DOUBLED_2D_YEAR_TO_CURRENT_PAT,
+      PAREN_RANGE_TO_CURRENT_PAT,
+      DOUBLED_PAREN_TO_CURRENT_PAT
+  };
 
-  private static final Pattern[] SINGLE_YEARS
-          = {PAREN_SINGLE_YEAR_PAT,
-            SINGLE_YEAR_PAT
-          };
+  private static final Pattern[] SINGLE_YEARS = {PAREN_SINGLE_YEAR_PAT,
+      SINGLE_YEAR_PAT
+  };
 
   private void parse() {
     String lHoldings = holdings;
 
-    // parse these first to avoid false to-current expressions created 
+    // parse these first to avoid false to-current expressions created
     // by removing expressions following hyphens
     lHoldings = extractToCurrentRanges(lHoldings);
     lHoldings = extractRanges(lHoldings);
@@ -214,14 +241,11 @@ public class DiscreteRangeHoldingsParser implements HoldingsParser {
   }
 
   /**
-   * Checks for expressions that express a range of years with a specific end
-   * year (not the current year). Returns a list of all years found in all of
-   * the ranges.
+   * Checks for expressions that express a range of years with a specific end year (not the current
+   * year). Returns a list of all years found in all of the ranges.
    *
-   * @param matchExp A regular expression matches a string that expresses a
-   * range of years.
-   * @return a list of years based on all year ranges that match the matchExp
-   * regular expression.
+   * @param matchExp A regular expression matches a string that expresses a range of years.
+   * @return a list of years based on all year ranges that match the matchExp regular expression.
    */
   List<Integer> getYearRanges(Matcher matcher, String lHoldings) {
     ArrayList<Integer> list = new ArrayList<>();
@@ -271,17 +295,13 @@ public class DiscreteRangeHoldingsParser implements HoldingsParser {
   }
 
   /**
-   * Parses the holdings string for single year expressions. Returns a List of
-   * all of the matching years found in the holdings. Excludes years that are
-   * not in expected range.
-   *
-   * TODO: add more validation of expressions and years?
+   * Parses the holdings string for single year expressions. Returns a List of all of the matching
+   * years found in the holdings. Excludes years that are not in expected range.
    *
    * @param exp regex expression to match on
    * @return
    */
-  List<Integer> getSingleYears(Matcher matcher, String lHoldings
-  ) {
+  List<Integer> getSingleYears(Matcher matcher, String lHoldings) {
 
     ArrayList<Integer> list = new ArrayList<Integer>();
 
@@ -298,7 +318,7 @@ public class DiscreteRangeHoldingsParser implements HoldingsParser {
         list.add(foundInt);
       } else {
         String warning = String.format("Excluded year %d from parse of holdings %s because it was out of normal range.",
-                foundInt, lHoldings);
+            foundInt, lHoldings);
         logger.debug(warning);
       }
     }
@@ -307,15 +327,13 @@ public class DiscreteRangeHoldingsParser implements HoldingsParser {
   }
 
   /**
-   * Parses the holdings string for range expressions ending in the current
-   * year.
+   * Parses the holdings string for range expressions ending in the current year.
    *
    * @param exp regex expression to match on
    * @return a List<Integer> of the years in all of the range expressions found
    *
    */
-  List<Integer> getToCurrentYearRanges(Matcher matcher, String lHoldings
-  ) {
+  List<Integer> getToCurrentYearRanges(Matcher matcher, String lHoldings) {
     ArrayList<Integer> list = new ArrayList<Integer>();
     while (matcher.find()) {
       logger.debug("Matcher " + matcher + " Matched on " + lHoldings.substring(matcher.start(), matcher.end()));
@@ -336,13 +354,14 @@ public class DiscreteRangeHoldingsParser implements HoldingsParser {
    * Returns a list of all years between start and end inclusive.
    * 
    * @param start the first year in the range
+   * 
    * @parm end the last year in the range
    */
-  List<Integer> getYearsInRange(int start, int end
-  ) {
+  List<Integer> getYearsInRange(int start, int end) {
     ArrayList<Integer> list = new ArrayList<>();
     if (end < start) {
-      logger.info(String.format("Range for string %s returned zero results because end of range precedes beginning of range.", holdings));
+      String rangeExp = String.valueOf(start) + "-" + String.valueOf(end);
+      logger.warn(String.format("Range %s returned zero results because end of range precedes beginning of range.", rangeExp));
     } else {
       for (int i = start; i <= end; i++) {
         list.add(i);
@@ -350,19 +369,19 @@ public class DiscreteRangeHoldingsParser implements HoldingsParser {
     }
     return list;
   }
+  
   /*
-   * Turns a two digit year to a four digit year by prepending the first two 
-   * chars of the earlier year to the later year.
+   * Turns a two digit year to a four digit year by prepending the first two chars of the earlier year
+   * to the later year.
    * 
-   * For example, for the expression 1994/96 it prepends 19 to 96 so that the 
-   * last year becomes 1996.
+   * For example, for the expression 1994/96 it prepends 19 to 96 so that the last year becomes 1996.
    * 
-   * This works because two-digit years are only allowed when they have 
-   * a four-digit year to the left, for example 1996/98.
+   * This works because two-digit years are only allowed when they have a four-digit year to the left,
+   * for example 1996/98.
    * 
-   * If the second year ends up being less than the first year, there may be an 
-   * occurence of something like 1999/01. In this case we attempt to fix it 
-   * by adding 100 to the second year after prepending 19 to get [1999, 2001]
+   * If the second year ends up being less than the first year, there may be an occurrence of
+   * something like 1999/01. In this case we attempt to fix it by adding 100 to the second year after
+   * prepending 19 to get [1999, 2001]
    */
 
   static Integer toFourDigitYear(Integer firstYear, Integer lastYear) {
@@ -374,34 +393,33 @@ public class DiscreteRangeHoldingsParser implements HoldingsParser {
     if (lastYearString.length() > 2) {
       throw new IllegalArgumentException("Second argument must be a length of one or two.");
     }
-    
+
     // Replace the last x digits of the first year with the last year to get a candidate return value
-    String left = firstYearString.substring(0, 4 - lastYearString.length()); 
+    String left = firstYearString.substring(0, 4 - lastYearString.length());
     String fourDLastYearString = left + lastYearString;
     if (Integer.parseInt(fourDLastYearString) < Integer.parseInt(firstYearString)) {
       int centuryAdjust = lastYearString.length() == 1 ? 10 : 100;
       Integer fourDLastYear = Integer.parseInt(fourDLastYearString) + centuryAdjust;
       fourDLastYearString = fourDLastYear.toString();
       logger.debug("Increased year by 100 in converting 2-digit year.\nOriginal values are "
-              + firstYearString + " and " + lastYearString
-              + ". Read as " + firstYearString + " and " + fourDLastYearString + ".");
+          + firstYearString + " and " + lastYearString
+          + ". Read as " + firstYearString + " and " + fourDLastYearString + ".");
     }
     return Integer.parseInt(fourDLastYearString);
   }
-  
-    /*
-   * Turns a two digit year to a four digit year by prepending the first two 
-   * chars of the earlier year to the later year.
+
+  /*
+   * Turns a two digit year to a four digit year by prepending the first two chars of the earlier year
+   * to the later year.
    * 
-   * For example, for the expression 1994/96 it prepends 19 to 96 so that the 
-   * last year becomes 1996.
+   * For example, for the expression 1994/96 it prepends 19 to 96 so that the last year becomes 1996.
    * 
-   * This works because two-digit years are only allowed when they have 
-   * a four-digit year to the left, for example 1996/98.
+   * This works because two-digit years are only allowed when they have a four-digit year to the left,
+   * for example 1996/98.
    * 
-   * If the second year ends up being less than the first year, there may be an 
-   * occurence of something like 1999/01. In this case we attempt to fix it 
-   * by adding 100 to the second year after prepending 19 to get [1999, 2001]
+   * If the second year ends up being less than the first year, there may be an occurence of something
+   * like 1999/01. In this case we attempt to fix it by adding 100 to the second year after prepending
+   * 19 to get [1999, 2001]
    */
 
   static Integer toFourDigitYear(String firstYearString, String lastYearString) {
@@ -412,17 +430,17 @@ public class DiscreteRangeHoldingsParser implements HoldingsParser {
     if (lastYearString.length() > 2) {
       throw new IllegalArgumentException("Second argument must be a length of one or two.");
     }
-    
+
     // Replace the last x digits of the first year with the last year to get a candidate return value
-    String left = firstYearString.substring(0, 4 - lastYearString.length()); 
+    String left = firstYearString.substring(0, 4 - lastYearString.length());
     String fourDLastYearString = left + lastYearString;
     if (Integer.parseInt(fourDLastYearString) < Integer.parseInt(firstYearString)) {
       int centuryAdjust = lastYearString.length() == 1 ? 10 : 100;
       Integer fourDLastYear = Integer.parseInt(fourDLastYearString) + centuryAdjust;
       fourDLastYearString = fourDLastYear.toString();
       logger.debug("Increased year by 100 in converting 2-digit year.\nOriginal values are "
-              + firstYearString + " and " + lastYearString
-              + ". Read as " + firstYearString + " and " + fourDLastYearString + ".");
+          + firstYearString + " and " + lastYearString
+          + ". Read as " + firstYearString + " and " + fourDLastYearString + ".");
     }
     return Integer.parseInt(fourDLastYearString);
   }

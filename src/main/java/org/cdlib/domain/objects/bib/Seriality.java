@@ -3,7 +3,7 @@ package org.cdlib.domain.objects.bib;
 
 /**
  *
- * Modeled on MARC leader byte 6 - Bibliographic Level.
+ * Modeled on MARC leader byte 7 - Bibliographic Level.
  * 
  * Indicates the publishing scheme for the bibliographic item:
  * where it is published as a series over time (a serial), or whether it is published 
@@ -13,10 +13,12 @@ package org.cdlib.domain.objects.bib;
  * 
  * See https://www.loc.gov/marc/bibliographic/bdleader.html
  * 
+ * 
  */
 public enum Seriality {
   
   MONO,
-  SERIAL
+  SERIAL,
+  INTEGRATING
 
 }

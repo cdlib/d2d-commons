@@ -1,0 +1,432 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<record xmlns="http://www.loc.gov/MARC21/slim">
+    <leader>00000cas a2200000 i 4500</leader>
+    <controlfield tag="001">2006581</controlfield>
+    <controlfield tag="008">760223c19209999njumr p       0   a0eng c</controlfield>
+    <datafield ind1=" " ind2=" " tag="010">
+      <subfield code="a">   21017038 </subfield>
+      <subfield code="z">sn 78000337 </subfield>
+    </datafield>
+    <datafield ind1=" " ind2=" " tag="040">
+      <subfield code="a">NSD</subfield>
+      <subfield code="b">eng</subfield>
+      <subfield code="c">NSD</subfield>
+      <subfield code="d">HUL</subfield>
+      <subfield code="d">IUL</subfield>
+      <subfield code="d">DLC</subfield>
+      <subfield code="d">SER</subfield>
+      <subfield code="d">NSD</subfield>
+      <subfield code="d">RCS</subfield>
+      <subfield code="d">OCL</subfield>
+      <subfield code="d">AIP</subfield>
+      <subfield code="d">NST</subfield>
+      <subfield code="d">NSD</subfield>
+      <subfield code="d">MYG</subfield>
+      <subfield code="d">AGL</subfield>
+      <subfield code="d">OCL</subfield>
+      <subfield code="d">CAS</subfield>
+      <subfield code="d">TJC</subfield>
+      <subfield code="d">GUA</subfield>
+      <subfield code="d">IXA</subfield>
+      <subfield code="d">DLC</subfield>
+      <subfield code="d">WAU</subfield>
+      <subfield code="d">IUL</subfield>
+      <subfield code="d">DLC</subfield>
+      <subfield code="d">OCL</subfield>
+      <subfield code="d">CUS</subfield>
+      <subfield code="d">IUL</subfield>
+      <subfield code="d">OCL</subfield>
+      <subfield code="d">TJC</subfield>
+      <subfield code="d">OCLCQ</subfield>
+      <subfield code="d">DLC</subfield>
+      <subfield code="d">OCLCQ</subfield>
+      <subfield code="d">MYG</subfield>
+      <subfield code="d">NLGGC</subfield>
+      <subfield code="d">NLM</subfield>
+      <subfield code="d">WAU</subfield>
+      <subfield code="d">NSD</subfield>
+      <subfield code="d">LVB</subfield>
+      <subfield code="d">EEM</subfield>
+      <subfield code="d">NSD</subfield>
+      <subfield code="d">ZP2</subfield>
+      <subfield code="d">CUV</subfield>
+      <subfield code="d">CUS</subfield>
+      <subfield code="d">KRTAS</subfield>
+      <subfield code="d">WAU</subfield>
+      <subfield code="d">OCLCQ</subfield>
+      <subfield code="d">AMAZN</subfield>
+      <subfield code="d">UKMGB</subfield>
+      <subfield code="d">OCLCQ</subfield>
+      <subfield code="d">OCL</subfield>
+      <subfield code="d">OCLCO</subfield>
+      <subfield code="d">OCL</subfield>
+      <subfield code="d">OCLCF</subfield>
+      <subfield code="d">P4I</subfield>
+      <subfield code="d">OCLCO</subfield>
+      <subfield code="d">OCLCQ</subfield>
+      <subfield code="d">OCLCO</subfield>
+      <subfield code="d">MYG</subfield>
+      <subfield code="d">CUV</subfield>
+      <subfield code="d">CUI</subfield>
+      <subfield code="d">OCLCQ</subfield>
+      <subfield code="d">HUELT</subfield>
+      <subfield code="d">OCLCO</subfield>
+      <subfield code="d">AU@</subfield>
+    </datafield>
+    <datafield ind1=" " ind2=" " tag="012">
+      <subfield code="a">3</subfield>
+      <subfield code="b">3</subfield>
+      <subfield code="e">n</subfield>
+      <subfield code="j">0</subfield>
+      <subfield code="k">1</subfield>
+      <subfield code="m">1</subfield>
+    </datafield>
+    <datafield ind1="7" ind2=" " tag="016">
+      <subfield code="a">0043541</subfield>
+      <subfield code="2">DNLM</subfield>
+    </datafield>
+    <datafield ind1="7" ind2=" " tag="016">
+      <subfield code="a">E01120000</subfield>
+      <subfield code="2">DNLM</subfield>
+    </datafield>
+    <datafield ind1="7" ind2=" " tag="016">
+      <subfield code="a">007845492</subfield>
+      <subfield code="2">Uk</subfield>
+    </datafield>
+    <datafield ind1=" " ind2=" " tag="019">
+      <subfield code="a">1567360</subfield>
+      <subfield code="a">228664029</subfield>
+      <subfield code="a">255576435</subfield>
+      <subfield code="a">317465583</subfield>
+      <subfield code="a">776054731</subfield>
+      <subfield code="a">962363556</subfield>
+      <subfield code="a">995546558</subfield>
+      <subfield code="a">1004808992</subfield>
+      <subfield code="a">1004998344</subfield>
+      <subfield code="a">1005897790</subfield>
+      <subfield code="a">1006241122</subfield>
+      <subfield code="a">1006807338</subfield>
+      <subfield code="a">1008851467</subfield>
+      <subfield code="a">1010913982</subfield>
+      <subfield code="a">1011951456</subfield>
+      <subfield code="a">1013594418</subfield>
+      <subfield code="a">1049779424</subfield>
+      <subfield code="a">1054983448</subfield>
+      <subfield code="a">1057920430</subfield>
+      <subfield code="a">1064267648</subfield>
+      <subfield code="a">1081546399</subfield>
+      <subfield code="a">1084948719</subfield>
+    </datafield>
+    <datafield ind1="0" ind2=" " tag="022">
+      <subfield code="a">0012-9658</subfield>
+      <subfield code="l">0012-9658</subfield>
+      <subfield code="2">1</subfield>
+    </datafield>
+    <datafield ind1="1" ind2=" " tag="029">
+      <subfield code="a">AU@</subfield>
+      <subfield code="b">000000900381</subfield>
+    </datafield>
+    <datafield ind1="1" ind2=" " tag="029">
+      <subfield code="a">AU@</subfield>
+      <subfield code="b">000014503874</subfield>
+    </datafield>
+    <datafield ind1="1" ind2=" " tag="029">
+      <subfield code="a">AU@</subfield>
+      <subfield code="b">000021441338</subfield>
+    </datafield>
+    <datafield ind1="1" ind2=" " tag="029">
+      <subfield code="a">AU@</subfield>
+      <subfield code="b">000021794080</subfield>
+    </datafield>
+    <datafield ind1="1" ind2=" " tag="029">
+      <subfield code="a">AU@</subfield>
+      <subfield code="b">000023990119</subfield>
+    </datafield>
+    <datafield ind1="1" ind2=" " tag="029">
+      <subfield code="a">AU@</subfield>
+      <subfield code="b">000050756940</subfield>
+    </datafield>
+    <datafield ind1="1" ind2=" " tag="029">
+      <subfield code="a">AU@</subfield>
+      <subfield code="b">000053316763</subfield>
+    </datafield>
+    <datafield ind1="1" ind2=" " tag="029">
+      <subfield code="a">NLGGC</subfield>
+      <subfield code="b">840375492</subfield>
+    </datafield>
+    <datafield ind1="1" ind2=" " tag="029">
+      <subfield code="a">NZ1</subfield>
+      <subfield code="b">13993630</subfield>
+    </datafield>
+    <datafield ind1="1" ind2=" " tag="029">
+      <subfield code="a">NZ1</subfield>
+      <subfield code="b">4813844</subfield>
+    </datafield>
+    <datafield ind1="1" ind2=" " tag="029">
+      <subfield code="a">UKMGB</subfield>
+      <subfield code="b">007845492</subfield>
+    </datafield>
+    <datafield ind1=" " ind2=" " tag="030">
+      <subfield code="a">ECOLAR</subfield>
+    </datafield>
+    <datafield ind1=" " ind2=" " tag="032">
+      <subfield code="a">167300</subfield>
+      <subfield code="b">USPS</subfield>
+    </datafield>
+    <datafield ind1=" " ind2=" " tag="042">
+      <subfield code="a">nsdp</subfield>
+      <subfield code="a">pcc</subfield>
+    </datafield>
+    <datafield ind1="0" ind2="0" tag="050">
+      <subfield code="a">QH540</subfield>
+      <subfield code="b">.E3</subfield>
+    </datafield>
+    <datafield ind1="0" ind2="0" tag="060">
+      <subfield code="a">W1</subfield>
+      <subfield code="b">EC914</subfield>
+    </datafield>
+    <datafield ind1="0" ind2=" " tag="070">
+      <subfield code="a">410</subfield>
+      <subfield code="b">Ec7</subfield>
+    </datafield>
+    <datafield ind1=" " ind2="0" tag="072">
+      <subfield code="a">X300</subfield>
+    </datafield>
+    <datafield ind1="1" ind2="0" tag="082">
+      <subfield code="a">577</subfield>
+      <subfield code="2">13</subfield>
+    </datafield>
+    <datafield ind1="0" ind2=" " tag="130">
+      <subfield code="a">Ecology (Brooklyn, New York, N.Y.)</subfield>
+    </datafield>
+    <datafield ind1="1" ind2=" " tag="210">
+      <subfield code="a">Ecol.</subfield>
+      <subfield code="b">(Brooklyn, New York, N.Y.)</subfield>
+    </datafield>
+    <datafield ind1=" " ind2="0" tag="222">
+      <subfield code="a">Ecology</subfield>
+      <subfield code="b">(Brooklyn, New York, N.Y.)</subfield>
+    </datafield>
+    <datafield ind1="1" ind2="0" tag="245">
+      <subfield code="a">Ecology.</subfield>
+    </datafield>
+    <datafield ind1="1" ind2="3" tag="246">
+      <subfield code="a">Ecology, Ecological Society of America</subfield>
+      <subfield code="f">Oct. 2016-</subfield>
+    </datafield>
+    <datafield ind1=" " ind2=" " tag="260">
+      <subfield code="3">1920-1948 :</subfield>
+      <subfield code="a">Brooklyn, NY :</subfield>
+      <subfield code="b">Brooklyn Botanical Garden,</subfield>
+      <subfield code="c">1920-</subfield>
+    </datafield>
+    <datafield ind1="2" ind2="1" tag="264">
+      <subfield code="3">1949-1983 :</subfield>
+      <subfield code="a">Durham, N.C. :</subfield>
+      <subfield code="b">Ecological Society of America and Duke University Press</subfield>
+    </datafield>
+    <datafield ind1="2" ind2="1" tag="264">
+      <subfield code="3">1984-1994 :</subfield>
+      <subfield code="a">Tempe, Ariz. :</subfield>
+      <subfield code="b">Ecological Society of America</subfield>
+    </datafield>
+    <datafield ind1="2" ind2="1" tag="264">
+      <subfield code="3">1995-Sept. 2016 :</subfield>
+      <subfield code="a">Washington, D.C. :</subfield>
+      <subfield code="b">Ecological Society of America</subfield>
+    </datafield>
+    <datafield ind1="3" ind2="1" tag="264">
+      <subfield code="3">October 2016- :</subfield>
+      <subfield code="a">Hoboken, NJ :</subfield>
+      <subfield code="b">Wiley Subscription Services, Inc.</subfield>
+    </datafield>
+    <datafield ind1=" " ind2=" " tag="300">
+      <subfield code="a">volumes :</subfield>
+      <subfield code="b">illustrations, plates (some color) ;</subfield>
+      <subfield code="c">27 cm</subfield>
+    </datafield>
+    <datafield ind1=" " ind2=" " tag="310">
+      <subfield code="a">Monthly,</subfield>
+      <subfield code="b">2000-</subfield>
+    </datafield>
+    <datafield ind1=" " ind2=" " tag="321">
+      <subfield code="a">Quarterly,</subfield>
+      <subfield code="b">1920-1964</subfield>
+    </datafield>
+    <datafield ind1=" " ind2=" " tag="321">
+      <subfield code="a">Six no. a year,</subfield>
+      <subfield code="b">1965-1992</subfield>
+    </datafield>
+    <datafield ind1=" " ind2=" " tag="321">
+      <subfield code="a">Eight no. year,</subfield>
+      <subfield code="b">1993-1999</subfield>
+    </datafield>
+    <datafield ind1=" " ind2=" " tag="336">
+      <subfield code="a">text</subfield>
+      <subfield code="b">txt</subfield>
+      <subfield code="2">rdacontent</subfield>
+    </datafield>
+    <datafield ind1=" " ind2=" " tag="337">
+      <subfield code="a">unmediated</subfield>
+      <subfield code="b">n</subfield>
+      <subfield code="2">rdamedia</subfield>
+    </datafield>
+    <datafield ind1=" " ind2=" " tag="338">
+      <subfield code="a">volume</subfield>
+      <subfield code="b">nc</subfield>
+      <subfield code="2">rdacarrier</subfield>
+    </datafield>
+    <datafield ind1="0" ind2=" " tag="362">
+      <subfield code="a">Vol. 1, no. 1 (Jan. 1920)-</subfield>
+    </datafield>
+    <datafield ind1=" " ind2=" " tag="500">
+      <subfield code="a">Published: Brooklyn, N.Y. : Brooklyn Botanical Garden, 1920-1948; Durham, N.C. : Ecological Society of America and Duke University Press, 1949-1983; Tempe, Ariz. : Ecological Society of America, 1984- ; Washington, D.C., &lt;1997&gt; -September 2016.</subfield>
+    </datafield>
+    <datafield ind1="2" ind2=" " tag="510">
+      <subfield code="a">Chemical abstracts</subfield>
+      <subfield code="x">0009-2258</subfield>
+      <subfield code="b">-1993</subfield>
+    </datafield>
+    <datafield ind1=" " ind2=" " tag="525">
+      <subfield code="a">Some issues accompanied by supplements.</subfield>
+    </datafield>
+    <datafield ind1=" " ind2=" " tag="550">
+      <subfield code="a">Issued by the Ecological Society of America.</subfield>
+    </datafield>
+    <datafield ind1=" " ind2=" " tag="555">
+      <subfield code="a">Vols. 1-30, 1920-49. 1 v.; v. 31-50, 1950-69. 1 v.</subfield>
+    </datafield>
+    <datafield ind1=" " ind2=" " tag="588">
+      <subfield code="a">Latest issue consulted: Vol. 98, no. 6 (June 2017).</subfield>
+    </datafield>
+    <datafield ind1=" " ind2="0" tag="650">
+      <subfield code="a">Ecology</subfield>
+      <subfield code="v">Periodicals.</subfield>
+    </datafield>
+    <datafield ind1=" " ind2="2" tag="650">
+      <subfield code="a">Ecology.</subfield>
+    </datafield>
+    <datafield ind1=" " ind2="6" tag="650">
+      <subfield code="a">Écologie</subfield>
+      <subfield code="v">Périodiques.</subfield>
+    </datafield>
+    <datafield ind1=" " ind2="7" tag="650">
+      <subfield code="a">Ecology.</subfield>
+      <subfield code="2">fast</subfield>
+      <subfield code="0">(OCoLC)fst00901476</subfield>
+    </datafield>
+    <datafield ind1="1" ind2="7" tag="650">
+      <subfield code="a">Ecologie.</subfield>
+      <subfield code="2">gtt</subfield>
+    </datafield>
+    <datafield ind1=" " ind2="2" tag="655">
+      <subfield code="a">Periodical.</subfield>
+    </datafield>
+    <datafield ind1=" " ind2="7" tag="655">
+      <subfield code="a">Periodicals.</subfield>
+      <subfield code="2">fast</subfield>
+      <subfield code="0">(OCoLC)fst01411641</subfield>
+    </datafield>
+    <datafield ind1=" " ind2="7" tag="655">
+      <subfield code="a">Electronic journals.</subfield>
+      <subfield code="2">lcgft</subfield>
+    </datafield>
+    <datafield ind1="0" ind2="4" tag="650">
+      <subfield code="a">periodika</subfield>
+      <subfield code="x">NPA</subfield>
+      <subfield code="x">ELTE</subfield>
+    </datafield>
+    <datafield ind1="0" ind2="4" tag="650">
+      <subfield code="a">periodika</subfield>
+      <subfield code="x">biológia</subfield>
+    </datafield>
+    <datafield ind1="0" ind2="4" tag="650">
+      <subfield code="a">ökológia</subfield>
+    </datafield>
+    <datafield ind1=" " ind2="0" tag="655">
+      <subfield code="a">Electronic journals.</subfield>
+    </datafield>
+    <datafield ind1=" " ind2="4" tag="655">
+      <subfield code="a">Electronic journals.</subfield>
+    </datafield>
+    <datafield ind1="2" ind2=" " tag="710">
+      <subfield code="a">Ecological Society of America.</subfield>
+    </datafield>
+    <datafield ind1="2" ind2=" " tag="710">
+      <subfield code="a">Brooklyn Botanic Garden.</subfield>
+    </datafield>
+    <datafield ind1="0" ind2="8" tag="776">
+      <subfield code="i">Microfilm version:</subfield>
+      <subfield code="t">Ecology</subfield>
+      <subfield code="x">0012-9658</subfield>
+      <subfield code="w">(OCoLC)23020648</subfield>
+    </datafield>
+    <datafield ind1="0" ind2="8" tag="776">
+      <subfield code="i">Online version:</subfield>
+      <subfield code="t">Ecology (Brooklyn, New York, N.Y. : Online)</subfield>
+      <subfield code="x">1939-9170</subfield>
+      <subfield code="w">(DLC)sn 97023010</subfield>
+      <subfield code="w">(OCoLC)35698209</subfield>
+    </datafield>
+    <datafield ind1="0" ind2="8" tag="776">
+      <subfield code="i">Online version:</subfield>
+      <subfield code="t">Ecology (Brooklyn, New York, N.Y.)</subfield>
+      <subfield code="w">(OCoLC)566149631</subfield>
+    </datafield>
+    <datafield ind1="0" ind2="0" tag="780">
+      <subfield code="t">Plant world</subfield>
+      <subfield code="x">0096-8307</subfield>
+      <subfield code="w">(DLC)   21006545</subfield>
+      <subfield code="w">(OCoLC)1605034</subfield>
+    </datafield>
+    <datafield ind1=" " ind2=" " tag="850">
+      <subfield code="a">CU-RivA</subfield>
+      <subfield code="a">CaNSHD</subfield>
+      <subfield code="a">DLC</subfield>
+      <subfield code="a">DNAL</subfield>
+      <subfield code="a">GU</subfield>
+      <subfield code="a">InU</subfield>
+      <subfield code="a">MCM</subfield>
+      <subfield code="a">NjR</subfield>
+      <subfield code="a">TxU</subfield>
+    </datafield>
+    <datafield ind1="4" ind2="1" tag="856">
+      <subfield code="u">http://onlinelibrary.wiley.com/journal/10.1002/(ISSN)1939-9170</subfield>
+    </datafield>
+    <datafield ind1="4" ind2="1" tag="856">
+      <subfield code="u">http://www.jstor.org/journals/00129658.html</subfield>
+    </datafield>
+    <datafield ind1="4" ind2="1" tag="856">
+      <subfield code="u">http://www.esajournals.org/perlserv/?request=get-archive&amp;issn=0012-9658</subfield>
+      <subfield code="z">Scroll down for title</subfield>
+    </datafield>
+    <datafield ind1="2" ind2="0" tag="891">
+      <subfield code="9">853</subfield>
+      <subfield code="8">1</subfield>
+      <subfield code="a">v.</subfield>
+      <subfield code="b">no.</subfield>
+      <subfield code="u">12</subfield>
+      <subfield code="v">r</subfield>
+      <subfield code="i">(year)</subfield>
+      <subfield code="j">(month)</subfield>
+      <subfield code="w">m</subfield>
+    </datafield>
+    <datafield ind1="4" ind2="1" tag="891">
+      <subfield code="9">863</subfield>
+      <subfield code="8">1.1</subfield>
+      <subfield code="a">&lt;81&gt;</subfield>
+      <subfield code="b">&lt;1&gt;</subfield>
+      <subfield code="i">&lt;2000&gt;</subfield>
+      <subfield code="j">&lt;01&gt;</subfield>
+    </datafield>
+    <datafield ind1=" " ind2=" " tag="938">
+      <subfield code="a">AMAZON</subfield>
+      <subfield code="b">AMZN</subfield>
+      <subfield code="n">B0030GEQPG</subfield>
+    </datafield>
+    <datafield ind1=" " ind2=" " tag="938">
+      <subfield code="a">Kirtas Technologies, Inc.</subfield>
+      <subfield code="b">KRTS</subfield>
+      <subfield code="n">762518</subfield>
+    </datafield>
+  </record>
