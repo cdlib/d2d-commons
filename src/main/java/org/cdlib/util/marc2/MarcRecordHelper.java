@@ -10,7 +10,6 @@ import java.util.stream.Collectors;
 import org.cdlib.util.DeserializationException;
 import org.marc4j.MarcException;
 import org.marc4j.MarcXmlReader;
-import org.marc4j.marc.ControlField;
 import org.marc4j.marc.DataField;
 import org.marc4j.marc.Record;
 import org.marc4j.marc.Subfield;
@@ -78,13 +77,8 @@ public class MarcRecordHelper {
    * If index = 1 and ubound = 3 the method returns {'a','t'}
    * 
    */
-  public Optional<char[]> controlFieldSegment(String tag, int index, int ubound) {
-    Optional<String> ctrlFieldValOpt = controlFieldVal(tag);
-    if (!ctrlFieldValOpt.isPresent()) {
-      return Optional.empty();
-    }
-    String ctrlFieldVal = ctrlFieldValOpt.get();
-    return fromSegment(ctrlFieldVal, index, ubound);
+  public Optional<char[]> controlFieldSegment(String tag, int beginIndex, int endIndex) {
+    return controlFieldVal(tag).flatMap(s -> fromSegment(s, beginIndex, endIndex));
   }
 
   private Optional<char[]> fromSegment(String source, int beginIndex, int endIndex) {
@@ -96,22 +90,18 @@ public class MarcRecordHelper {
       return Optional.empty();
     }
     segment = source.substring(beginIndex, endIndex);
-    return Optional.of(segment.toCharArray());
+    return Optional.ofNullable(segment.toCharArray());
   }
 
   public Optional<String> controlFieldVal(String tag) {
     if (tag.isEmpty()) {
       throw new IllegalArgumentException("Tag cannot be empty.");
     }
-    List<ControlField> controlFields = record.getControlFields();
-    Optional<ControlField> controlField = controlFields.stream()
+    
+    return record.getControlFields().stream()
         .filter(cf -> cf.getTag().contentEquals(tag))
-        .findFirst();
-   
-    if (!controlField.isPresent()) {
-      return Optional.empty();
-    }
-    return Optional.ofNullable(controlField.get().getData());
+        .findFirst()
+        .map(cf -> cf.getData());
   }
 
   /*
@@ -125,7 +115,7 @@ public class MarcRecordHelper {
     if (index + 1 > leader.length()) {
       return Optional.empty();
     }
-    return Optional.of(leader.charAt(index));
+    return Optional.ofNullable(leader.charAt(index));
   }
 
   public Optional<char[]> leaderSegment(int beginIndex, int endIndex) {
