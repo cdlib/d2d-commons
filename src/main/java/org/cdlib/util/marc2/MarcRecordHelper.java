@@ -74,7 +74,7 @@ public class MarcRecordHelper {
    * 
    * For example, if control field has value "cats"
    * 
-   * If index = 1 and ubound = 3 the method returns {'a','t'}
+   * If beginIndex = 1 and endIndex = 3 the method returns {'a','t'}
    * 
    */
   public Optional<char[]> controlFieldSegment(String tag, int beginIndex, int endIndex) {
@@ -97,11 +97,12 @@ public class MarcRecordHelper {
     if (tag.isEmpty()) {
       throw new IllegalArgumentException("Tag cannot be empty.");
     }
-    
-    return record.getControlFields().stream()
-        .filter(cf -> cf.getTag().contentEquals(tag))
-        .findFirst()
-        .map(cf -> cf.getData());
+
+    return record.getControlFields()
+                 .stream()
+                 .filter(cf -> cf.getTag().contentEquals(tag))
+                 .findFirst()
+                 .map(cf -> cf.getData());
   }
 
   /*
@@ -117,6 +118,7 @@ public class MarcRecordHelper {
     }
     return Optional.ofNullable(leader.charAt(index));
   }
+
 
   public Optional<char[]> leaderSegment(int beginIndex, int endIndex) {
     String leader = record.getLeader().marshal();
@@ -139,7 +141,7 @@ public class MarcRecordHelper {
     if (values.isEmpty()) {
       return Optional.empty();
     }
-    return Optional.of(values.get(0));
+    return Optional.ofNullable(values.get(0));
   }
 
   /*
@@ -150,26 +152,25 @@ public class MarcRecordHelper {
    * Returns an empty List if no values are found.
    */
   public Optional<List<String>> subfieldVals(String tag, char subfieldCode) {
+    List<DataField> dataFields = record.getDataFields()
+                                       .stream()
+                                       .filter(hasTagAndSubfield(tag, subfieldCode))
+                                       .collect(Collectors.toList());
+
+    List<Subfield> subfields = new ArrayList<>();
+    dataFields.forEach(df -> subfields.addAll(df.getSubfields(subfieldCode)));
+    
     List<String> fieldValues = new ArrayList<String>();
+    subfields.forEach(sf -> {
+      fieldValues.add(sf.getData().trim());
+    });
     
-    List<DataField> dataFields = record.getDataFields().stream()
-        .filter(hasTagAndSubfield(tag, subfieldCode))
-        .collect(Collectors.toList());
-    
-    for (DataField field : dataFields) {
-      List<Subfield> subfields = field.getSubfields(subfieldCode);
-      for (Subfield sb : subfields) {
-        if (sb != null) {
-          fieldValues.add(sb.getData().trim());
-        }
-      }
-    }
     if (fieldValues.isEmpty()) {
       return Optional.empty();
     }
-    return Optional.of(fieldValues);
+    return Optional.ofNullable(fieldValues);
   }
-  
+
   private static Predicate<DataField> hasTagAndSubfield(String tag, char subfieldCode) {
     return df -> df.getTag().equals(tag) && !df.getSubfields(subfieldCode).isEmpty();
   }
