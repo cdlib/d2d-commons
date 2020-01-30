@@ -15,13 +15,16 @@ import org.marc4j.marc.Record;
 import org.marc4j.marc.Subfield;
 
 /*
- * A wrapper class around a Marc4J record.
+ * A wrapper class around a Marc4J record, and more generally, an interface into a MARC record.
  * 
  * This class provides method that simplifies and limits the boilerplate of direct calls to the
  * Marc4J Record methods.
  * 
  * This class sticks to the mechanics of extracting data from the MARC record and avoids semantics
  * (so it would not have getTitle or getControlNumber, for example).
+ * 
+ * The arguments and return values are all native Java types, rather than MARC4J types, so that
+ * an interface could be extracted potentially that would work with another underlying MARC parser implementation.
  * 
  * The methods return Optional<T>, which is empty if the MARC record lacks the field or subfield
  * specified, but will throw IllegalArgumentException if the arguments are invalid (such as negative
@@ -121,8 +124,12 @@ public class MarcRecordHelper {
 
 
   public Optional<char[]> leaderSegment(int beginIndex, int endIndex) {
-    String leader = record.getLeader().marshal();
+    String leader = leaderVal().orElse("");
     return fromSegment(leader, beginIndex, endIndex);
+  }
+  
+  public Optional<String> leaderVal() {
+    return Optional.ofNullable(record.getLeader().marshal());
   }
 
   /*

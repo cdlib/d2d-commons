@@ -2,6 +2,7 @@
 <record xmlns="http://www.loc.gov/MARC21/slim">
     <leader>00000cam a2200000Ma 4500</leader>
     <controlfield tag="001">751666086</controlfield>
+    <controlfield tag="006"></controlfield>
     <controlfield tag="008">081028s2010    ie a          000 p eng d</controlfield>
     <datafield ind1=" " ind2=" " tag="040">
       <subfield code="a">UKMGB</subfield>
@@ -12,7 +13,7 @@
       <subfield code="d">UKMGB</subfield>
     </datafield>
     <datafield ind1=" " ind2=" " tag="015">
-      <subfield code="a">GBA8C6989</subfield>
+      <subfield code="a"></subfield>
       <subfield code="2">bnb</subfield>
     </datafield>
     <datafield ind1="7" ind2=" " tag="016">
