@@ -35,8 +35,6 @@ public class Bib {
   private String author;
   private Carrier carrier;
   private String corporateAuthor;
-  
-  //250$a
   private String edition;
   @NotNull
   private BibIdentifiers identifiers;
@@ -47,7 +45,7 @@ public class Bib {
   private List<Link> otherForms;
   @NotNull(message = "PublicationEvent required")
   private PublicationEvent publicationEvent;
-  private RecordType recordType;
+  private MaterialType materialType;
   @NotNull
   private ResourceMeta resourceMeta;
   @NotNull(message = "Seriality is required.")
@@ -74,7 +72,7 @@ public class Bib {
     this.marc = source.marc;
     this.otherForms = source.otherForms;
     this.publicationEvent = source.publicationEvent;
-    this.recordType = source.recordType;
+    this.materialType = source.materialType;
     this.resourceMeta = source.resourceMeta;
     this.seriality = source.seriality;
   }
@@ -112,8 +110,8 @@ public class Bib {
     return publicationEvent;
   }
 
-  public RecordType getRecordType() {
-    return recordType;
+  public MaterialType getMaterialType() {
+    return materialType;
   }
 
   public ResourceMeta getResourceMeta() {
@@ -164,8 +162,8 @@ public class Bib {
     this.publicationEvent = publicationEvent;
   }
 
-  public void setRecordType(RecordType recordType) {
-    this.recordType = recordType;
+  public void setMaterialType(MaterialType recordType) {
+    this.materialType = recordType;
   }
 
   public void setResorceMeta(ResourceMeta resourceMeta) {

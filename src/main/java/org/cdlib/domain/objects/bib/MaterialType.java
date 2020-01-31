@@ -9,15 +9,16 @@ package org.cdlib.domain.objects.bib;
  * See https://www.loc.gov/marc/bibliographic/bdleader.html
  *
  */
-public enum RecordType {
+public enum MaterialType {
   
-  BOOK,
-  MUSIC,
-  MAP,
-  COMPUTER_FILE,
-  SERIAL,
-  VISUAL_MATERIALS,
-  MIXED_MATERIALS,
-  OTHER;
+  LANGUAGE_RESOURCE,
+  MUSICAL_SCORE,
+  CARTOGRAPHIC_RESOURCE,
+  AUDIO_RESOURCE,
+  VIDEO_RESOURCE,
+  COMPUTER_RESOURCE,
+  GRAPHIC_RESOURCE,
+  PHYSICAL_ARTIFACT,
+  MIXED_MEDIA
 
 }
