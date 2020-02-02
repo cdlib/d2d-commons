@@ -39,7 +39,6 @@ public class Bib {
   @NotNull
   private BibIdentifiers identifiers;
   private String language;
-  @NotNull
   private Link marc;
   @NotNull
   private List<Link> otherForms;
@@ -57,7 +56,7 @@ public class Bib {
     identifiers = new BibIdentifiers();
     otherForms = new ArrayList<>();
     publicationEvent = new PublicationEvent();
-    marc = new Link();
+    marc = null;
     resourceMeta = new ResourceMeta();;
     title = new Title();
   }

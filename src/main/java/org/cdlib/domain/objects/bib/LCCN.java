@@ -1,5 +1,6 @@
 package org.cdlib.domain.objects.bib;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -8,7 +9,7 @@ public class LCCN implements Identifier {
   
   private static final IdAuthority AUTHORITY = IdAuthority.LOC;
   private String value;
-  private List<String> alternateValues;
+  private List<String> alternateValues = new ArrayList<>();
   
   public LCCN() {}
 
