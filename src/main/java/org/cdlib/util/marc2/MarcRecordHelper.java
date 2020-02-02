@@ -81,7 +81,8 @@ public class MarcRecordHelper {
    * 
    */
   public Optional<char[]> controlFieldSegment(String tag, int beginIndex, int endIndex) {
-    return controlFieldVal(tag).flatMap(s -> fromSegment(s, beginIndex, endIndex));
+    return controlFieldVal(tag)
+        .flatMap(s -> fromSegment(s, beginIndex, endIndex));
   }
 
   private Optional<char[]> fromSegment(String source, int beginIndex, int endIndex) {
