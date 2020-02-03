@@ -2,6 +2,7 @@ package org.cdlib.domain.objects;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import org.cdlib.util.JSON;
 
 /*
  * A link to a related resource.
@@ -15,9 +16,9 @@ public class Link {
   @NotNull
   @NotEmpty
   private String mimeType;
-  
+
   public Link() {}
-  
+
   public Link(Link source) {
     this.href = source.href;
     this.mimeType = source.mimeType;
@@ -30,16 +31,15 @@ public class Link {
   public String getMimeType() {
     return mimeType;
   }
-
-  @Override
-  public int hashCode() {
-    final int prime = 31;
-    int result = 1;
-    result = prime * result + ((href == null) ? 0 : href.hashCode());
-    result = prime * result + ((mimeType == null) ? 0 : mimeType.hashCode());
-    return result;
+  
+  public void setHref(String href) {
+    this.href = href;
   }
 
+  public void setMimeType(String mimeType) {
+    this.mimeType = mimeType;
+  } 
+  
   @Override
   public boolean equals(Object obj) {
     if (this == obj)
@@ -60,6 +60,21 @@ public class Link {
     } else if (!mimeType.equals(other.mimeType))
       return false;
     return true;
-  } 
+  }
+  
+  @Override
+  public int hashCode() {
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + ((href == null) ? 0 : href.hashCode());
+    result = prime * result + ((mimeType == null) ? 0 : mimeType.hashCode());
+    return result;
+  }
+  
+  @Override
+  public String toString() {
+    return JSON.serialize(this);
+  }
+
 
 }
