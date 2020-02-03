@@ -1,8 +1,9 @@
 package org.cdlib.test;
 
-/**
+/*
  *
- * @author jferrie
+ * Used for testing serialization failures.
+ * This object cannot be serialized using Jackson.
  */
 public class NonBean {
   

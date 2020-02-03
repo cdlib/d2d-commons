@@ -3,45 +3,30 @@ package org.cdlib.domain.objects.bib;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import org.cdlib.domain.constraints.OCLCNumber;
 import org.cdlib.util.CollectionUtil;
 
-public class OclcNumber {
+public class OclcNumber implements Identifier {
 
+  private static final IdAuthority AUTHORITY = IdAuthority.OCLC;
+  private List<String> altValues = new ArrayList<>();
+  
+  @NotNull
+  @NotEmpty
   @OCLCNumber(message = "OCLC number must be in valid OCLC format.")
   private String value;
-  private List<String> formerValues;
   
-  public OclcNumber() {
-  }
+  public OclcNumber() {}
 
+  public OclcNumber(OclcNumber source) {
+    this.value = source.value;
+    this.altValues = source.altValues;
+  }
+  
   public OclcNumber(String value) {
     this.value = value;
-    formerValues = new ArrayList<>();
-  }
-
-  public String getValue() {
-    return value;
-  }
-
-  public void setValue(String value) {
-    this.value = value;
-  }
-
-  public List<String> getFormerValues() {
-    return CollectionUtil.dedupedList(formerValues);
-  }
-
-  public void setFormerValues(List<String> formerValues) {
-    this.formerValues = formerValues;
-  }
-
-  @Override
-  public int hashCode() {
-    int hash = 3;
-    hash = 73 * hash + Objects.hashCode(this.value);
-    hash = 73 * hash + Objects.hashCode(this.formerValues);
-    return hash;
   }
 
   @Override
@@ -59,15 +44,45 @@ public class OclcNumber {
     if (!Objects.equals(this.value, other.value)) {
       return false;
     }
-    if (!Objects.equals(this.formerValues, other.formerValues)) {
+    if (!Objects.equals(this.altValues, other.altValues)) {
       return false;
     }
     return true;
   }
 
+  public List<String> getAlternateValues() {
+    return CollectionUtil.dedupedList(altValues);
+  }
+
+  @Override
+  public @NotNull String getAuthority() {
+    return AUTHORITY.getUri();
+  }
+
+  @Override
+  public String getValue() {
+    return value;
+  }
+
+  @Override
+  public int hashCode() {
+    int hash = 3;
+    hash = 73 * hash + Objects.hashCode(this.value);
+    hash = 73 * hash + Objects.hashCode(this.altValues);
+    return hash;
+  }
+
+  public void setAlternateValues(List<String> altValues) {
+    this.altValues = altValues;
+  }
+
+  public void setValue(String value) {
+    this.value = value;
+  }
+
   @Override
   public String toString() {
-    return "OclcNumber{" + "value=" + value + ", formerValues=" + formerValues + '}';
+    return "OclcNumber{" + "value=" + value + ", formerValues=" + altValues + '}';
   }
 
 }

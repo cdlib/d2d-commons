@@ -7,15 +7,18 @@ package org.cdlib.domain.objects.bib;
  * A classification of the general type of material represented by the Bib data.
  * 
  * See https://www.loc.gov/marc/bibliographic/bdleader.html
- * 
- * @author jferrie
+ *
  */
-public enum RecordType {
+public enum MaterialType {
   
-  LANGUAGE_MATERIAL,
-  NOTATED_MUSIC,
-  CARTOGRAPHIC_MATERIAL,
-  NON_MUSICAL_SOUND_RECORDING,
-  MUSICAL_SOUND_RECORDING;
+  LANGUAGE_RESOURCE,
+  MUSICAL_SCORE,
+  CARTOGRAPHIC_RESOURCE,
+  AUDIO_RESOURCE,
+  VIDEO_RESOURCE,
+  COMPUTER_RESOURCE,
+  GRAPHIC_RESOURCE,
+  PHYSICAL_ARTIFACT,
+  MIXED_MEDIA
 
 }

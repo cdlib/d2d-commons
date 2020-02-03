@@ -1,15 +1,14 @@
 package org.cdlib.test;
 
-/**
- *
- * @author jferrie
+/*
+ * Used for testing JSON serialization and deserialization.
  */
 public class SerializablePojo {
   private String testString;
   private int testInt;
   
   public SerializablePojo() {
-    testString = "test String val";
+    testString = "test String val 好比不上";
     testInt = 22;
   }
 

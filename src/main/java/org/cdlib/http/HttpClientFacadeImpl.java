@@ -13,12 +13,12 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.Logger;
 
 public class HttpClientFacadeImpl implements HttpClientFacade {
 
-  private static final Logger LOGGER = LogManager.getLogger(HttpClientFacadeImpl.class);
+  @SuppressWarnings("unused")
+  private static final Logger LOGGER = Logger.getLogger(HttpClientFacadeImpl.class);
   private static final int DEFAULT_TIMEOUT = 20000;
   private static final ContentType DEFAULT_CONTENT_TYPE = ContentType.APPLICATION_FORM_URLENCODED;
 
@@ -43,14 +43,13 @@ public class HttpClientFacadeImpl implements HttpClientFacade {
       httpPost.setEntity(requestEntity);
       HttpResponse response = httpClient.execute(httpPost);
       if (response.getStatusLine().getStatusCode() < 200 || response.getStatusLine().getStatusCode() > 399) {
-        LOGGER.error("Response status line = " + response.getStatusLine() + ", code = " + response.getStatusLine().getStatusCode() + ", from URL " + url + " post " + post);
-        throw new WebException(response.getStatusLine().getReasonPhrase(), response);
+       throw new WebException(response.getStatusLine().getReasonPhrase(), response);
       }
       HttpEntity entity = response.getEntity();
       result = EntityUtils.toString(entity, "utf-8");
       EntityUtils.consume(entity);
     } catch (IOException | UnsupportedCharsetException | ParseException e) {
-      LOGGER.error(e.toString());
+      // TODO throw an exception
       return "";
     } finally {
       httpPost.releaseConnection();
@@ -61,29 +60,26 @@ public class HttpClientFacadeImpl implements HttpClientFacade {
 
   @Override
   public String get(String url) {
-    LOGGER.debug("URLClientImpl doURLGet: url=" + url + " timeout=" + DEFAULT_TIMEOUT);
     String result = "";
     RequestConfig config = RequestConfig.custom().setConnectTimeout(DEFAULT_TIMEOUT).setSocketTimeout(DEFAULT_TIMEOUT).build();
     HttpGet httpGet = new HttpGet(url);
-
+    
     try (CloseableHttpClient httpClient = HttpClientBuilder.create().setDefaultRequestConfig(config).build()) {
       HttpResponse response = httpClient.execute(httpGet);
       if (response.getStatusLine().getStatusCode() != 200) {
-        LOGGER.error("Response status line = " + response.getStatusLine() + ", code = " + response.getStatusLine().getStatusCode() + ", from url " + url);
         throw new WebException(response.getStatusLine().getReasonPhrase(), response);
       }
       HttpEntity entity = response.getEntity();
       result = EntityUtils.toString(entity, "utf-8");
       EntityUtils.consume(entity);
     } catch (IOException e) {
-      LOGGER.error("While getting url " + url + " error: " + e.toString());
       throw new WebException(e.getMessage(), e, 500);
     } catch (ParseException e) {
-      LOGGER.error("While getting url " + url + " error: " + e.toString());
       throw new WebException(e.getMessage(), e, 400);
     }
+    
     return result;
-
+    
   }
 
 }
