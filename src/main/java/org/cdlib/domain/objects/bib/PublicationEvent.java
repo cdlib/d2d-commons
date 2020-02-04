@@ -1,9 +1,10 @@
 package org.cdlib.domain.objects.bib;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 public class PublicationEvent {
   
-  // 008 -- first date
-  // 260 gives strings for place and publisher (use)
   private String date;
   private String place;
   private String publisher;
@@ -16,21 +17,32 @@ public class PublicationEvent {
     this.publisher = source.publisher;
   }
   
+  @NotNull
+  @NotEmpty
   public String getDate() {
     return date;
   }
+  
+  @NotNull
+  @NotEmpty
   public String getPlace() {
     return place;
   }
+  
+  @NotNull
+  @NotEmpty
   public String getPublisher() {
     return publisher;
   }
+  
   public void setDate(String date) {
     this.date = date;
   }
+  
   public void setPlace(String place) {
     this.place = place;
   }
+  
   public void setPublisher(String publisher) {
     this.publisher = publisher;
   }

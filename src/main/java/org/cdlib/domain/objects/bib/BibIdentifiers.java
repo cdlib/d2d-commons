@@ -1,7 +1,5 @@
 package org.cdlib.domain.objects.bib;
 
-import javax.validation.constraints.NotNull;
-
 /*
  * Brings together all bibliographic identifiers.
  * 
@@ -15,7 +13,6 @@ public class BibIdentifiers {
 
   private ISBN isbn;
   private ISSN issn;
-  private LCCN lccn;
   private OclcNumber oclcNumber;
 
   public BibIdentifiers() {
@@ -25,23 +22,18 @@ public class BibIdentifiers {
   public BibIdentifiers(BibIdentifiers source) {
     this.isbn = source.isbn;
     this.issn = source.issn;
-    this.lccn = source.lccn;
     this.oclcNumber = source.oclcNumber;
   }
 
-  public @NotNull ISBN getIsbn() {
+  public ISBN getIsbn() {
     return isbn;
   }
 
-  public @NotNull ISSN getIssn() {
+  public ISSN getIssn() {
     return issn;
   }
 
-  public @NotNull LCCN getLccn() {
-    return lccn;
-  }
-
-  public @NotNull OclcNumber getOclcNumber() {
+  public OclcNumber getOclcNumber() {
     return oclcNumber;
   }
 
@@ -51,10 +43,6 @@ public class BibIdentifiers {
 
   public void setIssn(ISSN issn) {
     this.issn = issn;
-  }
-
-  public void setLccn(LCCN lccn) {
-    this.lccn = lccn;
   }
 
   public void setOclcNumber(OclcNumber oclcNumber) {
@@ -67,7 +55,6 @@ public class BibIdentifiers {
     int result = 1;
     result = prime * result + ((isbn == null) ? 0 : isbn.hashCode());
     result = prime * result + ((issn == null) ? 0 : issn.hashCode());
-    result = prime * result + ((lccn == null) ? 0 : lccn.hashCode());
     result = prime * result + ((oclcNumber == null) ? 0 : oclcNumber.hashCode());
     return result;
   }
@@ -90,11 +77,6 @@ public class BibIdentifiers {
       if (other.issn != null)
         return false;
     } else if (!issn.equals(other.issn))
-      return false;
-    if (lccn == null) {
-      if (other.lccn != null)
-        return false;
-    } else if (!lccn.equals(other.lccn))
       return false;
     if (oclcNumber == null) {
       if (other.oclcNumber != null)

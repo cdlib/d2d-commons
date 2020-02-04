@@ -18,6 +18,7 @@ public interface Identifier {
   @NotEmpty
   public String getAuthority();
   
+  @NotNull
   public List<String> getAlternateValues();
 
 }

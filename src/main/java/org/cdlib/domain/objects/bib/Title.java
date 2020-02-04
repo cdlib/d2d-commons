@@ -40,7 +40,6 @@ public class Title {
    * this is the same as the canonical title
    * 
    */
-  @NotNull
   @NotEmpty
   public String getNonRomanizedTitle() {
     return nonRomanizedTitle;

@@ -17,8 +17,8 @@ package org.cdlib.domain.objects.bib;
  */
 public enum Seriality {
   
-  MONO,
+  MONOGRAPH,
   SERIAL,
-  INTEGRATING
+  INTEGRATING_RESOURCE
 
 }

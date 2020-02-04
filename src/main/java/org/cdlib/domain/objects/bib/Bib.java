@@ -36,19 +36,26 @@ public class Bib {
   private Carrier carrier;
   private String corporateAuthor;
   private String edition;
+
   @NotNull
   private BibIdentifiers identifiers;
   private String language;
   private Link marc;
+
   @NotNull
   private List<Link> otherForms;
+  
   @NotNull(message = "PublicationEvent required")
   private PublicationEvent publicationEvent;
+  
   private MaterialType materialType;
+  
   @NotNull
   private ResourceMeta resourceMeta;
+  
   @NotNull(message = "Seriality is required.")
   private Seriality seriality;
+  
   @NotNull(message = "Title is required.")
   private Title title;
   
