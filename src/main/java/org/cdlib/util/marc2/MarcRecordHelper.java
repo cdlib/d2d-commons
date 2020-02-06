@@ -108,6 +108,25 @@ public class MarcRecordHelper {
                  .findFirst()
                  .map(cf -> cf.getData());
   }
+  
+  public Optional<List<char[]>> indicators(String tag) {
+    List<DataField> dataFields = record.getDataFields()
+        .stream()
+        .filter(df -> df.getTag().equals(tag))
+        .collect(Collectors.toList());
+    List<char[]> indicators = dataFields
+        .stream()
+        .map(this::indicators)
+        .collect(Collectors.toList());
+    return Optional.of(indicators);
+  }
+  
+  private char[] indicators(DataField dataField) {
+    char[] indicators = new char[2];
+    indicators[0] = dataField.getIndicator1();
+    indicators[1] = dataField.getIndicator2();
+    return indicators;
+  }
 
   /*
    * Returns the char at an index of the leader.
