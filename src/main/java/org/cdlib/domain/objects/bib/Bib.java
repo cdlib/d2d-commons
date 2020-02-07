@@ -35,7 +35,7 @@ public class Bib {
 
   private String author;
   private Carrier carrier;
-  private List<String> corporateAuthors = new ArrayList<>();;
+  private String corporateAuthor;
   private String edition;
 
   @NotNull
@@ -72,7 +72,7 @@ public class Bib {
   public Bib(Bib source) {
     this.author = source.author;
     this.carrier = source.carrier;
-    this.corporateAuthors = source.corporateAuthors;
+    this.corporateAuthor = source.corporateAuthor;
     this.edition = source.edition;
     this.identifiers = source.identifiers;
     this.language = source.language;
@@ -90,10 +90,8 @@ public class Bib {
   public Carrier getCarrier() {
     return carrier;
   }
-  public List<String> getCorporateAuthors() {
-    List<String> copy = new ArrayList<>();
-    copy.addAll(corporateAuthors);
-    return copy;
+  public String getCorporateAuthor() {
+    return corporateAuthor;
   }
   public String getEdition() {
     return edition;
@@ -143,8 +141,8 @@ public class Bib {
     this.carrier = carrier;
   }
 
-  public void setCorporateAuthors(List<String> corporateAuthors) {
-    this.corporateAuthors = Collections.unmodifiableList(corporateAuthors);
+  public void setCorporateAuthor(String corporateAuthor) {
+    this.corporateAuthor = corporateAuthor;
   }
 
   public void setEdition(String edition) {
