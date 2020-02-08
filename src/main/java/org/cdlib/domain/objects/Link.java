@@ -27,32 +27,6 @@ public class Link {
     this.href = source.href;
     this.mimeType = source.mimeType;
   }
-  
-  public String getHref() {
-    return href;
-  }
-  
-  public String getMimeType() {
-    return mimeType;
-  }
-  
-  public void setHref(String href) {
-    this.href = href;
-  }
-
-  public void setMimeType(String mimeType) {
-    this.mimeType = mimeType;
-  } 
-  
-  @Override
-  public int hashCode() {
-    final int prime = 31;
-    int result = 1;
-    result = prime * result + ((href == null) ? 0 : href.hashCode());
-    result = prime * result + ((mimeType == null) ? 0 : mimeType.hashCode());
-    result = prime * result + ((properties == null) ? 0 : properties.hashCode());
-    return result;
-  }
 
   @Override
   public boolean equals(Object obj) {
@@ -79,6 +53,40 @@ public class Link {
     } else if (!properties.equals(other.properties))
       return false;
     return true;
+  }
+
+  public String getHref() {
+    return href;
+  }
+  
+  public String getMimeType() {
+    return mimeType;
+  }
+  
+  public Map<String, Object> getProperties() {
+    return properties;
+  }
+  
+  @Override
+  public int hashCode() {
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + ((href == null) ? 0 : href.hashCode());
+    result = prime * result + ((mimeType == null) ? 0 : mimeType.hashCode());
+    result = prime * result + ((properties == null) ? 0 : properties.hashCode());
+    return result;
+  }
+
+  public void setHref(String href) {
+    this.href = href;
+  } 
+  
+  public void setMimeType(String mimeType) {
+    this.mimeType = mimeType;
+  }
+
+  public void setProperties(Map<String, Object> properties) {
+    this.properties = properties;
   }
 
   @Override
