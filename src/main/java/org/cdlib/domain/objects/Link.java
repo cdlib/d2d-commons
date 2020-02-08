@@ -1,5 +1,6 @@
 package org.cdlib.domain.objects;
 
+import java.util.Map;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import org.cdlib.util.JSON;
@@ -16,6 +17,9 @@ public class Link {
   @NotNull
   @NotEmpty
   private String mimeType;
+  
+  @NotNull
+  private Map<String, Object> properties;
 
   public Link() {}
 
@@ -41,6 +45,16 @@ public class Link {
   } 
   
   @Override
+  public int hashCode() {
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + ((href == null) ? 0 : href.hashCode());
+    result = prime * result + ((mimeType == null) ? 0 : mimeType.hashCode());
+    result = prime * result + ((properties == null) ? 0 : properties.hashCode());
+    return result;
+  }
+
+  @Override
   public boolean equals(Object obj) {
     if (this == obj)
       return true;
@@ -59,18 +73,14 @@ public class Link {
         return false;
     } else if (!mimeType.equals(other.mimeType))
       return false;
+    if (properties == null) {
+      if (other.properties != null)
+        return false;
+    } else if (!properties.equals(other.properties))
+      return false;
     return true;
   }
-  
-  @Override
-  public int hashCode() {
-    final int prime = 31;
-    int result = 1;
-    result = prime * result + ((href == null) ? 0 : href.hashCode());
-    result = prime * result + ((mimeType == null) ? 0 : mimeType.hashCode());
-    return result;
-  }
-  
+
   @Override
   public String toString() {
     return JSON.serialize(this);
