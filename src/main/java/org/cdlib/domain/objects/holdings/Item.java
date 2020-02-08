@@ -2,7 +2,7 @@ package org.cdlib.domain.objects.holdings;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import org.cdlib.domain.objects.bib.Carrier;
+import org.cdlib.domain.objects.bib.CarrierClass;
 import org.cdlib.domain.objects.bib.Seriality;
 import org.cdlib.domain.objects.consortium.ShelvingLocation;
 
@@ -15,7 +15,7 @@ public class Item {
   private String callNumber;
 
   @NotNull(message = "Item carrier is required.")
-  private Carrier carrier;
+  private CarrierClass carrier;
 
   @Valid
   @NotNull(message = "Item circulation status is required.")
@@ -144,7 +144,7 @@ public class Item {
    * Specified whether the item is physical or electronic.
    *
    */
-  public Carrier getCarrier() {
+  public CarrierClass getCarrier() {
     return carrier;
   }
 
@@ -258,7 +258,7 @@ public class Item {
     this.callNumber = callNumber;
   }
 
-  public void setCarrier(Carrier carrier) {
+  public void setCarrier(CarrierClass carrier) {
     this.carrier = carrier;
   }
   

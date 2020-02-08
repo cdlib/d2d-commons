@@ -34,7 +34,7 @@ import org.cdlib.util.JSON;
 public class Bib {
 
   private String author;
-  private Carrier carrier;
+  private CarrierClass carrier;
   private String corporateAuthor;
   private String edition;
 
@@ -87,7 +87,7 @@ public class Bib {
   public String getAuthor() {
     return author;
   }
-  public Carrier getCarrier() {
+  public CarrierClass getCarrier() {
     return carrier;
   }
   public String getCorporateAuthor() {
@@ -137,7 +137,7 @@ public class Bib {
     this.author = author;
   }
 
-  public void setCarrier(Carrier carrier) {
+  public void setCarrier(CarrierClass carrier) {
     this.carrier = carrier;
   }
 
