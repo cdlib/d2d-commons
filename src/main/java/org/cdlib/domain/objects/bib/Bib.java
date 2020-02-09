@@ -1,7 +1,6 @@
 package org.cdlib.domain.objects.bib;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import javax.validation.constraints.NotNull;
 import org.cdlib.domain.objects.Link;
@@ -34,7 +33,8 @@ import org.cdlib.util.JSON;
 public class Bib {
 
   private String author;
-  private CarrierClass carrier;
+  private Carrier carrier;
+  private CarrierClass carrierClass;
   private String corporateAuthor;
   private String edition;
 
@@ -72,6 +72,7 @@ public class Bib {
   public Bib(Bib source) {
     this.author = source.author;
     this.carrier = source.carrier;
+    this.carrierClass = source.carrierClass;
     this.corporateAuthor = source.corporateAuthor;
     this.edition = source.edition;
     this.identifiers = source.identifiers;
@@ -87,12 +88,19 @@ public class Bib {
   public String getAuthor() {
     return author;
   }
-  public CarrierClass getCarrier() {
+  
+  public Carrier getCarrier() {
     return carrier;
   }
+
+  public CarrierClass getCarrierClass() {
+    return carrierClass;
+  }
+  
   public String getCorporateAuthor() {
     return corporateAuthor;
   }
+  
   public String getEdition() {
     return edition;
   }
@@ -136,9 +144,13 @@ public class Bib {
   public void setAuthor(String author) {
     this.author = author;
   }
-
-  public void setCarrier(CarrierClass carrier) {
+  
+  public void setCarrier(Carrier carrier) {
     this.carrier = carrier;
+  }
+
+  public void setCarrierClass(CarrierClass carrier) {
+    this.carrierClass = carrier;
   }
 
   public void setCorporateAuthor(String corporateAuthor) {
