@@ -109,6 +109,29 @@ public class MarcRecordHelper {
                  .map(cf -> cf.getData());
   }
   
+  /*
+   * Provides a List of cdlib MarcDataFields based on tag.
+   */
+  public Optional<List<MarcDataField>> marcDataFields(String tag) {
+    return marcDataFields(tag, (s) -> true);
+  }
+  
+  /*
+   * Provides a List of cdlib MarcDataFields based on tag.
+   */
+  public Optional<List<MarcDataField>> marcDataFields(String tag, Predicate<MarcDataField> condition) {
+    List<DataField> dataFields = record.getDataFields()
+        .stream()
+        .filter(df -> df.getTag().equals(tag))
+        .collect(Collectors.toList());
+    List<MarcDataField> marcDataFields = new ArrayList<>();
+    dataFields.forEach(df -> marcDataFields.add(new MarcDataField(df)));
+    List<MarcDataField> result = marcDataFields.stream()
+        .filter(condition)
+        .collect(Collectors.toList());
+    return Optional.of(result);
+  }
+  
   public Optional<List<char[]>> indicators(String tag) {
     List<DataField> dataFields = record.getDataFields()
         .stream()
@@ -116,12 +139,12 @@ public class MarcRecordHelper {
         .collect(Collectors.toList());
     List<char[]> indicators = dataFields
         .stream()
-        .map(this::indicators)
+        .map(MarcRecordHelper::indicators)
         .collect(Collectors.toList());
     return Optional.of(indicators);
   }
   
-  private char[] indicators(DataField dataField) {
+  static char[] indicators(DataField dataField) {
     char[] indicators = new char[2];
     indicators[0] = dataField.getIndicator1();
     indicators[1] = dataField.getIndicator2();
