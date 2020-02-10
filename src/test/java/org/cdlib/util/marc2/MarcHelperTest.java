@@ -111,6 +111,13 @@ public class MarcHelperTest {
   }
   
   @Test
+  public void marcDataFieldsWithControlFieldTag_emptyResult() {
+    Optional<List<MarcDataField>> result = marcHelper.marcDataFields("008", hasSubfieldMatching('x', "9781847171481"));
+    List<MarcDataField> resultList = result.get();
+    assertEquals(0, resultList.size());
+  }
+  
+  @Test
   public void marcDataFieldsWithFilterTagNotFound_emptyResult() {
     Optional<List<MarcDataField>> result = marcHelper.marcDataFields("999", hasSubfieldMatching('a', "9781847171481"));
     List<MarcDataField> resultList = result.get();
@@ -128,7 +135,7 @@ public class MarcHelperTest {
     return (df) -> {
       Optional<List<String>> resultVal = df.getSubFields().get(key);
       return resultVal.map(list -> list.get(0)
-                                       .equals("9781847171481"))
+                                       .equals(val))
                       .orElse(false);
     };
 
