@@ -45,6 +45,4 @@ public class SubFields {
     return JSON.serialize(subfields);
   }
   
-  
-
 }
