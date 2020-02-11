@@ -25,11 +25,11 @@ public class SubFields {
   public SubFields(DataField dataField) {
     List<Subfield> sourceSubfields = dataField.getSubfields();
     Set<Character> codes = new HashSet<>();
-    sourceSubfields.forEach(code -> codes.add(code.getCode()));
+    sourceSubfields.forEach(sf -> codes.add(sf.getCode()));
     for (char code : codes) {
       List<String> vals = sourceSubfields
           .stream()
-          .filter(c -> c.getCode() == code)
+          .filter(sf -> sf.getCode() == code)
           .map(sf -> sf.getData())
           .collect(Collectors.toList());
       subfields.put(code, vals);

@@ -47,7 +47,7 @@ public class MarcRecordHelper {
     }
   }
 
-  private Record asRecord(String marcXml) {
+  public static Record asRecord(String marcXml) {
     Record marcRecord = null;
     InputStream is = new ByteArrayInputStream(marcXml.getBytes());
     MarcXmlReader reader = new MarcXmlReader(is);
@@ -107,29 +107,6 @@ public class MarcRecordHelper {
                  .filter(cf -> cf.getTag().contentEquals(tag))
                  .findFirst()
                  .map(cf -> cf.getData());
-  }
-  
-  /*
-   * Provides a List of cdlib MarcDataFields based on tag.
-   */
-  public Optional<List<MarcDataField>> marcDataFields(String tag) {
-    return marcDataFields(tag, (s) -> true);
-  }
-  
-  /*
-   * Provides a List of cdlib MarcDataFields based on tag.
-   */
-  public Optional<List<MarcDataField>> marcDataFields(String tag, Predicate<MarcDataField> condition) {
-    List<DataField> dataFields = record.getDataFields()
-        .stream()
-        .filter(df -> df.getTag().equals(tag))
-        .collect(Collectors.toList());
-    List<MarcDataField> marcDataFields = new ArrayList<>();
-    dataFields.forEach(df -> marcDataFields.add(new MarcDataField(df)));
-    List<MarcDataField> result = marcDataFields.stream()
-        .filter(condition)
-        .collect(Collectors.toList());
-    return Optional.of(result);
   }
   
   public Optional<List<char[]>> indicators(String tag) {
