@@ -22,6 +22,10 @@ public class SubFields {
   
   private Map<Character, List<String>> subfields = new HashMap<>();
   
+  public SubFields() {
+    
+  }
+  
   public SubFields(DataField dataField) {
     List<Subfield> sourceSubfields = dataField.getSubfields();
     Set<Character> codes = new HashSet<>();

@@ -20,6 +20,12 @@ public class MarcDataField {
     indicators = MarcRecordHelper.indicators(dataField);
   }
 
+  public MarcDataField(String tag, SubFields subFields, char[] indicators) {
+    this.tag = tag;
+    this.subFields = subFields;
+    this.indicators = indicators;
+  } 
+
   public String getTag() {
     return tag;
   }
