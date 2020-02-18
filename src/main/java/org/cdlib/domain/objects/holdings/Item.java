@@ -144,7 +144,7 @@ public class Item {
    * Specified whether the item is physical or electronic.
    *
    */
-  public CarrierClass getCarrier() {
+  public CarrierClass getCarrierClass() {
     return carrier;
   }
 
@@ -258,7 +258,7 @@ public class Item {
     this.callNumber = callNumber;
   }
 
-  public void setCarrier(CarrierClass carrier) {
+  public void setCarrierClass(CarrierClass carrier) {
     this.carrier = carrier;
   }
   
