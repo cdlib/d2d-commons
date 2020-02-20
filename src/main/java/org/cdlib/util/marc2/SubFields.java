@@ -22,8 +22,8 @@ public class SubFields {
   
   private Map<Character, List<String>> subfields = new HashMap<>();
   
-  public SubFields() {
-    
+  public SubFields(Map<Character, List<String>> subfields) {
+    this.subfields = subfields;
   }
   
   public SubFields(DataField dataField) {

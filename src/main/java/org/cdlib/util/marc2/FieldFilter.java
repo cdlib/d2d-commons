@@ -10,6 +10,12 @@ import org.marc4j.MarcException;
 import org.marc4j.marc.DataField;
 import org.marc4j.marc.Record;
 
+/*
+ * 
+ * Based on a MARC record, provide a list of fields
+ * based on a tag, or other criteria provided in a Predicate.
+ *
+ */
 public class FieldFilter {
 
   private Record record;
@@ -27,7 +33,7 @@ public class FieldFilter {
   }
 
   /*
-   * Provides a List of cdlib MarcDataFields based on tag.
+   * Provides a List of cdlib MarcDataFields based on tag without other conditions.
    */
   public Optional<List<MarcDataField>> marcDataFields(String tag) {
     return marcDataFields(tag, (s) -> true);
