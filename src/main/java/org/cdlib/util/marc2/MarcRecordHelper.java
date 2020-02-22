@@ -47,7 +47,7 @@ public class MarcRecordHelper {
     }
   }
 
-  private Record asRecord(String marcXml) {
+  public static Record asRecord(String marcXml) {
     Record marcRecord = null;
     InputStream is = new ByteArrayInputStream(marcXml.getBytes());
     MarcXmlReader reader = new MarcXmlReader(is);
@@ -107,6 +107,25 @@ public class MarcRecordHelper {
                  .filter(cf -> cf.getTag().contentEquals(tag))
                  .findFirst()
                  .map(cf -> cf.getData());
+  }
+  
+  public Optional<List<char[]>> indicators(String tag) {
+    List<DataField> dataFields = record.getDataFields()
+        .stream()
+        .filter(df -> df.getTag().equals(tag))
+        .collect(Collectors.toList());
+    List<char[]> indicators = dataFields
+        .stream()
+        .map(MarcRecordHelper::indicators)
+        .collect(Collectors.toList());
+    return Optional.of(indicators);
+  }
+  
+  static char[] indicators(DataField dataField) {
+    char[] indicators = new char[2];
+    indicators[0] = dataField.getIndicator1();
+    indicators[1] = dataField.getIndicator2();
+    return indicators;
   }
 
   /*

@@ -1,6 +1,7 @@
 package org.cdlib.util.marc2;
 
 import static org.junit.Assert.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import org.cdlib.util.DeserializationException;
@@ -38,7 +39,7 @@ public class MarcHelperTest {
   public void leadercharBadIndex_emptyOptional() {
     assertFalse(marcHelper.leaderChar(90).isPresent());
   }
-  
+
   @Test
   public void leaderVal_happyPath() {
     assertEquals("00000cam a2200000Ma 4500", marcHelper.leaderVal().get());
@@ -91,7 +92,7 @@ public class MarcHelperTest {
   public void notControlField_optionalEmpty() {
     assertFalse(marcHelper.controlFieldVal("245").isPresent());
   }
-  
+
   @Test
   public void controlFieldVal_optionalHasEmptyString() {
     assertTrue(marcHelper.controlFieldVal("006").isPresent());
@@ -214,6 +215,22 @@ public class MarcHelperTest {
   public void subfieldEmpty_valueEmpty() {
     Optional<String> result = marcHelper.subfieldVal("015", 'a');
     assertTrue(result.get().isEmpty());
+  }
+
+  @Test
+  public void indicators_HappyPath() {
+    List<char[]> indicators = marcHelper.indicators("245").orElse(new ArrayList<>());
+    char[] result = indicators.get(0);
+    assertEquals('1', result[0]);
+    assertEquals('0', result[1]);
+  }
+
+  @Test
+  public void indicatorsBothEmpty_whitespace() {
+    List<char[]> indicators = marcHelper.indicators("015").orElse(new ArrayList<>());
+    char[] result = indicators.get(0);
+    assertTrue(Character.isWhitespace(result[0]));
+    assertTrue(Character.isWhitespace(result[1]));
   }
 
 
