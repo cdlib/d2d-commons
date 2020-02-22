@@ -12,10 +12,14 @@ import org.cdlib.util.JSON;
  */
 public class Title {
 
-  // 245
   private String mainTitle;
   private String nonRomanizedTitle;
   private List<String> otherTitles;
+  
+  public Title(String mainTitle) {
+    this.mainTitle = mainTitle;
+    otherTitles = new ArrayList<>();
+  }
   
   public Title() {
     otherTitles = new ArrayList<>();
@@ -40,7 +44,6 @@ public class Title {
    * this is the same as the canonical title
    * 
    */
-  @NotNull
   @NotEmpty
   public String getNonRomanizedTitle() {
     return nonRomanizedTitle;

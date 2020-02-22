@@ -34,21 +34,29 @@ public class Bib {
 
   private String author;
   private Carrier carrier;
+  private CarrierClass carrierClass;
   private String corporateAuthor;
   private String edition;
+
   @NotNull
   private BibIdentifiers identifiers;
   private String language;
   private Link marc;
+
   @NotNull
   private List<Link> otherForms;
+  
   @NotNull(message = "PublicationEvent required")
   private PublicationEvent publicationEvent;
+  
   private MaterialType materialType;
+  
   @NotNull
   private ResourceMeta resourceMeta;
+  
   @NotNull(message = "Seriality is required.")
   private Seriality seriality;
+  
   @NotNull(message = "Title is required.")
   private Title title;
   
@@ -64,6 +72,7 @@ public class Bib {
   public Bib(Bib source) {
     this.author = source.author;
     this.carrier = source.carrier;
+    this.carrierClass = source.carrierClass;
     this.corporateAuthor = source.corporateAuthor;
     this.edition = source.edition;
     this.identifiers = source.identifiers;
@@ -79,12 +88,19 @@ public class Bib {
   public String getAuthor() {
     return author;
   }
+  
   public Carrier getCarrier() {
     return carrier;
   }
+
+  public CarrierClass getCarrierClass() {
+    return carrierClass;
+  }
+  
   public String getCorporateAuthor() {
     return corporateAuthor;
   }
+  
   public String getEdition() {
     return edition;
   }
@@ -128,9 +144,13 @@ public class Bib {
   public void setAuthor(String author) {
     this.author = author;
   }
-
+  
   public void setCarrier(Carrier carrier) {
     this.carrier = carrier;
+  }
+
+  public void setCarrierClass(CarrierClass carrier) {
+    this.carrierClass = carrier;
   }
 
   public void setCorporateAuthor(String corporateAuthor) {
