@@ -83,6 +83,7 @@ public class Bib {
     this.materialType = source.materialType;
     this.resourceMeta = source.resourceMeta;
     this.seriality = source.seriality;
+    this.title = source.title;
   }
   
   public String getAuthor() {
@@ -199,6 +200,97 @@ public class Bib {
 
   public void setTitle(Title title) {
     this.title = title;
+  }
+
+  @Override
+  public int hashCode() {
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + ((author == null) ? 0 : author.hashCode());
+    result = prime * result + ((carrier == null) ? 0 : carrier.hashCode());
+    result = prime * result + ((carrierClass == null) ? 0 : carrierClass.hashCode());
+    result = prime * result + ((corporateAuthor == null) ? 0 : corporateAuthor.hashCode());
+    result = prime * result + ((edition == null) ? 0 : edition.hashCode());
+    result = prime * result + ((identifiers == null) ? 0 : identifiers.hashCode());
+    result = prime * result + ((language == null) ? 0 : language.hashCode());
+    result = prime * result + ((marc == null) ? 0 : marc.hashCode());
+    result = prime * result + ((materialType == null) ? 0 : materialType.hashCode());
+    result = prime * result + ((otherForms == null) ? 0 : otherForms.hashCode());
+    result = prime * result + ((publicationEvent == null) ? 0 : publicationEvent.hashCode());
+    result = prime * result + ((resourceMeta == null) ? 0 : resourceMeta.hashCode());
+    result = prime * result + ((seriality == null) ? 0 : seriality.hashCode());
+    result = prime * result + ((title == null) ? 0 : title.hashCode());
+    return result;
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj)
+      return true;
+    if (obj == null)
+      return false;
+    if (getClass() != obj.getClass())
+      return false;
+    Bib other = (Bib) obj;
+    if (author == null) {
+      if (other.author != null)
+        return false;
+    } else if (!author.equals(other.author))
+      return false;
+    if (carrier != other.carrier)
+      return false;
+    if (carrierClass != other.carrierClass)
+      return false;
+    if (corporateAuthor == null) {
+      if (other.corporateAuthor != null)
+        return false;
+    } else if (!corporateAuthor.equals(other.corporateAuthor))
+      return false;
+    if (edition == null) {
+      if (other.edition != null)
+        return false;
+    } else if (!edition.equals(other.edition))
+      return false;
+    if (identifiers == null) {
+      if (other.identifiers != null)
+        return false;
+    } else if (!identifiers.equals(other.identifiers))
+      return false;
+    if (language == null) {
+      if (other.language != null)
+        return false;
+    } else if (!language.equals(other.language))
+      return false;
+    if (marc == null) {
+      if (other.marc != null)
+        return false;
+    } else if (!marc.equals(other.marc))
+      return false;
+    if (materialType != other.materialType)
+      return false;
+    if (otherForms == null) {
+      if (other.otherForms != null)
+        return false;
+    } else if (!otherForms.equals(other.otherForms))
+      return false;
+    if (publicationEvent == null) {
+      if (other.publicationEvent != null)
+        return false;
+    } else if (!publicationEvent.equals(other.publicationEvent))
+      return false;
+    if (resourceMeta == null) {
+      if (other.resourceMeta != null)
+        return false;
+    } else if (!resourceMeta.equals(other.resourceMeta))
+      return false;
+    if (seriality != other.seriality)
+      return false;
+    if (title == null) {
+      if (other.title != null)
+        return false;
+    } else if (!title.equals(other.title))
+      return false;
+    return true;
   }
 
   @Override
