@@ -58,6 +58,11 @@ public class Link {
         return false;
     } else if (!properties.equals(other.properties))
       return false;
+    if (id == null) {
+      if (other.id != null)
+        return false;
+    } else if (!id.equals(other.id))
+      return false;
     return true;
   }
 
@@ -73,6 +78,10 @@ public class Link {
     return properties;
   }
   
+  public Identifier getId() {
+    return id;
+  }
+  
   @Override
   public int hashCode() {
     final int prime = 31;
@@ -80,6 +89,7 @@ public class Link {
     result = prime * result + ((href == null) ? 0 : href.hashCode());
     result = prime * result + ((mimeType == null) ? 0 : mimeType.hashCode());
     result = prime * result + ((properties == null) ? 0 : properties.hashCode());
+    result = prime * result + ((properties == null) ? 0 : id.hashCode());
     return result;
   }
 
@@ -93,6 +103,10 @@ public class Link {
 
   public void setProperties(Map<String, Object> properties) {
     this.properties = properties;
+  }
+  
+  public void setId(Identifier id) {
+    this.id = id;
   }
 
   @Override
