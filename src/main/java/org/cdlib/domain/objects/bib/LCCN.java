@@ -2,6 +2,7 @@ package org.cdlib.domain.objects.bib;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
@@ -34,32 +35,7 @@ public class LCCN implements Identifier {
   public void setValue(String value) {
     this.value = value;
   }
-
-  @Override
-  public int hashCode() {
-    final int prime = 31;
-    int result = 1;
-    result = prime * result + ((value == null) ? 0 : value.hashCode());
-    return result;
-  }
-
-  @Override
-  public boolean equals(Object obj) {
-    if (this == obj)
-      return true;
-    if (obj == null)
-      return false;
-    if (getClass() != obj.getClass())
-      return false;
-    LCCN other = (LCCN) obj;
-    if (value == null) {
-      if (other.value != null)
-        return false;
-    } else if (!value.equals(other.value))
-      return false;
-    return true;
-  }
-
+  
   @Override
   public List<String> getAlternateValues() {
     return alternateValues;
@@ -67,6 +43,26 @@ public class LCCN implements Identifier {
 
   public void setAlternateValues(List<String> alternateValues) {
     this.alternateValues = alternateValues;
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(alternateValues, value);
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj) {
+      return true;
+    }
+    if (obj == null) {
+      return false;
+    }
+    if (!(obj instanceof LCCN)) {
+      return false;
+    }
+    LCCN other = (LCCN) obj;
+    return Objects.equals(alternateValues, other.alternateValues) && Objects.equals(value, other.value);
   }
 
 }

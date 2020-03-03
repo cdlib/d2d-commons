@@ -2,6 +2,7 @@ package org.cdlib.domain.objects.bib;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import org.cdlib.util.CollectionUtil;
 import org.cdlib.util.JSON;
 
@@ -43,30 +44,25 @@ public class ISBN implements Identifier {
   public void setAlternateValues(List<String> values) {
     this.alternateValues = new ArrayList<String>(values);
   }
-  
+
   @Override
   public int hashCode() {
-    final int prime = 31;
-    int result = 1;
-    result = prime * result + ((alternateValues == null) ? 0 : alternateValues.hashCode());
-    return result;
+    return Objects.hash(alternateValues, value);
   }
 
   @Override
   public boolean equals(Object obj) {
-    if (this == obj)
+    if (this == obj) {
       return true;
-    if (obj == null)
+    }
+    if (obj == null) {
       return false;
-    if (getClass() != obj.getClass())
+    }
+    if (!(obj instanceof ISBN)) {
       return false;
+    }
     ISBN other = (ISBN) obj;
-    if (alternateValues == null) {
-      if (other.alternateValues != null)
-        return false;
-    } else if (!alternateValues.equals(other.alternateValues))
-      return false;
-    return true;
+    return Objects.equals(alternateValues, other.alternateValues) && Objects.equals(value, other.value);
   }
 
   @Override

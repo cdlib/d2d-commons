@@ -19,6 +19,6 @@ public enum Seriality {
   
   MONOGRAPH,
   SERIAL,
-  INTEGRATING_RESOURCE
+  INTEGRATING_RESOURCE;
 
 }

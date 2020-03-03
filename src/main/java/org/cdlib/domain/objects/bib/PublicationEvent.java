@@ -1,87 +1,71 @@
 package org.cdlib.domain.objects.bib;
 
+import java.util.Objects;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 public class PublicationEvent {
-  
+
   private String date;
   private String place;
   private String publisher;
-  
+
   public PublicationEvent() {}
-  
+
   public PublicationEvent(PublicationEvent source) {
     this.date = source.date;
     this.place = source.place;
     this.publisher = source.publisher;
   }
-  
+
   @NotNull
   @NotEmpty
   public String getDate() {
     return date;
   }
-  
+
   @NotNull
   @NotEmpty
   public String getPlace() {
     return place;
   }
-  
+
   @NotNull
   @NotEmpty
   public String getPublisher() {
     return publisher;
   }
-  
+
   public void setDate(String date) {
     this.date = date;
   }
-  
+
   public void setPlace(String place) {
     this.place = place;
   }
-  
+
   public void setPublisher(String publisher) {
     this.publisher = publisher;
   }
-  
+
   @Override
   public int hashCode() {
-    final int prime = 31;
-    int result = 1;
-    result = prime * result + ((date == null) ? 0 : date.hashCode());
-    result = prime * result + ((place == null) ? 0 : place.hashCode());
-    result = prime * result + ((publisher == null) ? 0 : publisher.hashCode());
-    return result;
+    return Objects.hash(date, place, publisher);
   }
-  
+
   @Override
   public boolean equals(Object obj) {
-    if (this == obj)
+    if (this == obj) {
       return true;
-    if (obj == null)
+    }
+    if (obj == null) {
       return false;
-    if (getClass() != obj.getClass())
+    }
+    if (!(obj instanceof PublicationEvent)) {
       return false;
+    }
     PublicationEvent other = (PublicationEvent) obj;
-    if (date == null) {
-      if (other.date != null)
-        return false;
-    } else if (!date.equals(other.date))
-      return false;
-    if (place == null) {
-      if (other.place != null)
-        return false;
-    } else if (!place.equals(other.place))
-      return false;
-    if (publisher == null) {
-      if (other.publisher != null)
-        return false;
-    } else if (!publisher.equals(other.publisher))
-      return false;
-    return true;
+    return Objects.equals(date, other.date) && Objects.equals(place, other.place) && Objects.equals(publisher, other.publisher);
   }
-  
+
 }

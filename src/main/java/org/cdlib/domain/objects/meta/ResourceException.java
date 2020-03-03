@@ -1,5 +1,6 @@
 package org.cdlib.domain.objects.meta;
 
+import java.util.Objects;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
@@ -43,6 +44,26 @@ public class ResourceException {
 
   public void setScope(Scope scope) {
     this.scope = scope;
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(message, scope, severity);
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj) {
+      return true;
+    }
+    if (obj == null) {
+      return false;
+    }
+    if (!(obj instanceof ResourceException)) {
+      return false;
+    }
+    ResourceException other = (ResourceException) obj;
+    return Objects.equals(message, other.message) && scope == other.scope && severity == other.severity;
   }
 
   @Override
