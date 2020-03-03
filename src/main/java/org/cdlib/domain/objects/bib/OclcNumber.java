@@ -7,6 +7,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import org.cdlib.domain.constraints.OCLCNumber;
 import org.cdlib.util.CollectionUtil;
+import org.cdlib.util.JSON;
 
 public class OclcNumber implements Identifier {
 
@@ -29,27 +30,6 @@ public class OclcNumber implements Identifier {
     this.value = value;
   }
 
-  @Override
-  public boolean equals(Object obj) {
-    if (this == obj) {
-      return true;
-    }
-    if (obj == null) {
-      return false;
-    }
-    if (getClass() != obj.getClass()) {
-      return false;
-    }
-    final OclcNumber other = (OclcNumber) obj;
-    if (!Objects.equals(this.value, other.value)) {
-      return false;
-    }
-    if (!Objects.equals(this.altValues, other.altValues)) {
-      return false;
-    }
-    return true;
-  }
-
   public List<String> getAlternateValues() {
     return CollectionUtil.dedupedList(altValues);
   }
@@ -64,14 +44,6 @@ public class OclcNumber implements Identifier {
     return value;
   }
 
-  @Override
-  public int hashCode() {
-    int hash = 3;
-    hash = 73 * hash + Objects.hashCode(this.value);
-    hash = 73 * hash + Objects.hashCode(this.altValues);
-    return hash;
-  }
-
   public void setAlternateValues(List<String> altValues) {
     this.altValues = altValues;
   }
@@ -79,10 +51,31 @@ public class OclcNumber implements Identifier {
   public void setValue(String value) {
     this.value = value;
   }
+  
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(altValues, value);
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj) {
+      return true;
+    }
+    if (obj == null) {
+      return false;
+    }
+    if (!(obj instanceof OclcNumber)) {
+      return false;
+    }
+    OclcNumber other = (OclcNumber) obj;
+    return Objects.equals(altValues, other.altValues) && Objects.equals(value, other.value);
+  }
 
   @Override
   public String toString() {
-    return "OclcNumber{" + "value=" + value + ", formerValues=" + altValues + '}';
+    return JSON.serialize(this);
   }
 
 }

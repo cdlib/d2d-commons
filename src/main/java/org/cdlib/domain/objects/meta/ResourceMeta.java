@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.validation.constraints.NotNull;
 import org.cdlib.util.JSON;
 
 /**
@@ -15,7 +16,10 @@ import org.cdlib.util.JSON;
  */
 public class ResourceMeta {
 
+  @NotNull
   private List<ResourceException> exceptions;
+  
+  @NotNull
   private Map<String, String> properties;
 
   public ResourceMeta() {

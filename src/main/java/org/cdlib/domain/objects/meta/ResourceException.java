@@ -1,5 +1,8 @@
 package org.cdlib.domain.objects.meta;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 /**
  *
  * ResourceException for inclusion in ResourceMeta.
@@ -8,8 +11,14 @@ package org.cdlib.domain.objects.meta;
  */
 public class ResourceException {
   
+  @NotNull
+  @NotEmpty
   private String message;
+  
+  @NotNull
   private Severity severity;
+  
+  @NotNull
   private Scope scope;
 
   public String getMessage() {
@@ -42,6 +51,7 @@ public class ResourceException {
   }
   
   public static enum Severity {
+    INFO,
     WARN,
     ERROR
   }
