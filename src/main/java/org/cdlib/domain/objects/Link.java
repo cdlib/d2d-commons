@@ -3,6 +3,7 @@ package org.cdlib.domain.objects;
 import java.util.Map;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import org.cdlib.domain.objects.bib.Identifier;
 import org.cdlib.util.JSON;
 
 /*
@@ -19,6 +20,10 @@ public class Link {
   private String mimeType;
   
   @NotNull
+  @NotEmpty
+  private Identifier id; 
+  
+  @NotNull
   private Map<String, Object> properties;
 
   public Link() {}
@@ -26,6 +31,7 @@ public class Link {
   public Link(Link source) {
     this.href = source.href;
     this.mimeType = source.mimeType;
+    this.id = source.id; 
   }
 
   @Override
