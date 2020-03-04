@@ -3,6 +3,7 @@ package org.cdlib.domain.objects.bib;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import org.cdlib.domain.objects.Link;
 import org.cdlib.domain.objects.meta.ResourceMeta;
@@ -66,7 +67,7 @@ public class Bib {
     otherForms = new ArrayList<>();
     publicationEvent = new PublicationEvent();
     marc = null;
-    resourceMeta = new ResourceMeta();;
+    resourceMeta = new ResourceMeta();
     title = new Title();
   }
   

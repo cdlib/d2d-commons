@@ -35,6 +35,10 @@ public class ResourceMeta {
   public void addProperty(String key, String value) {
     properties.put(key, value);
   }
+  
+  public void addProperties(Map<String, String> properties) {
+    properties.putAll(properties);
+  }
 
   /**
    * 
