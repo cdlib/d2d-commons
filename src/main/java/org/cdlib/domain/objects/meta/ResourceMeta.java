@@ -21,7 +21,7 @@ public class ResourceMeta {
   private List<ResourceException> exceptions;
   
   @NotNull
-  private Map<String, String> properties;
+  private Map<String, Object> properties;
 
   public ResourceMeta() {
     this.exceptions = new ArrayList<>();
@@ -53,11 +53,11 @@ public class ResourceMeta {
     this.exceptions = exceptions;
   }
 
-  public Map<String, String> getProperties() {
+  public Map<String, Object> getProperties() {
     return Collections.unmodifiableMap(properties);
   }
 
-  public void setProperties(Map<String, String> properties) {
+  public void setProperties(Map<String, Object> properties) {
     this.properties = properties;
   }
 
