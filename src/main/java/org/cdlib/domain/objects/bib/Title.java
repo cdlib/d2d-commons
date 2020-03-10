@@ -2,33 +2,32 @@ package org.cdlib.domain.objects.bib;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import org.cdlib.util.JSON;
 
 /*
- * Collects various MARC related title data.
- * TODO: Extend to include full RDA title data?
+ * Collects various MARC related title data. TODO: Extend to include full RDA title data?
  */
 public class Title {
 
   private String mainTitle;
   private String nonRomanizedTitle;
   private List<String> otherTitles;
-  
+
   public Title(String mainTitle) {
     this.mainTitle = mainTitle;
     otherTitles = new ArrayList<>();
   }
-  
+
   public Title() {
     otherTitles = new ArrayList<>();
   }
 
   /*
    * 
-   * Title printed on the bibliographic instance, 
-   * in the original character set
+   * Title printed on the bibliographic instance, in the original character set
    * 
    */
   @NotNull
@@ -39,8 +38,7 @@ public class Title {
 
   /*
    * 
-   * title as transliterated into Latin characters;
-   * if the canonical title is in Latin characters, 
+   * title as transliterated into Latin characters; if the canonical title is in Latin characters,
    * this is the same as the canonical title
    * 
    */
@@ -51,8 +49,7 @@ public class Title {
 
   /*
    * 
-   * other titles that this bib may be known as
-   * this value may be an empty set, must not be null
+   * other titles that this bib may be known as this value may be an empty set, must not be null
    * 
    */
   @NotNull
@@ -72,43 +69,26 @@ public class Title {
   public void setOtherTitles(List<String> otherTitles) {
     this.otherTitles = otherTitles;
   }
-  
+
 
   @Override
   public int hashCode() {
-    final int prime = 31;
-    int result = 1;
-    result = prime * result + ((mainTitle == null) ? 0 : mainTitle.hashCode());
-    result = prime * result + ((nonRomanizedTitle == null) ? 0 : nonRomanizedTitle.hashCode());
-    result = prime * result + ((otherTitles == null) ? 0 : otherTitles.hashCode());
-    return result;
+    return Objects.hash(mainTitle, nonRomanizedTitle, otherTitles);
   }
 
   @Override
   public boolean equals(Object obj) {
-    if (this == obj)
+    if (this == obj) {
       return true;
-    if (obj == null)
+    }
+    if (obj == null) {
       return false;
-    if (getClass() != obj.getClass())
+    }
+    if (!(obj instanceof Title)) {
       return false;
+    }
     Title other = (Title) obj;
-    if (mainTitle == null) {
-      if (other.mainTitle != null)
-        return false;
-    } else if (!mainTitle.equals(other.mainTitle))
-      return false;
-    if (nonRomanizedTitle == null) {
-      if (other.nonRomanizedTitle != null)
-        return false;
-    } else if (!nonRomanizedTitle.equals(other.nonRomanizedTitle))
-      return false;
-    if (otherTitles == null) {
-      if (other.otherTitles != null)
-        return false;
-    } else if (!otherTitles.equals(other.otherTitles))
-      return false;
-    return true;
+    return Objects.equals(mainTitle, other.mainTitle) && Objects.equals(nonRomanizedTitle, other.nonRomanizedTitle) && Objects.equals(otherTitles, other.otherTitles);
   }
 
   @Override

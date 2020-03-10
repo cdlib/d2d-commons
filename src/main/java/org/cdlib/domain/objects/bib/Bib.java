@@ -2,6 +2,8 @@ package org.cdlib.domain.objects.bib;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import org.cdlib.domain.objects.Link;
 import org.cdlib.domain.objects.meta.ResourceMeta;
@@ -65,7 +67,7 @@ public class Bib {
     otherForms = new ArrayList<>();
     publicationEvent = new PublicationEvent();
     marc = null;
-    resourceMeta = new ResourceMeta();;
+    resourceMeta = new ResourceMeta();
     title = new Title();
   }
   
@@ -83,6 +85,7 @@ public class Bib {
     this.materialType = source.materialType;
     this.resourceMeta = source.resourceMeta;
     this.seriality = source.seriality;
+    this.title = source.title;
   }
   
   public String getAuthor() {
@@ -199,6 +202,29 @@ public class Bib {
 
   public void setTitle(Title title) {
     this.title = title;
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(author, carrier, carrierClass, corporateAuthor, edition, identifiers, language, marc, materialType, otherForms, publicationEvent, resourceMeta, seriality, title);
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj) {
+      return true;
+    }
+    if (obj == null) {
+      return false;
+    }
+    if (!(obj instanceof Bib)) {
+      return false;
+    }
+    Bib other = (Bib) obj;
+    return Objects.equals(author, other.author) && carrier == other.carrier && carrierClass == other.carrierClass && Objects.equals(corporateAuthor, other.corporateAuthor)
+        && Objects.equals(edition, other.edition) && Objects.equals(identifiers, other.identifiers) && Objects.equals(language, other.language) && Objects.equals(marc, other.marc)
+        && materialType == other.materialType && Objects.equals(otherForms, other.otherForms) && Objects.equals(publicationEvent, other.publicationEvent)
+        && Objects.equals(resourceMeta, other.resourceMeta) && seriality == other.seriality && Objects.equals(title, other.title);
   }
 
   @Override

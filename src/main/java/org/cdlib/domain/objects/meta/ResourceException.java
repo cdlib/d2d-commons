@@ -1,5 +1,9 @@
 package org.cdlib.domain.objects.meta;
 
+import java.util.Objects;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 /**
  *
  * ResourceException for inclusion in ResourceMeta.
@@ -8,8 +12,14 @@ package org.cdlib.domain.objects.meta;
  */
 public class ResourceException {
   
+  @NotNull
+  @NotEmpty
   private String message;
+  
+  @NotNull
   private Severity severity;
+  
+  @NotNull
   private Scope scope;
 
   public String getMessage() {
@@ -37,11 +47,32 @@ public class ResourceException {
   }
 
   @Override
+  public int hashCode() {
+    return Objects.hash(message, scope, severity);
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj) {
+      return true;
+    }
+    if (obj == null) {
+      return false;
+    }
+    if (!(obj instanceof ResourceException)) {
+      return false;
+    }
+    ResourceException other = (ResourceException) obj;
+    return Objects.equals(message, other.message) && scope == other.scope && severity == other.severity;
+  }
+
+  @Override
   public String toString() {
     return "ResourceException{" + "message=" + message + ", severity=" + severity + ", scope=" + scope + '}';
   }
   
   public static enum Severity {
+    INFO,
     WARN,
     ERROR
   }

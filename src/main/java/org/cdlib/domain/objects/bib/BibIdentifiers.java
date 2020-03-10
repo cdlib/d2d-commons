@@ -1,5 +1,8 @@
 package org.cdlib.domain.objects.bib;
 
+import java.util.Objects;
+import org.cdlib.util.JSON;
+
 /*
  * Brings together all bibliographic identifiers.
  * 
@@ -51,39 +54,28 @@ public class BibIdentifiers {
 
   @Override
   public int hashCode() {
-    final int prime = 31;
-    int result = 1;
-    result = prime * result + ((isbn == null) ? 0 : isbn.hashCode());
-    result = prime * result + ((issn == null) ? 0 : issn.hashCode());
-    result = prime * result + ((oclcNumber == null) ? 0 : oclcNumber.hashCode());
-    return result;
+    return Objects.hash(isbn, issn, oclcNumber);
   }
 
   @Override
   public boolean equals(Object obj) {
-    if (this == obj)
+    if (this == obj) {
       return true;
-    if (obj == null)
+    }
+    if (obj == null) {
       return false;
-    if (getClass() != obj.getClass())
+    }
+    if (!(obj instanceof BibIdentifiers)) {
       return false;
+    }
     BibIdentifiers other = (BibIdentifiers) obj;
-    if (isbn == null) {
-      if (other.isbn != null)
-        return false;
-    } else if (!isbn.equals(other.isbn))
-      return false;
-    if (issn == null) {
-      if (other.issn != null)
-        return false;
-    } else if (!issn.equals(other.issn))
-      return false;
-    if (oclcNumber == null) {
-      if (other.oclcNumber != null)
-        return false;
-    } else if (!oclcNumber.equals(other.oclcNumber))
-      return false;
-    return true;
+    return Objects.equals(isbn, other.isbn) && Objects.equals(issn, other.issn) && Objects.equals(oclcNumber, other.oclcNumber);
+  }
+  
+  @Override
+  public String toString() {
+    return JSON.serialize(this);
   }
 
+ 
 }

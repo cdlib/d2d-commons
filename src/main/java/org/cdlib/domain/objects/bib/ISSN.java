@@ -2,6 +2,7 @@ package org.cdlib.domain.objects.bib;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import org.cdlib.util.CollectionUtil;
@@ -30,23 +31,6 @@ public class ISSN implements Identifier {
   }
   
   @Override
-  public boolean equals(Object obj) {
-    if (this == obj)
-      return true;
-    if (obj == null)
-      return false;
-    if (getClass() != obj.getClass())
-      return false;
-    ISSN other = (ISSN) obj;
-    if (alternateValues == null) {
-      if (other.alternateValues != null)
-        return false;
-    } else if (!alternateValues.equals(other.alternateValues))
-      return false;
-    return true;
-  }
-  
-  @Override
   public @NotNull @NotEmpty String getAuthority() {
     return AUTHORITY.getUri();
   }
@@ -67,14 +51,6 @@ public class ISSN implements Identifier {
     return CollectionUtil.dedupedList(alternateValues);
   }
 
-  @Override
-  public int hashCode() {
-    final int prime = 31;
-    int result = 1;
-    result = prime * result + ((alternateValues == null) ? 0 : alternateValues.hashCode());
-    return result;
-  }
-
   public void setAlternateValues(List<String> values) {
     this.alternateValues = new ArrayList<String>(values);
   }
@@ -82,6 +58,26 @@ public class ISSN implements Identifier {
   @Override
   public String toString() {
     return JSON.serialize(this);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(alternateValues, value);
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj) {
+      return true;
+    }
+    if (obj == null) {
+      return false;
+    }
+    if (!(obj instanceof ISSN)) {
+      return false;
+    }
+    ISSN other = (ISSN) obj;
+    return Objects.equals(alternateValues, other.alternateValues) && Objects.equals(value, other.value);
   }
 
 }

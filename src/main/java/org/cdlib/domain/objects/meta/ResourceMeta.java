@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import javax.validation.constraints.NotNull;
 import org.cdlib.util.JSON;
 
 /**
@@ -15,8 +17,11 @@ import org.cdlib.util.JSON;
  */
 public class ResourceMeta {
 
+  @NotNull
   private List<ResourceException> exceptions;
-  private Map<String, String> properties;
+  
+  @NotNull
+  private Map<String, Object> properties;
 
   public ResourceMeta() {
     this.exceptions = new ArrayList<>();
@@ -29,6 +34,10 @@ public class ResourceMeta {
 
   public void addProperty(String key, String value) {
     properties.put(key, value);
+  }
+  
+  public void addProperties(Map<String, String> properties) {
+    properties.putAll(properties);
   }
 
   /**
@@ -44,43 +53,32 @@ public class ResourceMeta {
     this.exceptions = exceptions;
   }
 
-  public Map<String, String> getProperties() {
+  public Map<String, Object> getProperties() {
     return Collections.unmodifiableMap(properties);
   }
 
-  public void setProperties(Map<String, String> properties) {
+  public void setProperties(Map<String, Object> properties) {
     this.properties = properties;
   }
 
   @Override
   public int hashCode() {
-    final int prime = 31;
-    int result = 1;
-    result = prime * result + ((exceptions == null) ? 0 : exceptions.hashCode());
-    result = prime * result + ((properties == null) ? 0 : properties.hashCode());
-    return result;
+    return Objects.hash(exceptions, properties);
   }
 
   @Override
   public boolean equals(Object obj) {
-    if (this == obj)
+    if (this == obj) {
       return true;
-    if (obj == null)
+    }
+    if (obj == null) {
       return false;
-    if (getClass() != obj.getClass())
+    }
+    if (!(obj instanceof ResourceMeta)) {
       return false;
+    }
     ResourceMeta other = (ResourceMeta) obj;
-    if (exceptions == null) {
-      if (other.exceptions != null)
-        return false;
-    } else if (!exceptions.equals(other.exceptions))
-      return false;
-    if (properties == null) {
-      if (other.properties != null)
-        return false;
-    } else if (!properties.equals(other.properties))
-      return false;
-    return true;
+    return Objects.equals(exceptions, other.exceptions) && Objects.equals(properties, other.properties);
   }
 
   @Override
