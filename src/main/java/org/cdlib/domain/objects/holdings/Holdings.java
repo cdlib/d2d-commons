@@ -1,5 +1,6 @@
 package org.cdlib.domain.objects.holdings;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -22,10 +23,13 @@ public class Holdings {
   @NotNull(message = "A list of holdings is required.")
   private List<Item> heldItems;
 
+  @Valid
   @NotNull(message = "Resource metadata is requird.")
   private ResourceMeta resourceMeta;
 
   public Holdings() {
+    resourceMeta = new ResourceMeta();
+    heldItems = new ArrayList<>();
   }
 
   public Holdings(Holdings source) {
@@ -33,7 +37,7 @@ public class Holdings {
       this.bib = new Bib(source.bib);
     }
     if (source.heldItems != null) {
-      this.heldItems = source.heldItems.stream().map(Item::new).collect(Collectors.toList());
+      this.heldItems.addAll(source.heldItems);
     }
   }
 
