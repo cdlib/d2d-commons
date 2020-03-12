@@ -18,20 +18,14 @@ public class PublicationEvent {
     this.publisher = source.publisher;
   }
 
-  @NotNull
-  @NotEmpty
   public String getDate() {
     return date;
   }
 
-  @NotNull
-  @NotEmpty
   public String getPlace() {
     return place;
   }
 
-  @NotNull
-  @NotEmpty
   public String getPublisher() {
     return publisher;
   }

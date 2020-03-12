@@ -48,17 +48,20 @@ public class Bib {
   @NotNull
   private List<Link> otherForms;
   
+  @Valid
   @NotNull(message = "PublicationEvent required")
   private PublicationEvent publicationEvent;
   
   private MaterialType materialType;
   
+  @Valid
   @NotNull
   private ResourceMeta resourceMeta;
   
   @NotNull(message = "Seriality is required.")
   private Seriality seriality;
   
+  @Valid
   @NotNull(message = "Title is required.")
   private Title title;
   

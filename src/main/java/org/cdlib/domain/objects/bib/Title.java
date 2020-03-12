@@ -8,7 +8,7 @@ import javax.validation.constraints.NotNull;
 import org.cdlib.util.JSON;
 
 /*
- * Collects various MARC related title data. TODO: Extend to include full RDA title data?
+ * Collects various MARC related title data.
  */
 public class Title {
 
@@ -42,7 +42,6 @@ public class Title {
    * this is the same as the canonical title
    * 
    */
-  @NotEmpty
   public String getNonRomanizedTitle() {
     return nonRomanizedTitle;
   }
@@ -69,7 +68,6 @@ public class Title {
   public void setOtherTitles(List<String> otherTitles) {
     this.otherTitles = otherTitles;
   }
-
 
   @Override
   public int hashCode() {
