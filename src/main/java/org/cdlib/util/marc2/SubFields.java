@@ -51,7 +51,10 @@ public class SubFields {
         mergedList.addAll(subfields.get(c));
       }
     }
-    return Optional.ofNullable(mergedList);
+    if (mergedList.isEmpty()) {
+      return Optional.empty();
+    }
+    return Optional.of(mergedList);
   }
 
   @Override

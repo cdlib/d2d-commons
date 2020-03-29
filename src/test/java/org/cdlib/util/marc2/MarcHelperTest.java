@@ -172,12 +172,48 @@ public class MarcHelperTest {
   }
 
   @Test
+  public void wholeSubfieldHappyPath() {
+    Optional<SubFields> subfields = marcHelper.subFields("020");
+    assertTrue(subfields.isPresent());
+    assertEquals("9781847171481", subfields.get().get('a').get().get(0));
+  }
+
+  @Test
+  public void wholeSubfieldTagNotFound_EmptyOptional() {
+    Optional<SubFields> subfields = marcHelper.subFields("999");
+    assertFalse(subfields.isPresent());
+  }
+
+  @Test
+  public void wholeSubfieldTagEmpty_EmptyOptional() {
+    Optional<SubFields> subfields = marcHelper.subFields("");
+    assertFalse(subfields.isPresent());
+  }
+  
+  @Test
   public void subfields_happyPath() {
     Optional<List<String>> result = marcHelper.subfieldVals("020", 'a');
     assertTrue(result.isPresent());
     List<String> innerResult = result.get();
     assertEquals("9781847171481", innerResult.get(0));
     assertEquals("1847171486", innerResult.get(1));
+  }
+  
+  @Test(expected = NullPointerException.class)
+  public void subfieldsNullTag_NPE() {
+    marcHelper.subfieldVals(null, 'a');
+  }
+  
+  @Test
+  public void subfieldsMultiple_happyPath() {
+    Optional<List<String>> result = marcHelper.subfieldVals("020", 'a', 'q');
+    assertTrue(result.isPresent());
+    List<String> innerResult = result.get();
+    assertEquals(4, innerResult.size());
+    assertEquals("9781847171481", innerResult.get(0));
+    assertEquals("1847171486", innerResult.get(1));
+    assertEquals("(hbk.)", innerResult.get(2));
+    assertEquals("(hbk.)", innerResult.get(3));
   }
 
   @Test
@@ -195,7 +231,7 @@ public class MarcHelperTest {
 
   @Test
   public void subfieldsNoField_emptyOptional() {
-    Optional<List<String>> result = marcHelper.subfieldVals("900", 'a');
+    Optional<List<String>> result = marcHelper.subfieldVals("900", 'a', 'b');
     assertFalse(result.isPresent());
   }
 

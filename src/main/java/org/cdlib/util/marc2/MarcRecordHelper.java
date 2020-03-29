@@ -23,12 +23,13 @@ import org.marc4j.marc.Subfield;
  * This class sticks to the mechanics of extracting data from the MARC record and avoids semantics
  * (so it would not have getTitle or getControlNumber, for example).
  * 
- * The arguments and return values are all native Java types, rather than MARC4J types, so that
- * an interface could be extracted potentially that would work with another underlying MARC parser implementation.
+ * The arguments and return values are all native Java types, rather than MARC4J types, so that an
+ * interface could be extracted potentially that would work with another underlying MARC parser
+ * implementation.
  * 
- * The methods return Optional<T>, which is empty if the MARC record lacks the field or subfield
- * specified, but will throw IllegalArgumentException if the arguments are invalid (such as negative
- * integer indexes, or empty tag or subfield names.
+ * The methods generally return Optional<T>, which is empty if the MARC record lacks the field or
+ * subfield specified, but will throw IllegalArgumentException if the arguments are invalid (such as
+ * negative integer indexes, or empty tag or subfield names.
  * 
  */
 public class MarcRecordHelper {
@@ -82,7 +83,7 @@ public class MarcRecordHelper {
    */
   public Optional<char[]> controlFieldSegment(String tag, int beginIndex, int endIndex) {
     return controlFieldVal(tag)
-        .flatMap(s -> fromSegment(s, beginIndex, endIndex));
+                               .flatMap(s -> fromSegment(s, beginIndex, endIndex));
   }
 
   private Optional<char[]> fromSegment(String source, int beginIndex, int endIndex) {
@@ -108,19 +109,19 @@ public class MarcRecordHelper {
                  .findFirst()
                  .map(cf -> cf.getData());
   }
-  
+
   public Optional<List<char[]>> indicators(String tag) {
     List<DataField> dataFields = record.getDataFields()
-        .stream()
-        .filter(df -> df.getTag().equals(tag))
-        .collect(Collectors.toList());
+                                       .stream()
+                                       .filter(df -> df.getTag().equals(tag))
+                                       .collect(Collectors.toList());
     List<char[]> indicators = dataFields
-        .stream()
-        .map(MarcRecordHelper::indicators)
-        .collect(Collectors.toList());
+                                        .stream()
+                                        .map(MarcRecordHelper::indicators)
+                                        .collect(Collectors.toList());
     return Optional.of(indicators);
   }
-  
+
   static char[] indicators(DataField dataField) {
     char[] indicators = new char[2];
     indicators[0] = dataField.getIndicator1();
@@ -147,9 +148,20 @@ public class MarcRecordHelper {
     String leader = leaderVal().orElse("");
     return fromSegment(leader, beginIndex, endIndex);
   }
-  
+
   public Optional<String> leaderVal() {
     return Optional.ofNullable(record.getLeader().marshal());
+  }
+
+  public Optional<SubFields> subFields(String tag) {
+    if (tag == null) {
+      throw new NullPointerException("tag cannot be null");
+    }
+    Optional<DataField> datafield = record.getDataFields()
+                                          .stream()
+                                          .filter(df -> df.getTag().equals(tag))
+                                          .findFirst();
+    return datafield.map(df -> new SubFields(df));
   }
 
   /*
@@ -178,29 +190,31 @@ public class MarcRecordHelper {
    * 
    * Returns an empty List if no values are found.
    */
-  public Optional<List<String>> subfieldVals(String tag, char subfieldCode) {
+  public Optional<List<String>> subfieldVals(String tag, char... subfieldCodes) {
+    if (tag == null) {
+      throw new NullPointerException("tag cannot be null");
+    }
     List<DataField> dataFields = record.getDataFields()
                                        .stream()
-                                       .filter(hasTagAndSubfield(tag, subfieldCode))
+                                       .filter(df -> df.getTag().equals(tag))
                                        .collect(Collectors.toList());
 
     List<Subfield> subfields = new ArrayList<>();
-    dataFields.forEach(df -> subfields.addAll(df.getSubfields(subfieldCode)));
-    
+    for (char subfieldCode : subfieldCodes) {
+      dataFields.forEach(df -> subfields.addAll(df.getSubfields(subfieldCode)));
+    }
+
     List<String> fieldValues = new ArrayList<String>();
     subfields.forEach(sf -> {
-      fieldValues.add(sf.getData().trim());
+      if (sf.getData() != null) {
+        fieldValues.add(sf.getData().trim());
+      }
     });
-    
+
     if (fieldValues.isEmpty()) {
       return Optional.empty();
     }
-    return Optional.ofNullable(fieldValues);
+    return Optional.of(fieldValues);
   }
-
-  private static Predicate<DataField> hasTagAndSubfield(String tag, char subfieldCode) {
-    return df -> df.getTag().equals(tag) && !df.getSubfields(subfieldCode).isEmpty();
-  }
-
 
 }
