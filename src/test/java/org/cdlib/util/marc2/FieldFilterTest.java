@@ -64,6 +64,14 @@ public class FieldFilterTest {
     assertEquals(0, resultList.size());
   }
   
+  
+  @Test
+  public void marcDataFieldsWithNoSubfields_emptyResult() {
+    Optional<List<MarcDataField>> result = marcHelper.marcDataFields("021", hasSubfieldMatching('x', "9781847171481"));
+    List<MarcDataField> resultList = result.get();
+    assertEquals(0, resultList.size());
+  }
+  
   @Test
   public void marcDataFieldsWithFilterTagNotFound_emptyResult() {
     Optional<List<MarcDataField>> result = marcHelper.marcDataFields("999", hasSubfieldMatching('a', "9781847171481"));

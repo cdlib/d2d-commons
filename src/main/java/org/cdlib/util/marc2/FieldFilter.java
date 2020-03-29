@@ -12,8 +12,8 @@ import org.marc4j.marc.Record;
 
 /*
  * 
- * Based on a MARC record, provide a list of fields
- * based on a tag, or other criteria provided in a Predicate.
+ * Based on a MARC record, provide a list of fields based on a tag, or other criteria provided in a
+ * Predicate.
  *
  */
 public class FieldFilter {
@@ -57,10 +57,13 @@ public class FieldFilter {
 
   public static Predicate<MarcDataField> hasSubfieldMatching(char key, String val) {
     return (df) -> {
+      if (df.getSubFields() == null) {
+        return false;
+      }
       Optional<List<String>> resultVal = df.getSubFields().get(key);
-      return resultVal.map(list -> list.get(0).equals(val)).orElse(false);
+      return resultVal.filter(list -> !list.isEmpty())
+                      .map(list -> list.get(0).equals(val))
+                      .orElse(false);
     };
   }
-
-
 }

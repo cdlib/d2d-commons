@@ -33,11 +33,16 @@ public class SubFieldsTest {
   }
   
   @Test
-  public void testInitialization() {
+  public void testGet() {
     SubFields subfields = new SubFields(mockDataField);
     assertEquals("First of repeating", subfields.get('a').get().get(0));
     assertEquals("Second of repeating", subfields.get('a').get().get(1));
     assertEquals("Non repeating", subfields.get('b').get().get(0));
+    List<String> result = subfields.get('a', 'b').get();
+    assertEquals(3, result.size());
+    assertEquals("First of repeating", result.get(0));
+    assertEquals("Second of repeating", result.get(1));
+    assertEquals("Non repeating", result.get(2));
   }
 
 }
