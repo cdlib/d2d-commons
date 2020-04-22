@@ -1,7 +1,9 @@
 package org.cdlib.domain.objects.hathi;
 
+import java.util.Objects;
 import javax.validation.constraints.NotEmpty;
 import org.cdlib.domain.objects.consortium.MemberCode;
+import org.cdlib.util.JSON;
 
 /*
  * A record for an bibliographic item from the hathitrust
@@ -67,6 +69,32 @@ public class OverlapItem {
   
   public void setInstitution(MemberCode institution) {
     this.institution = institution;
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(access, institution, oclcNumber, rights, sysId, type);
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj) {
+      return true;
+    }
+    if (obj == null) {
+      return false;
+    }
+    if (!(obj instanceof OverlapItem)) {
+      return false;
+    }
+    OverlapItem other = (OverlapItem) obj;
+    return Objects.equals(access, other.access) && institution == other.institution && Objects.equals(oclcNumber, other.oclcNumber) && Objects.equals(rights, other.rights)
+        && Objects.equals(sysId, other.sysId) && Objects.equals(type, other.type);
+  }
+  
+  @Override
+  public String toString() {
+    return JSON.serialize(this);
   }
 
 }
