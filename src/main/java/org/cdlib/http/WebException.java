@@ -9,6 +9,7 @@ import org.apache.http.util.EntityUtils;
  * Exception that includes HTTP status code and response body.
  *
  */
+@SuppressWarnings("serial")
 public class WebException extends RuntimeException {
 
   private final int httpStatus;
