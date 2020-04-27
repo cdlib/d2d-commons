@@ -3,11 +3,12 @@ package org.cdlib.domain.objects.holdings;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import org.cdlib.domain.objects.Link;
 import org.cdlib.domain.objects.bib.Bib;
 import org.cdlib.domain.objects.meta.ResourceMeta;
+import org.cdlib.util.JSON;
 
 /**
  * Summarized list of lending candidates, as Items, and the Bib for which they
@@ -22,7 +23,11 @@ public class Holdings {
   @Valid
   @NotNull(message = "A list of holdings is required.")
   private List<Item> heldItems;
-
+  
+  @Valid
+  @NotNull
+  private List<Link> linksToContent;
+  
   @Valid
   @NotNull(message = "Resource metadata is requird.")
   private ResourceMeta resourceMeta;
@@ -63,6 +68,14 @@ public class Holdings {
     this.heldItems = heldItems;
   }
 
+  public List<Link> getLinksToContent() {
+    return linksToContent;
+  }
+
+  public void setLinksToContent(List<Link> linksToContent) {
+    this.linksToContent = linksToContent;
+  }
+
   public ResourceMeta getResourceMeta() {
     return resourceMeta;
   }
@@ -73,10 +86,7 @@ public class Holdings {
 
   @Override
   public int hashCode() {
-    int hash = 5;
-    hash = 41 * hash + Objects.hashCode(this.bib);
-    hash = 41 * hash + Objects.hashCode(this.heldItems);
-    return hash;
+    return Objects.hash(bib, heldItems, linksToContent, resourceMeta);
   }
 
   @Override
@@ -87,23 +97,19 @@ public class Holdings {
     if (obj == null) {
       return false;
     }
-    if (getClass() != obj.getClass()) {
+    if (!(obj instanceof Holdings)) {
       return false;
     }
-    final Holdings other = (Holdings) obj;
-    if (!Objects.equals(this.bib, other.bib)) {
-      return false;
-    }
-    // TODO: compare collections
-    if (!Objects.equals(this.heldItems, other.heldItems)) {
-      return false;
-    }
-    return true;
+    Holdings other = (Holdings) obj;
+    return Objects.equals(bib, other.bib) 
+        && Objects.equals(heldItems, other.heldItems) 
+        && Objects.equals(linksToContent, other.linksToContent) 
+        && Objects.equals(resourceMeta, other.resourceMeta);
   }
 
   @Override
   public String toString() {
-    return "Holdings{" + "bib=" + bib + ", heldItems=" + heldItems + ", resourceMeta=" + resourceMeta + '}';
+    return JSON.serialize(this);
   }
 
 }
