@@ -1,4 +1,4 @@
-package org.cdlib.domain.objects;
+package org.cdlib.domain.objects.link;
 
 import java.util.Map;
 import java.util.Objects;
