@@ -13,6 +13,13 @@ import org.cdlib.util.JSON;
 /**
  * Summarized list of lending candidates, as Items, and the Bib for which they
  * are relevant.
+ * 
+ * The meaning of Bib is the Bib requested for which relevant holdings are gathered;
+ * the actual held items may reference a different Bib record (hence the individual items 
+ * have OCLC numbers that differ from the Bib), because the provider of the Holdings 
+ * may determine that these other items are close enough to fulfill the request.
+ * 
+ * The heldItems and linksToContent collections are guaranteed not to be null.
  */
 public class Holdings {
 
@@ -24,6 +31,10 @@ public class Holdings {
   @NotNull(message = "A list of holdings is required.")
   private List<Item> heldItems;
   
+  /*
+   * links to online resources that could fulfill 
+   * a request for this Bib
+   */
   @Valid
   @NotNull
   private List<Link> linksToContent;
@@ -35,6 +46,7 @@ public class Holdings {
   public Holdings() {
     resourceMeta = new ResourceMeta();
     heldItems = new ArrayList<>();
+    linksToContent = new ArrayList<>();
   }
 
   public Holdings(Holdings source) {
@@ -43,6 +55,13 @@ public class Holdings {
     }
     if (source.heldItems != null) {
       this.heldItems.addAll(source.heldItems);
+    } else {
+      heldItems = new ArrayList<>();
+    }
+    if (source.linksToContent != null) {
+      this.linksToContent.addAll(source.linksToContent);
+    } else {
+      linksToContent = new ArrayList<>();
     }
   }
 
@@ -50,6 +69,7 @@ public class Holdings {
     this.bib = bib;
     this.heldItems = heldItems;
     this.resourceMeta = resourceMeta;
+    this.linksToContent = new ArrayList<>();
   }
 
   public Bib getBib() {
