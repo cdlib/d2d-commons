@@ -4,7 +4,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 @SuppressWarnings("serial")
-class Cache<T> extends LinkedHashMap<T, String> {
+public class Cache<T, S> extends LinkedHashMap<T, S> {
     
     private int maxSize;
     
@@ -14,7 +14,7 @@ class Cache<T> extends LinkedHashMap<T, String> {
     }
     
     @Override
-    protected boolean removeEldestEntry(Map.Entry<T, String> eldest) {
+    protected boolean removeEldestEntry(Map.Entry<T, S> eldest) {
       return size() > maxSize;
     }
 }
