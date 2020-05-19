@@ -3,10 +3,6 @@ package org.cdlib.cache;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Optional;
-import javax.annotation.PostConstruct;
-import org.cdlib.domain.objects.bib.Identifier;
-import org.cdlib.pirs.ApplicationProperties;
-import org.springframework.beans.factory.annotation.Autowired;
 
 public class CacheService<T, S> {
     
