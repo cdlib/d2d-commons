@@ -4,7 +4,7 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.Optional;
 
-public class CacheService<T, S> {
+public abstract class CacheService<T, S> {
     
     protected Map<T, S> cache;
     
@@ -15,9 +15,7 @@ public class CacheService<T, S> {
       cache = Collections.synchronizedMap(new Cache<T, S>(cacheSize));
     }
     
-    public void insertInto(T key, S result) {
-      cache.put(key, result);
-    }
+    public abstract void insertInto(T key, S result);
     
     public Optional<S> getFrom(T key) {
       return Optional.ofNullable(cache.get(key));
