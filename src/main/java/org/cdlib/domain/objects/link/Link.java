@@ -1,5 +1,6 @@
 package org.cdlib.domain.objects.link;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import javax.validation.constraints.NotEmpty;
@@ -27,6 +28,13 @@ public class Link {
   public Link(Link source) {
     this.href = source.href;
     this.mimeType = source.mimeType;
+    this.properties = deepCopy(source.properties);
+  }
+  
+  private static Map<String, Object> deepCopy(Map<String, Object> properties) {
+    Map<String, Object> copy = new HashMap<>();
+    String intermediate = JSON.serialize(properties);
+    return JSON.deserialize(intermediate, copy.getClass());
   }
 
   public String getHref() {
