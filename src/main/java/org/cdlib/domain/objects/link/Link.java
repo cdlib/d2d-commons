@@ -21,7 +21,7 @@ public class Link {
   private String mimeType;
   
   @NotNull
-  private Map<String, Object> properties;
+  private Map<String, String> properties;
 
   public Link() {}
 
@@ -31,10 +31,10 @@ public class Link {
     this.properties = deepCopy(source.properties);
   }
   
-  private static Map<String, Object> deepCopy(Map<String, Object> properties) {
-    Map<String, Object> copy = new HashMap<>();
+  @SuppressWarnings("unchecked")
+  private static Map<String, String> deepCopy(Map<String, String> properties) {
     String intermediate = JSON.serialize(properties);
-    return JSON.deserialize(intermediate, copy.getClass());
+    return JSON.deserialize(intermediate, properties.getClass());
   }
 
   public String getHref() {
@@ -45,7 +45,7 @@ public class Link {
     return mimeType;
   }
   
-  public Map<String, Object> getProperties() {
+  public Map<String, String> getProperties() {
     return properties;
   }
 
@@ -57,7 +57,7 @@ public class Link {
     this.mimeType = mimeType;
   }
 
-  public void setProperties(Map<String, Object> properties) {
+  public void setProperties(Map<String, String> properties) {
     this.properties = properties;
   }
 
@@ -78,7 +78,9 @@ public class Link {
       return false;
     }
     Link other = (Link) obj;
-    return Objects.equals(href, other.href) && Objects.equals(mimeType, other.mimeType) && Objects.equals(properties, other.properties);
+    return Objects.equals(href, other.href) 
+        && Objects.equals(mimeType, other.mimeType) 
+        && Objects.equals(properties, other.properties);
   }
 
   @Override
