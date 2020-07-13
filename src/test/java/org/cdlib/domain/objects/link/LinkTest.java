@@ -14,6 +14,7 @@ public class LinkTest {
     Link copy = new Link(original);
     assertFalse(copy == original);
     assertFalse(copy.getProperties() == original.getProperties());
+    assertTrue(copy.getProperties().equals(original.getProperties()));
     assertTrue("result".equals(copy.getProperties().get("test")));
     assertFalse(copy.getProperties().get("test") == original.getProperties().get("test"));
     assertEquals(copy.getProperties().get("carrier"), original.getProperties().get("carrier"));

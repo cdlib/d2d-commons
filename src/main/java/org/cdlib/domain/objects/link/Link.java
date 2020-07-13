@@ -1,6 +1,5 @@
 package org.cdlib.domain.objects.link;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import javax.validation.constraints.NotEmpty;
