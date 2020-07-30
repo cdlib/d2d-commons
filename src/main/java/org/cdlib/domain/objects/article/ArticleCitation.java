@@ -1,6 +1,8 @@
 package org.cdlib.domain.objects.article;
 
+import java.util.List;
 import org.cdlib.domain.objects.bib.Bib;
+import org.cdlib.domain.objects.identifier.Identifier;;
 
 public class ArticleCitation {
   
@@ -10,6 +12,7 @@ public class ArticleCitation {
   private String issue;
   private String pageRange;
   private String volume;
+  private List<Identifier> identifiers;
   
   public String getArticleYear() {
     return articleYear;

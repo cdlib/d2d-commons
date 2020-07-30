@@ -1,4 +1,4 @@
-package org.cdlib.domain.objects.bib;
+package org.cdlib.domain.objects.identifier;
 
 import java.util.List;
 import javax.validation.constraints.NotEmpty;
@@ -10,11 +10,9 @@ import javax.validation.constraints.NotNull;
  */
 public interface Identifier {
   
-  @NotNull
   @NotEmpty
   public String getValue();
   
-  @NotNull
   @NotEmpty
   public String getAuthority();
   

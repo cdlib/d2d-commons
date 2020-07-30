@@ -1,27 +1,32 @@
-package org.cdlib.domain.objects.bib;
+package org.cdlib.domain.objects.identifier;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import org.cdlib.util.CollectionUtil;
+import java.util.stream.Collectors;
 import org.cdlib.util.JSON;
 
-public class PMID implements Identifier {
+/**
+ * 
+ * Represents the ISSN identifiers associated with a bibliographic resource.
+ * 
+ */
+public class ISSN implements Identifier {
 
-  private static final IdAuthority AUTHORITY = IdAuthority.NLM;
-  private static final String DESCRIPTOR = "pmid";
-  private List<String> alternateValues = new ArrayList<String>();
+  private static final IdAuthority AUTHORITY = IdAuthority.ISSN;
+  private static final String DESCRIPTOR = "issn";
   private String value;
-  
-  public PMID() {}
-  
-  public PMID(String value) {
-    this.value = value;
-  }
-  
-  public PMID(PMID source) {
+  private List<String> alternateValues = new ArrayList<String>();
+
+  public ISSN() {}
+
+  public ISSN(ISSN source) {
     this.value = source.value;
     this.alternateValues = source.alternateValues;
+  }
+
+  public ISSN(String value) {
+    this.value = value;
   }
 
   @Override
@@ -34,17 +39,20 @@ public class PMID implements Identifier {
     return DESCRIPTOR;
   }
 
+  @Override
   public String getValue() {
     return value;
   }
-  
+
   public void setValue(String value) {
     this.value = value;
   }
 
   @Override
   public List<String> getAlternateValues() {
-    return CollectionUtil.dedupedList(alternateValues);
+    return alternateValues.stream()
+        .distinct()
+        .collect(Collectors.toList());
   }
 
   public void setAlternateValues(List<String> values) {
@@ -64,10 +72,10 @@ public class PMID implements Identifier {
     if (obj == null) {
       return false;
     }
-    if (!(obj instanceof PMID)) {
+    if (!(obj instanceof ISSN)) {
       return false;
     }
-    PMID other = (PMID) obj;
+    ISSN other = (ISSN) obj;
     return Objects.equals(alternateValues, other.alternateValues) && Objects.equals(value, other.value);
   }
 
@@ -76,4 +84,5 @@ public class PMID implements Identifier {
     return JSON.serialize(this);
   }
 
+  
 }

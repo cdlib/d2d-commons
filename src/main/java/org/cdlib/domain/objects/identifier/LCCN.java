@@ -1,28 +1,26 @@
-package org.cdlib.domain.objects.bib;
+package org.cdlib.domain.objects.identifier;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import javax.validation.constraints.NotEmpty;
-import org.cdlib.util.CollectionUtil;
-import org.cdlib.util.JSON;
+import javax.validation.constraints.NotNull;
 
-public class ISBN implements Identifier {
-
-  private static final IdAuthority AUTHORITY = IdAuthority.ISBN;
-  private static final String DESCRIPTOR = "isbn";
-  private List<String> alternateValues = new ArrayList<String>();
+public class LCCN implements Identifier {
+  
+  private static final IdAuthority AUTHORITY = IdAuthority.LOC;
+  private static final String DESCRIPTOR = "lccn";
   private String value;
+  private List<String> alternateValues = new ArrayList<>();
   
-  public ISBN() {}
-  
-  public ISBN(String value) {
+  public LCCN() {}
+
+  public LCCN(String value) {
     this.value = value;
   }
   
-  public ISBN(ISBN source) {
+  public LCCN(LCCN source) {
     this.value = source.value;
-    this.alternateValues = source.alternateValues;
   }
 
   @Override
@@ -39,14 +37,14 @@ public class ISBN implements Identifier {
   public String getValue() {
     return value;
   }
-  
+
   public void setValue(String value) {
     this.value = value;
   }
-
+  
   @Override
   public List<String> getAlternateValues() {
-    return CollectionUtil.dedupedList(alternateValues);
+    return alternateValues;
   }
 
   public void setAlternateValues(List<String> values) {
@@ -66,16 +64,11 @@ public class ISBN implements Identifier {
     if (obj == null) {
       return false;
     }
-    if (!(obj instanceof ISBN)) {
+    if (!(obj instanceof LCCN)) {
       return false;
     }
-    ISBN other = (ISBN) obj;
+    LCCN other = (LCCN) obj;
     return Objects.equals(alternateValues, other.alternateValues) && Objects.equals(value, other.value);
-  }
-
-  @Override
-  public String toString() {
-    return JSON.serialize(this);
   }
 
 }

@@ -1,14 +1,10 @@
 package org.cdlib.util;
 
-import org.cdlib.domain.objects.bib.ISBN;
-import org.cdlib.domain.objects.bib.ISSN;
-import org.cdlib.domain.objects.bib.BibIdentifiers;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import org.cdlib.test.NonBean;
 import org.cdlib.test.SerializablePojo;
 import org.cdlib.util.JSON.JSONConversionException;
-import static org.junit.Assert.*;
-import java.util.ArrayList;
-import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
