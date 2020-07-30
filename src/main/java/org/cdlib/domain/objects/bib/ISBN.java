@@ -3,12 +3,14 @@ package org.cdlib.domain.objects.bib;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import javax.validation.constraints.NotEmpty;
 import org.cdlib.util.CollectionUtil;
 import org.cdlib.util.JSON;
 
 public class ISBN implements Identifier {
 
   private static final IdAuthority AUTHORITY = IdAuthority.ISBN;
+  private static final String DESCRIPTOR = "isbn";
   private List<String> alternateValues = new ArrayList<String>();
   private String value;
   
@@ -27,7 +29,13 @@ public class ISBN implements Identifier {
   public String getAuthority() {
     return AUTHORITY.getUri();
   }
+  
+  @Override
+  public String getDescriptor() {
+    return DESCRIPTOR;
+  }
 
+  @Override
   public String getValue() {
     return value;
   }
