@@ -33,7 +33,6 @@ public class ArticleCitationTest {
   
   private ArticleCitation stubArticleCitation() {
     ArticleCitation result = new ArticleCitation();
-    result.setAuthor("Jones, John");
     result.setIdentifiers(stubIdentifiers());
     return result;
   }
