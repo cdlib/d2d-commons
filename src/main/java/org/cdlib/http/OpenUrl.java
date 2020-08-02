@@ -11,7 +11,9 @@ import java.util.stream.Collectors;
 import org.apache.log4j.Logger;
 import org.cdlib.domain.objects.article.ArticleCitation;
 import org.cdlib.domain.objects.identifier.Identifier;
-
+/*
+ * Provides methods for serializing bibliographic data to an OpenURL 1.0 query.
+ */
 public class OpenUrl {
 
   private static final Logger logger = Logger.getLogger(OpenUrl.class);
