@@ -5,91 +5,56 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.function.Supplier;
+import java.util.stream.Collectors;
 import org.cdlib.domain.objects.article.ArticleCitation;
 import org.cdlib.domain.objects.identifier.Identifier;
 
 public class OpenUrl {
-  
+
   private static String URL_VERSION = "url_ver=Z39.88-2004";
 
-  public static String toEncodedQuery(ArticleCitation article) {
-    List<String> fieldValuePairs = new ArrayList<>();
-    fieldValuePairs.add(URL_VERSION);
-    addTitle(article, fieldValuePairs);
-    addVolume(article, fieldValuePairs);
-    addIssue(article, fieldValuePairs);
-    addYear(article, fieldValuePairs);
-    addMonth(article, fieldValuePairs);
-    addSeason(article, fieldValuePairs);
-    addPages(article, fieldValuePairs);
-    addIdentifiers(article.getIdentifiers(), fieldValuePairs);
-    return String.join("&", fieldValuePairs);
+  public static String encodedQueryFrom(ArticleCitation article) {
+    List<String> keyValuePairs = new ArrayList<>();
+    keyValuePairs.add(URL_VERSION);
+    keyValuePair(article::getTitle, "rft.atitle").ifPresent((result) -> keyValuePairs.add(result));
+    keyValuePair(article::getVolume, "rft.volume").ifPresent((result) -> keyValuePairs.add(result));
+    keyValuePair(article::getIssue, "rft.issue").ifPresent((result) -> keyValuePairs.add(result));
+    keyValuePair(article::getYearOfPublication, "rft.year").ifPresent((result) -> keyValuePairs.add(result));
+    keyValuePair(article::getMonthOfPublication, "rft.month").ifPresent((result) -> keyValuePairs.add(result));
+    keyValuePair(article::getSeasonOfPublication, "rft.ssn").ifPresent((result) -> keyValuePairs.add(result));
+    keyValuePair(article::getPages, "rft.pages").ifPresent((result) -> keyValuePairs.add(result));
+    keyValuePairsFrom(article.getIdentifiers()).ifPresent((result) -> keyValuePairs.addAll(result));
+    return String.join("&", keyValuePairs);
   }
 
-  private static void addYear(ArticleCitation article, List<String> fieldValuePairs) {
-    String year = article.getYearOfPublication();
-    if (!(year == null || year.trim().isEmpty())) {
-      fieldValuePairs.add("rft.year" + "=" + encodeValue(year));
+  private static Optional<String> keyValuePair(Supplier<String> supplier, String key) {
+    String value = supplier.get();
+    if (!(value == null || value.trim().isEmpty())) {
+      return Optional.of(key + "=" + encodeValue(value));
+    } else {
+      return Optional.empty();
     }
   }
-  
+
   /*
-   * Use for encoding URL query field and value;
+   * Use for encoding URL query field value.
    * Do not use for encoding URL segment.
    */
   public static String encodeValue(String value) {
     try {
       return URLEncoder.encode(value, StandardCharsets.UTF_8.toString());
     } catch (UnsupportedEncodingException e) {
-      throw new IllegalStateException("Unexpected unsupported encoding.", e);
-    }
-  }
-  
-  private static void addTitle(ArticleCitation article, List<String> fieldValuePairs) {
-    String title = article.getTitle();
-    if (!(title == null || title.trim().isEmpty())) {
-      fieldValuePairs.add("rft.atitle" + "=" + encodeValue(title));
-    }
-  }
-  
-  private static void addMonth(ArticleCitation article, List<String> fieldValuePairs) {
-    String month = article.getMonthOfPublication();
-    if (!(month == null || month.trim().isEmpty())) {
-      fieldValuePairs.add("rft.month" + "=" + encodeValue(month));
-    }
-  }
-  
-  private static void addSeason(ArticleCitation article, List<String> fieldValuePairs) {
-    String season = article.getSeasonOfPublication();
-    if (!(season == null || season.trim().isEmpty())) {
-      fieldValuePairs.add("rft.ssn" + "=" + encodeValue(season));
+      throw new IllegalStateException("Unexpected failure of encoding for " + value + " to " + StandardCharsets.UTF_8.toString(), e);
     }
   }
 
-  private static void addIssue(ArticleCitation article, List<String> fieldValuePairs) {
-    String issue = article.getIssue();
-    if (!(issue == null || issue.trim().isEmpty())) {
-      fieldValuePairs.add("rft.issue" + "=" + encodeValue(issue));
-    }
+  private static Optional<List<String>> keyValuePairsFrom(List<Identifier> identifiers) {
+    return Optional.of(identifiers.stream()
+        .filter((id) -> id != null)
+        .flatMap((id) -> id.asEncodedOpenUrl().stream())
+        .collect(Collectors.toList()));
   }
-  
-  private static void addVolume(ArticleCitation article, List<String> fieldValuePairs) {
-    String volume = article.getVolume();
-    if (!(volume == null || volume.trim().isEmpty())) {
-      fieldValuePairs.add("rft.volume" + "=" + encodeValue(volume));
-    }
-  }
-  
-  private static void addPages(ArticleCitation article, List<String> fieldValuePairs) {
-    String pages = article.getPages();
-    if (!(pages == null || pages.trim().isEmpty())) {
-      fieldValuePairs.add("rft.pages" + "=" + encodeValue(pages));
-    }
-  }
-  
-  private static void addIdentifiers(List<Identifier> identifiers, List<String> fieldValuePairs) {
-    identifiers.forEach((id) -> fieldValuePairs.addAll(id.asEncodedOpenUrl()));
-  }
-
 
 }

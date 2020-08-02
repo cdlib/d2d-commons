@@ -63,7 +63,7 @@ public class EISSN implements Identifier {
 
   @Override
   public int hashCode() {
-    return Objects.hash(alternateValues, value);
+    return Objects.hash(alternateValues, encodeValue(value));
   }
 
   @Override

@@ -3,6 +3,7 @@ package org.cdlib.domain.objects.identifier;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 import org.cdlib.util.CollectionUtil;
 import org.cdlib.util.JSON;
 import static org.cdlib.http.OpenUrl.encodeValue;
@@ -47,7 +48,7 @@ public class DOI implements Identifier {
 
   @Override
   public List<String> getAlternateValues() {
-    return CollectionUtil.dedupedList(alternateValues);
+    return alternateValues.stream().distinct().collect(Collectors.toList());
   }
 
   public void setAlternateValues(List<String> values) {
