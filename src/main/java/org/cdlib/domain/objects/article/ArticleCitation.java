@@ -12,13 +12,11 @@ public class ArticleCitation {
   
   private Author author;
   private Bib container;
-  private String endPage;
   private List<Identifier> identifiers;
   private String issue;
   private String monthOfPublication;
   private String pages;
   private String seasonOfPublication;
-  private String startPage;
   private String title;
   private String volume;
   private String yearOfPublication;
@@ -36,15 +34,12 @@ public class ArticleCitation {
     this.volume = source.volume;
     this.identifiers = deepCopy(identifiers);
   }
-  
   public Author getAuthor() {
     return author;
   }
-  
   public Bib getContainer() {
     return container;
   }
-  
   public List<Identifier> getIdentifiers() {
     return identifiers;
   }
@@ -52,9 +47,17 @@ public class ArticleCitation {
   public String getIssue() {
     return issue;
   }
-
+  
+  public String getMonthOfPublication() {
+    return monthOfPublication;
+  }
+  
   public String getPages() {
     return pages;
+  }
+  
+  public String getSeasonOfPublication() {
+    return seasonOfPublication;
   }
   
   public String getTitle() {
@@ -64,7 +67,7 @@ public class ArticleCitation {
   public String getVolume() {
     return volume;
   }
-  
+
   public String getYearOfPublication() {
     return yearOfPublication;
   }
@@ -85,8 +88,20 @@ public class ArticleCitation {
     this.issue = issue;
   }
   
+  public void setMonthOfPublication(String monthOfPublication) {
+    this.monthOfPublication = monthOfPublication;
+  }
+  
   public void setPages(String pageRange) {
     this.pages = pageRange;
+  }
+  
+  public void setSeasonOfPublication(String seasonOfPublication) {
+    this.seasonOfPublication = seasonOfPublication;
+  }
+  
+  public void setTitle(String title) {
+    this.title = title;
   }
   
   public void setVolume(String volume) {

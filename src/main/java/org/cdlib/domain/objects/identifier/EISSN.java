@@ -4,32 +4,29 @@ import static org.cdlib.http.OpenUrl.encodeValue;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import org.cdlib.util.CollectionUtil;
+import java.util.stream.Collectors;
 import org.cdlib.util.JSON;
 
-public class PMID implements Identifier {
+/**
+ * 
+ * Represents the ISSN identifiers associated with a bibliographic resource.
+ * 
+ */
+public class EISSN implements Identifier {
 
-  private static final IdAuthority AUTHORITY = IdAuthority.NLM;
-  private List<String> alternateValues = new ArrayList<String>();
+  private static final IdAuthority AUTHORITY = IdAuthority.ISSN;
   private String value;
-  
-  public PMID() {}
-  
-  public PMID(String value) {
-    this.value = value;
-  }
-  
-  public PMID(PMID source) {
+  private List<String> alternateValues = new ArrayList<String>();
+
+  public EISSN() {}
+
+  public EISSN(EISSN source) {
     this.value = source.value;
     this.alternateValues = source.alternateValues;
   }
-  
-  @Override
-  public List<String> asEncodedOpenUrl() {
-    List<String> result = new ArrayList<>();
-    result.add("rft_id=" + encodeValue("info:pmid/" + value));
-    result.add("rft.pmid=" + encodeValue(value));
-    return result;
+
+  public EISSN(String value) {
+    this.value = value;
   }
 
   @Override
@@ -37,17 +34,27 @@ public class PMID implements Identifier {
     return AUTHORITY.getUri();
   }
 
+  @Override
   public String getValue() {
     return value;
   }
-  
+
   public void setValue(String value) {
     this.value = value;
   }
 
   @Override
   public List<String> getAlternateValues() {
-    return CollectionUtil.dedupedList(alternateValues);
+    return alternateValues.stream()
+        .distinct()
+        .collect(Collectors.toList());
+  }
+  
+  @Override
+  public List<String> asEncodedOpenUrl() {
+    List<String> result = new ArrayList<>();
+    result.add("rft.eissn=" + encodeValue(value));
+    return result;
   }
 
   public void setAlternateValues(List<String> values) {
@@ -67,10 +74,10 @@ public class PMID implements Identifier {
     if (obj == null) {
       return false;
     }
-    if (!(obj instanceof PMID)) {
+    if (!(obj instanceof EISSN)) {
       return false;
     }
-    PMID other = (PMID) obj;
+    EISSN other = (EISSN) obj;
     return Objects.equals(alternateValues, other.alternateValues) && Objects.equals(value, other.value);
   }
 
@@ -79,6 +86,5 @@ public class PMID implements Identifier {
     return JSON.serialize(this);
   }
 
-
-
+  
 }

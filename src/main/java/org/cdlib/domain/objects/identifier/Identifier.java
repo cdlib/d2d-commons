@@ -19,8 +19,8 @@ public interface Identifier {
   @NotNull
   public List<String> getAlternateValues();
   
-  // used to name the identifier in OpenURL and other contexts, for example "pmid"
+  // Multiple ways that the field value pair may be expressed in an openurl
   @NotEmpty
-  public String getDescriptor();
+  public List<String> asEncodedOpenUrl();
 
 }

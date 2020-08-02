@@ -1,42 +1,42 @@
 package org.cdlib.domain.objects.identifier;
 
-import static org.cdlib.http.OpenUrl.encodeValue;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import static org.cdlib.http.OpenUrl.encodeValue;
 import org.cdlib.util.CollectionUtil;
 import org.cdlib.util.JSON;
 
-public class PMID implements Identifier {
+public class EISBN implements Identifier {
 
-  private static final IdAuthority AUTHORITY = IdAuthority.NLM;
+  private static final IdAuthority AUTHORITY = IdAuthority.ISBN;
   private List<String> alternateValues = new ArrayList<String>();
   private String value;
   
-  public PMID() {}
+  public EISBN() {}
   
-  public PMID(String value) {
+  public EISBN(String value) {
     this.value = value;
   }
   
-  public PMID(PMID source) {
+  public EISBN(EISBN source) {
     this.value = source.value;
     this.alternateValues = source.alternateValues;
-  }
-  
-  @Override
-  public List<String> asEncodedOpenUrl() {
-    List<String> result = new ArrayList<>();
-    result.add("rft_id=" + encodeValue("info:pmid/" + value));
-    result.add("rft.pmid=" + encodeValue(value));
-    return result;
   }
 
   @Override
   public String getAuthority() {
     return AUTHORITY.getUri();
   }
+  
+  @Override
+  public List<String> asEncodedOpenUrl() {
+    List<String> result = new ArrayList<>();
+    result.add("rft.id=" + value);
+    return result;
+  }
 
+  @Override
   public String getValue() {
     return value;
   }
@@ -67,10 +67,10 @@ public class PMID implements Identifier {
     if (obj == null) {
       return false;
     }
-    if (!(obj instanceof PMID)) {
+    if (!(obj instanceof EISBN)) {
       return false;
     }
-    PMID other = (PMID) obj;
+    EISBN other = (EISBN) obj;
     return Objects.equals(alternateValues, other.alternateValues) && Objects.equals(value, other.value);
   }
 
@@ -78,7 +78,5 @@ public class PMID implements Identifier {
   public String toString() {
     return JSON.serialize(this);
   }
-
-
 
 }

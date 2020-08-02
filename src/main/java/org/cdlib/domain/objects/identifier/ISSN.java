@@ -1,5 +1,6 @@
 package org.cdlib.domain.objects.identifier;
 
+import static org.cdlib.http.OpenUrl.encodeValue;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -14,7 +15,6 @@ import org.cdlib.util.JSON;
 public class ISSN implements Identifier {
 
   private static final IdAuthority AUTHORITY = IdAuthority.ISSN;
-  private static final String DESCRIPTOR = "issn";
   private String value;
   private List<String> alternateValues = new ArrayList<String>();
 
@@ -33,11 +33,6 @@ public class ISSN implements Identifier {
   public String getAuthority() {
     return AUTHORITY.getUri();
   }
-  
-  @Override
-  public String getDescriptor() {
-    return DESCRIPTOR;
-  }
 
   @Override
   public String getValue() {
@@ -53,6 +48,14 @@ public class ISSN implements Identifier {
     return alternateValues.stream()
         .distinct()
         .collect(Collectors.toList());
+  }
+  
+  @Override
+  public List<String> asEncodedOpenUrl() {
+    List<String> result = new ArrayList<>();
+    result.add("rft_id=" + encodeValue("urn:ISSN:" + value));
+    result.add("rft.issn=" + encodeValue(value));
+    return result;
   }
 
   public void setAlternateValues(List<String> values) {

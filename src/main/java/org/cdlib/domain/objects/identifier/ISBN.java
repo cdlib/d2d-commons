@@ -3,13 +3,13 @@ package org.cdlib.domain.objects.identifier;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import static org.cdlib.http.OpenUrl.encodeValue;
 import org.cdlib.util.CollectionUtil;
 import org.cdlib.util.JSON;
 
 public class ISBN implements Identifier {
 
   private static final IdAuthority AUTHORITY = IdAuthority.ISBN;
-  private static final String DESCRIPTOR = "isbn";
   private List<String> alternateValues = new ArrayList<String>();
   private String value;
   
@@ -30,8 +30,11 @@ public class ISBN implements Identifier {
   }
   
   @Override
-  public String getDescriptor() {
-    return DESCRIPTOR;
+  public List<String> asEncodedOpenUrl() {
+    List<String> result = new ArrayList<>();
+    result.add("rft_id=" + encodeValue("urn:ISBN/" + value));
+    result.add("rft.isbn=" + value);
+    return result;
   }
 
   @Override

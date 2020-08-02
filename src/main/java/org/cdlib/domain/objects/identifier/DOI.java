@@ -5,11 +5,11 @@ import java.util.List;
 import java.util.Objects;
 import org.cdlib.util.CollectionUtil;
 import org.cdlib.util.JSON;
+import static org.cdlib.http.OpenUrl.encodeValue;
 
 public class DOI implements Identifier {
 
   private static final IdAuthority AUTHORITY = IdAuthority.IDF;
-  private static final String DESCRIPTOR = "doi";
   private List<String> alternateValues = new ArrayList<String>();
   private String value;
   
@@ -23,15 +23,18 @@ public class DOI implements Identifier {
     this.value = source.value;
     this.alternateValues = source.alternateValues;
   }
+  
+  @Override
+  public List<String> asEncodedOpenUrl() {
+    List<String> result = new ArrayList<>();
+    result.add("rft_id=" + encodeValue("info:doi/") + encodeValue(value));
+    result.add("rft.doi=" + encodeValue(value));
+    return result;
+  }
 
   @Override
   public String getAuthority() {
     return AUTHORITY.getUri();
-  }
-  
-  @Override
-  public String getDescriptor() {
-    return DESCRIPTOR;
   }
 
   public String getValue() {
