@@ -32,8 +32,8 @@ public class ISBN implements Identifier {
   @Override
   public List<String> asEncodedOpenUrl() {
     List<String> result = new ArrayList<>();
-    result.add("rft_id=" + encodeValue("urn:ISBN:" + value));
-    result.add("rft.isbn=" + encodeValue(value));
+    encodeValue("urn:ISBN:" + value).ifPresent((encoded) -> result.add("rft_id=" + encoded));
+    encodeValue(value).ifPresent((encoded) -> result.add("rft.isbn=" + encoded));
     return result;
   }
 

@@ -53,8 +53,8 @@ public class ISSN implements Identifier {
   @Override
   public List<String> asEncodedOpenUrl() {
     List<String> result = new ArrayList<>();
-    result.add("rft_id=" + encodeValue("urn:ISSN:" + value));
-    result.add("rft.issn=" + encodeValue(value));
+    encodeValue("urn:ISSN:" + value).ifPresent((encoded) -> result.add("rft_id=" + encoded));
+    encodeValue(value).ifPresent((encoded) -> result.add("rft.issn=" + encoded));
     return result;
   }
 

@@ -44,8 +44,8 @@ public class LCCN implements Identifier {
   @Override
   public List<String> asEncodedOpenUrl() {
     List<String> result = new ArrayList<>();
-    result.add("rft_id=" + encodeValue("info:lccn/" + value));
-    result.add("rft.lccn=" + encodeValue(value));
+    encodeValue("info:lccn/" + value).ifPresent((encoded) -> result.add("rft_id=" + encoded));
+    encodeValue(value).ifPresent((encoded) -> result.add("rft.lccn=" + encoded));
     return result;
   }
 

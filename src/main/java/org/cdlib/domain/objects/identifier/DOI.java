@@ -1,35 +1,34 @@
 package org.cdlib.domain.objects.identifier;
 
+import static org.cdlib.http.OpenUrl.encodeValue;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
-import org.cdlib.util.CollectionUtil;
 import org.cdlib.util.JSON;
-import static org.cdlib.http.OpenUrl.encodeValue;
 
 public class DOI implements Identifier {
 
   private static final IdAuthority AUTHORITY = IdAuthority.IDF;
   private List<String> alternateValues = new ArrayList<String>();
   private String value;
-  
+
   public DOI() {}
-  
+
   public DOI(String value) {
     this.value = value;
   }
-  
+
   public DOI(DOI source) {
     this.value = source.value;
     this.alternateValues = source.alternateValues;
   }
-  
+
   @Override
   public List<String> asEncodedOpenUrl() {
     List<String> result = new ArrayList<>();
-    result.add("rft_id=" + encodeValue("info:doi/") + encodeValue(value));
-    result.add("rft.doi=" + encodeValue(value));
+    encodeValue("info:doi/" + value).ifPresent((encoded) -> result.add("rft_id=" + encoded));
+    encodeValue(value).ifPresent((encoded) -> result.add("rft.doi=" + encoded));
     return result;
   }
 
@@ -41,7 +40,7 @@ public class DOI implements Identifier {
   public String getValue() {
     return value;
   }
-  
+
   public void setValue(String value) {
     this.value = value;
   }

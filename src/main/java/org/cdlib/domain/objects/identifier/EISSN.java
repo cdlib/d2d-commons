@@ -53,7 +53,7 @@ public class EISSN implements Identifier {
   @Override
   public List<String> asEncodedOpenUrl() {
     List<String> result = new ArrayList<>();
-    result.add("rft.eissn=" + encodeValue(value));
+    encodeValue(value).ifPresent((encoded) -> result.add("rft.eissn=" + encoded));
     return result;
   }
 

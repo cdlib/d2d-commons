@@ -27,8 +27,8 @@ public class PMID implements Identifier {
   @Override
   public List<String> asEncodedOpenUrl() {
     List<String> result = new ArrayList<>();
-    result.add("rft_id=" + encodeValue("info:pmid/" + value));
-    result.add("rft.pmid=" + encodeValue(value));
+    encodeValue("info:pmid/" + value).ifPresent((encoded) -> result.add("rft_id=" + encoded));
+    encodeValue(value).ifPresent((encoded) -> result.add("rft.pmid=" + encoded));
     return result;
   }
 

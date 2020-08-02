@@ -47,8 +47,8 @@ public class OclcNumber implements Identifier {
   @Override
   public List<String> asEncodedOpenUrl() {
     List<String> result = new ArrayList<>();
-    result.add("rft_id=" + encodeValue("info:oclcnum/" + value));
-    result.add("rft.oclcnum=" + encodeValue(value));
+    encodeValue("info:oclcnum/" + value).ifPresent((encoded) -> result.add("rft_id=" + encoded));
+    encodeValue(value).ifPresent((encoded) -> result.add("rft.oclcnum=" + encoded));
     return result;
   }
 

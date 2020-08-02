@@ -33,7 +33,7 @@ public class EISBN implements Identifier {
   @Override
   public List<String> asEncodedOpenUrl() {
     List<String> result = new ArrayList<>();
-    result.add("rft.eisbn=" + encodeValue(value));
+    encodeValue(value).ifPresent((encoded) -> result.add("rft.eisbn=" + encoded));
     return result;
   }
 
