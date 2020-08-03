@@ -10,7 +10,9 @@ import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import org.apache.log4j.Logger;
 import org.cdlib.domain.objects.article.ArticleCitation;
+import org.cdlib.domain.objects.bib.Bib;
 import org.cdlib.domain.objects.identifier.Identifier;
+
 /*
  * Provides methods for serializing bibliographic data to an OpenURL 1.0 query.
  */
@@ -30,6 +32,7 @@ public class OpenUrl {
     keyValuePair(article::getSeasonOfPublication, "rft.ssn").ifPresent((result) -> keyValuePairs.add(result));
     keyValuePair(article::getPages, "rft.pages").ifPresent((result) -> keyValuePairs.add(result));
     keyValuePairsFrom(article.getIdentifiers()).ifPresent((result) -> keyValuePairs.addAll(result));
+    keyValuePairsFrom(article.getContainer()).ifPresent((result) -> keyValuePairs.addAll(result));
     return String.join("&", keyValuePairs);
   }
 
@@ -41,9 +44,8 @@ public class OpenUrl {
     Optional<String> encodedValue = encodeValue(value);
     if (encodedValue.isPresent()) {
       return Optional.of(key + "=" + encodedValue.get());
-    } else {
-      return Optional.empty();
     }
+    return Optional.empty();
   }
 
   /*
@@ -57,10 +59,15 @@ public class OpenUrl {
       return Optional.empty();
     }
   }
+  
+  private static Optional<List<String>> keyValuePairsFrom(Bib bib) {
+    List<String> keyValuePairs = new ArrayList<>();
+    keyValuePair(() -> bib.getTitle().getMainTitle(), "rft.jtitle").ifPresent((result) -> keyValuePairs.add(result));
+    return Optional.of(keyValuePairs);
+  }
 
   private static Optional<List<String>> keyValuePairsFrom(List<Identifier> identifiers) {
     return Optional.of(identifiers.stream()
-                                  .filter((id) -> id != null)
                                   .flatMap((id) -> id.asEncodedOpenUrl().stream())
                                   .collect(Collectors.toList()));
   }

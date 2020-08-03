@@ -1,5 +1,7 @@
 package org.cdlib.domain.objects.identifier;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import org.cdlib.util.JSON;
 
@@ -19,13 +21,26 @@ public class BibIdentifiers {
   private OclcNumber oclcNumber;
 
   public BibIdentifiers() {
-    
   }
   
   public BibIdentifiers(BibIdentifiers source) {
     this.isbn = source.isbn;
     this.issn = source.issn;
     this.oclcNumber = source.oclcNumber;
+  }
+  
+  public List<Identifier> asList() {
+    List<Identifier> ids = new ArrayList<>();
+    if (isbn != null) {
+      ids.add(isbn);
+    }
+    if (issn != null) {
+      ids.add(issn);
+    }
+    if (oclcNumber != null) {
+      ids.add(oclcNumber);
+    }
+    return ids;
   }
 
   public ISBN getIsbn() {

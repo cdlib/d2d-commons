@@ -4,6 +4,9 @@ import static org.junit.Assert.assertEquals;
 import java.util.ArrayList;
 import java.util.List;
 import org.cdlib.domain.objects.article.ArticleCitation;
+import org.cdlib.domain.objects.bib.Bib;
+import org.cdlib.domain.objects.bib.Seriality;
+import org.cdlib.domain.objects.bib.Title;
 import org.cdlib.domain.objects.identifier.DOI;
 import org.cdlib.domain.objects.identifier.EISBN;
 import org.cdlib.domain.objects.identifier.EISSN;
@@ -49,9 +52,25 @@ public class OpenUrlTest {
     return testIdentifiers;
   }
   
+  private Bib testMonograph() {
+    Bib bib = new Bib();
+    bib.setAuthor("Jones, John");
+    return bib;
+  }
+  
+  private Bib testSerial() {
+    Bib bib = new Bib();
+    bib.setSeriality(Seriality.SERIAL);
+    bib.setTitle(new Title("Journal of Journals"));
+    return bib;
+  }
+  
   @Test
-  public void testArticleOpenUrlQuery() {
-     assertEquals(EXPECTED, OpenUrl.encodedQueryFrom(testArticle()));
+  public void testJournalArticle() {
+     ArticleCitation stubArticle = testArticle();
+     stubArticle.setContainer(testSerial());
+     EXPECTED += "&rft.jtitle=Journal+of+Journals";
+     assertEquals(EXPECTED, OpenUrl.encodedQueryFrom(stubArticle));
   }
   
   @Test
@@ -59,6 +78,7 @@ public class OpenUrlTest {
     EXPECTED += "&rft_id=urn%3AISBN%3A12345&rft.isbn=12345&rft_id=info%3Aoclcnum%2F34567&rft.oclcnum=34567&rft.eisbn=1111111111111&rft_id=info%3Alccn%2F00001111111&rft.lccn=00001111111";
     ArticleCitation testArticle = testArticle();
     testArticle.setIdentifiers(testIdentifiers());
+    testArticle.setContainer(testMonograph());
     assertEquals(EXPECTED, OpenUrl.encodedQueryFrom(testArticle));
        
   }
@@ -68,8 +88,9 @@ public class OpenUrlTest {
     EXPECTED += "&rft_id=urn%3AISSN%3A12345&rft.issn=12345&rft_id=info%3Adoi%2F34567&rft.doi=34567&rft.eissn=1111111&rft_id=info%3Apmid%2F2222222&rft.pmid=2222222";
     ArticleCitation testArticle = testArticle();
     testArticle.setIdentifiers(testSerialIdentifiers());
+    testArticle.setContainer(testSerial());
+    EXPECTED += "&rft.jtitle=Journal+of+Journals";
     assertEquals(EXPECTED, OpenUrl.encodedQueryFrom(testArticle));
-       
   }
 
 }
