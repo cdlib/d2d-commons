@@ -1,5 +1,6 @@
 package org.cdlib.util;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -39,6 +40,7 @@ public final class JSON {
     return json;
   }
 
+  @SuppressWarnings("rawtypes")
   private static void checkDeserialize(Class clazz) {
     if (!objectMapper.canDeserialize(objectMapper.constructType(clazz))) {
       throw new JSONConversionException("json cannot be deserialized to object type");
@@ -57,10 +59,27 @@ public final class JSON {
     }
     return result;
   }
+  
+  public static <T> T deserialize(InputStream json, TypeReference<T> typeRef) {
+    Assert.notNull(typeRef);
+    Assert.notNull(json);
+    T result = null;
+    try {
+      result = objectMapper.readValue(json, typeRef);
+    } catch (IOException e) {
+      throw new JSONConversionException("Could not deserialize JSON", e);
+    }
+    return result;
+  }
 
   public static <T> T deserialize(String json, Class<T> theClass) {
     InputStream theStream = new ByteArrayInputStream(json.getBytes());
     return deserialize(theStream, theClass);
+  }
+  
+  public static <T> T deserialize(String json, TypeReference<T> typeRef) {
+    InputStream theStream = new ByteArrayInputStream(json.getBytes());
+    return deserialize(theStream, typeRef);
   }
   
   public static <T> T deserialize(String json, Class<T> theClass, Charset charset) {

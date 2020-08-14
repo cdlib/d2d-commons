@@ -2,11 +2,15 @@ package org.cdlib.util;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import java.util.ArrayList;
+import java.util.List;
+import org.cdlib.domain.objects.link.Link;
 import org.cdlib.test.NonBean;
 import org.cdlib.test.SerializablePojo;
 import org.cdlib.util.JSON.JSONConversionException;
 import org.junit.Before;
 import org.junit.Test;
+import com.fasterxml.jackson.core.type.TypeReference;
 
 public class JSONTest {
   
@@ -41,6 +45,24 @@ public class JSONTest {
     SerializablePojo obj = JSON.deserialize("{\"testString\":\"test String val 好比不上\",\"testInt\":22}", SerializablePojo.class);
     assertEquals(22, obj.getTestInt());
     assertEquals("test String val 好比不上", obj.getTestString());
+  }
+  
+  @Test
+  public void deserializesGenericCollection() {
+    List<Link> links = new ArrayList<>();
+    Link link0 = new Link();
+    link0.setHref("href0");
+    link0.setMimeType("type0");
+    Link link1 = new Link();
+    link1.setHref("href1");
+    link1.setMimeType("type1");
+    links.add(link0);
+    links.add(link1);
+    String json = JSON.serialize(links);
+    TypeReference<List<Link>> ref = new TypeReference<List<Link>> () {};
+    List<Link> deserialized = JSON.deserialize(json, ref);
+    assertEquals(links, deserialized);
+    assertEquals(json, JSON.serialize(deserialized));
   }
  
 }
