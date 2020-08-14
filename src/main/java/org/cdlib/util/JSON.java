@@ -60,12 +60,12 @@ public final class JSON {
     return result;
   }
   
-  public static <T> T deserialize(InputStream json, TypeReference<T> typeRef) {
-    Assert.notNull(typeRef);
+  public static <T> T deserialize(InputStream json, TypeReference<T> ref) {
+    Assert.notNull(ref);
     Assert.notNull(json);
     T result = null;
     try {
-      result = objectMapper.readValue(json, typeRef);
+      result = objectMapper.readValue(json, ref);
     } catch (IOException e) {
       throw new JSONConversionException("Could not deserialize JSON", e);
     }
@@ -77,9 +77,9 @@ public final class JSON {
     return deserialize(theStream, theClass);
   }
   
-  public static <T> T deserialize(String json, TypeReference<T> typeRef) {
+  public static <T> T deserialize(String json, TypeReference<T> ref) {
     InputStream theStream = new ByteArrayInputStream(json.getBytes());
-    return deserialize(theStream, typeRef);
+    return deserialize(theStream, ref);
   }
   
   public static <T> T deserialize(String json, Class<T> theClass, Charset charset) {
