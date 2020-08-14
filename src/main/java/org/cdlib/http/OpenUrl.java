@@ -10,7 +10,9 @@ import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import org.apache.log4j.Logger;
 import org.cdlib.domain.objects.article.ArticleCitation;
+import org.cdlib.domain.objects.author.Author;
 import org.cdlib.domain.objects.bib.Bib;
+import org.cdlib.domain.objects.bib.Seriality;
 import org.cdlib.domain.objects.identifier.Identifier;
 
 /*
@@ -19,20 +21,20 @@ import org.cdlib.domain.objects.identifier.Identifier;
 public class OpenUrl {
 
   private static final Logger logger = Logger.getLogger(OpenUrl.class);
-  private static String URL_VERSION = "url_ver=Z39.88-2004";
+  private static String VERSION = "url_ver=Z39.88-2004";
 
   public static String encodedQueryFrom(ArticleCitation article) {
     List<String> keyValuePairs = new ArrayList<>();
-    keyValuePairs.add(URL_VERSION);
-    keyValuePair(article::getTitle, "rft.atitle").ifPresent((result) -> keyValuePairs.add(result));
-    keyValuePair(article::getVolume, "rft.volume").ifPresent((result) -> keyValuePairs.add(result));
-    keyValuePair(article::getIssue, "rft.issue").ifPresent((result) -> keyValuePairs.add(result));
-    keyValuePair(article::getYearOfPublication, "rft.year").ifPresent((result) -> keyValuePairs.add(result));
-    keyValuePair(article::getMonthOfPublication, "rft.month").ifPresent((result) -> keyValuePairs.add(result));
-    keyValuePair(article::getSeasonOfPublication, "rft.ssn").ifPresent((result) -> keyValuePairs.add(result));
-    keyValuePair(article::getPages, "rft.pages").ifPresent((result) -> keyValuePairs.add(result));
-    keyValuePairsFrom(article.getIdentifiers()).ifPresent((result) -> keyValuePairs.addAll(result));
-    keyValuePairsFrom(article.getContainer()).ifPresent((result) -> keyValuePairs.addAll(result));
+    keyValuePairs.add(VERSION);
+    keyValuePair(article::getTitle, "rft.atitle").ifPresent(keyValuePairs::add);
+    keyValuePair(article::getVolume, "rft.volume").ifPresent(keyValuePairs::add);
+    keyValuePair(article::getIssue, "rft.issue").ifPresent(keyValuePairs::add);
+    keyValuePair(article::getYearOfPublication, "rft.year").ifPresent(keyValuePairs::add);
+    keyValuePair(article::getMonthOfPublication, "rft.month").ifPresent(keyValuePairs::add);
+    keyValuePair(article::getSeasonOfPublication, "rft.ssn").ifPresent(keyValuePairs::add);
+    keyValuePair(article::getPages, "rft.pages").ifPresent(keyValuePairs::add);
+    keyValuePairsFrom(article.getIdentifiers()).ifPresent(keyValuePairs::addAll);
+    keyValuePairsFrom(article.getContainer()).ifPresent(keyValuePairs::addAll);
     return String.join("&", keyValuePairs);
   }
 
@@ -55,14 +57,26 @@ public class OpenUrl {
     try {
       return Optional.of(URLEncoder.encode(value, StandardCharsets.UTF_8.toString()));
     } catch (UnsupportedEncodingException e) {
-      logger.error("Unexpected encoding exception when encoding " + value + " caused by " + e);
+      logger.error("Unexpected encoding exception when encoding " + value, e);
       return Optional.empty();
     }
   }
   
+  private static Optional<List<String>> keyValuePairsFrom(Author author) {
+    List<String> keyValuePairs = new ArrayList<>();
+    return Optional.of(keyValuePairs);
+  }
+  
+  
   private static Optional<List<String>> keyValuePairsFrom(Bib bib) {
     List<String> keyValuePairs = new ArrayList<>();
-    keyValuePair(() -> bib.getTitle().getMainTitle(), "rft.jtitle").ifPresent((result) -> keyValuePairs.add(result));
+    if (Seriality.MONOGRAPH.equals(bib.getSeriality())) {
+      keyValuePair(() -> bib.getTitle().getMainTitle(), "rft.btitle").ifPresent(keyValuePairs::add);
+    } else {
+      keyValuePair(() -> bib.getTitle().getMainTitle(), "rft.jtitle").ifPresent(keyValuePairs::add);
+    }
+    keyValuePairsFrom(bib.getIdentifiers().asList()).ifPresent(keyValuePairs::addAll);
+   
     return Optional.of(keyValuePairs);
   }
 
@@ -70,6 +84,13 @@ public class OpenUrl {
     return Optional.of(identifiers.stream()
                                   .flatMap((id) -> id.asEncodedOpenUrl().stream())
                                   .collect(Collectors.toList()));
+  }
+  
+  public static String encodedQueryFrom(Bib bib) {
+    List<String> keyValuePairs = new ArrayList<>();
+    keyValuePairs.add(VERSION);
+    keyValuePairs.addAll(keyValuePairsFrom(bib).get());
+    return String.join("&", keyValuePairs);
   }
 
 }

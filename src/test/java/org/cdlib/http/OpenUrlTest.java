@@ -20,9 +20,10 @@ import org.junit.Test;
 
 public class OpenUrlTest {
   
-  private String EXPECTED = "url_ver=Z39.88-2004&rft.atitle=Article+Title&rft.volume=2&rft.issue=1&rft.year=1968&rft.month=JAN&rft.ssn=spring&rft.pages=12-24";
+  private String EXPECTED_ARTICLE = "url_ver=Z39.88-2004&rft.atitle=Article+Title&rft.volume=2&rft.issue=1&rft.year=1968&rft.month=JAN&rft.ssn=spring&rft.pages=12-24";
+  private String EXPECTED_MONOGRAPH = "url_ver=Z39.88-2004&rft.btitle=Monograph+Title&rft_id=urn%3AISBN%3A12345&rft.isbn=12345&rft_id=info%3Aoclcnum%2F34567&rft.oclcnum=34567";
   
-  private ArticleCitation testArticle() {
+  private ArticleCitation stubArticle() {
     ArticleCitation article = new ArticleCitation();
     article.setIssue("1");
     article.setVolume("2");
@@ -34,7 +35,7 @@ public class OpenUrlTest {
     return article;
   }
   
-  private List<Identifier> testIdentifiers() {
+  private List<Identifier> stubMonographIdentifiers() {
     List<Identifier> testIdentifiers = new ArrayList<>();
     testIdentifiers.add(new ISBN("12345"));
     testIdentifiers.add(new OclcNumber("34567"));
@@ -43,7 +44,7 @@ public class OpenUrlTest {
     return testIdentifiers;
   }
   
-  private List<Identifier> testSerialIdentifiers() {
+  private List<Identifier> stubSerialIdentifiers() {
     List<Identifier> testIdentifiers = new ArrayList<>();
     testIdentifiers.add(new ISSN("12345"));
     testIdentifiers.add(new DOI("34567"));
@@ -52,45 +53,48 @@ public class OpenUrlTest {
     return testIdentifiers;
   }
   
-  private Bib testMonograph() {
+  private Bib stubMonograph() {
     Bib bib = new Bib();
+    bib.setTitle(new Title("Monograph Title"));
     bib.setAuthor("Jones, John");
+    
+    bib.getIdentifiers().setIsbn(new ISBN("12345"));
+    bib.getIdentifiers().setOclcNumber(new OclcNumber("34567"));
+    bib.setSeriality(Seriality.MONOGRAPH);
     return bib;
   }
   
-  private Bib testSerial() {
+  private Bib stubSerial() {
     Bib bib = new Bib();
     bib.setSeriality(Seriality.SERIAL);
     bib.setTitle(new Title("Journal of Journals"));
+    bib.setSeriality(Seriality.SERIAL);
     return bib;
+  }
+  
+  @Test
+  public void testBibMonograph() {
+    Bib testBib = stubMonograph();
+    assertEquals(EXPECTED_MONOGRAPH, OpenUrl.encodedQueryFrom(testBib));
+    
   }
   
   @Test
   public void testJournalArticle() {
-     ArticleCitation stubArticle = testArticle();
-     stubArticle.setContainer(testSerial());
-     EXPECTED += "&rft.jtitle=Journal+of+Journals";
-     assertEquals(EXPECTED, OpenUrl.encodedQueryFrom(stubArticle));
-  }
-  
-  @Test
-  public void testWithMonographIdentifier() {
-    EXPECTED += "&rft_id=urn%3AISBN%3A12345&rft.isbn=12345&rft_id=info%3Aoclcnum%2F34567&rft.oclcnum=34567&rft.eisbn=1111111111111&rft_id=info%3Alccn%2F00001111111&rft.lccn=00001111111";
-    ArticleCitation testArticle = testArticle();
-    testArticle.setIdentifiers(testIdentifiers());
-    testArticle.setContainer(testMonograph());
-    assertEquals(EXPECTED, OpenUrl.encodedQueryFrom(testArticle));
-       
+     ArticleCitation stubArticle = stubArticle();
+     stubArticle.setContainer(stubSerial());
+     EXPECTED_ARTICLE += "&rft.jtitle=Journal+of+Journals";
+     assertEquals(EXPECTED_ARTICLE, OpenUrl.encodedQueryFrom(stubArticle));
   }
   
   @Test
   public void testWithSerialIdentifier() {
-    EXPECTED += "&rft_id=urn%3AISSN%3A12345&rft.issn=12345&rft_id=info%3Adoi%2F34567&rft.doi=34567&rft.eissn=1111111&rft_id=info%3Apmid%2F2222222&rft.pmid=2222222";
-    ArticleCitation testArticle = testArticle();
-    testArticle.setIdentifiers(testSerialIdentifiers());
-    testArticle.setContainer(testSerial());
-    EXPECTED += "&rft.jtitle=Journal+of+Journals";
-    assertEquals(EXPECTED, OpenUrl.encodedQueryFrom(testArticle));
+    EXPECTED_ARTICLE += "&rft_id=urn%3AISSN%3A12345&rft.issn=12345&rft_id=info%3Adoi%2F34567&rft.doi=34567&rft.eissn=1111111&rft_id=info%3Apmid%2F2222222&rft.pmid=2222222";
+    ArticleCitation testArticle = stubArticle();
+    testArticle.setIdentifiers(stubSerialIdentifiers());
+    testArticle.setContainer(stubSerial());
+    EXPECTED_ARTICLE += "&rft.jtitle=Journal+of+Journals";
+    assertEquals(EXPECTED_ARTICLE, OpenUrl.encodedQueryFrom(testArticle));
   }
 
 }
