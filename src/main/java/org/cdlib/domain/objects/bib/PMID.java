@@ -3,24 +3,25 @@ package org.cdlib.domain.objects.bib;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
+import org.cdlib.util.CollectionUtil;
+import org.cdlib.util.JSON;
 
-public class LCCN implements Identifier {
-  
-  private static final IdAuthority AUTHORITY = IdAuthority.LOC;
-  private static final String DESCRIPTOR = "lccn";
+public class PMID implements Identifier {
+
+  private static final IdAuthority AUTHORITY = IdAuthority.NLM;
+  private static final String DESCRIPTOR = "pmid";
+  private List<String> alternateValues = new ArrayList<String>();
   private String value;
-  private List<String> alternateValues = new ArrayList<>();
   
-  public LCCN() {}
-
-  public LCCN(String value) {
+  public PMID() {}
+  
+  public PMID(String value) {
     this.value = value;
   }
   
-  public LCCN(LCCN source) {
+  public PMID(PMID source) {
     this.value = source.value;
+    this.alternateValues = source.alternateValues;
   }
 
   @Override
@@ -33,22 +34,21 @@ public class LCCN implements Identifier {
     return DESCRIPTOR;
   }
 
-  @Override
   public String getValue() {
     return value;
   }
-
+  
   public void setValue(String value) {
     this.value = value;
   }
-  
+
   @Override
   public List<String> getAlternateValues() {
-    return alternateValues;
+    return CollectionUtil.dedupedList(alternateValues);
   }
 
-  public void setAlternateValues(List<String> alternateValues) {
-    this.alternateValues = alternateValues;
+  public void setAlternateValues(List<String> values) {
+    this.alternateValues = new ArrayList<String>(values);
   }
 
   @Override
@@ -64,11 +64,16 @@ public class LCCN implements Identifier {
     if (obj == null) {
       return false;
     }
-    if (!(obj instanceof LCCN)) {
+    if (!(obj instanceof PMID)) {
       return false;
     }
-    LCCN other = (LCCN) obj;
+    PMID other = (PMID) obj;
     return Objects.equals(alternateValues, other.alternateValues) && Objects.equals(value, other.value);
+  }
+
+  @Override
+  public String toString() {
+    return JSON.serialize(this);
   }
 
 }

@@ -12,6 +12,7 @@ import org.cdlib.util.JSON;
 public class OclcNumber implements Identifier {
 
   private static final IdAuthority AUTHORITY = IdAuthority.OCLC;
+  private static final String DESCRIPTOR = "oclcnum";
   private List<String> altValues = new ArrayList<>();
   
   @NotNull
@@ -37,6 +38,11 @@ public class OclcNumber implements Identifier {
   @Override
   public @NotNull String getAuthority() {
     return AUTHORITY.getUri();
+  }
+  
+  @Override
+  public String getDescriptor() {
+    return DESCRIPTOR;
   }
 
   @Override

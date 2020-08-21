@@ -10,7 +10,8 @@ public enum IdAuthority {
   ISSN("issn.org"),
   LOC("loc.gov"),
   NLM("nlm.nih.gov"),
-  OCLC("oclc.org");
+  OCLC("oclc.org"),
+  IDF("doi.org");
   
   private String uri;
   

@@ -16,37 +16,41 @@ import org.cdlib.util.JSON;
 public class ISSN implements Identifier {
 
   private static final IdAuthority AUTHORITY = IdAuthority.ISSN;
+  private static final String DESCRIPTOR = "issn";
   private String value;
   private List<String> alternateValues = new ArrayList<String>();
-  
+
   public ISSN() {}
-  
+
   public ISSN(ISSN source) {
     this.value = source.value;
     this.alternateValues = source.alternateValues;
   }
-  
+
   public ISSN(String value) {
     this.value = value;
   }
-  
+
   @Override
-  public @NotNull @NotEmpty String getAuthority() {
+  public String getAuthority() {
     return AUTHORITY.getUri();
   }
+  
+  @Override
+  public String getDescriptor() {
+    return DESCRIPTOR;
+  }
 
-  @NotNull
-  @NotEmpty
- public String getValue() {
+  @Override
+  public String getValue() {
     return value;
   }
-  
+
   public void setValue(String value) {
     this.value = value;
   }
-  
+
   @Override
-  @NotNull
   public List<String> getAlternateValues() {
     return CollectionUtil.dedupedList(alternateValues);
   }
@@ -62,22 +66,34 @@ public class ISSN implements Identifier {
 
   @Override
   public int hashCode() {
-    return Objects.hash(alternateValues, value);
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + ((alternateValues == null) ? 0 : alternateValues.hashCode());
+    result = prime * result + ((value == null) ? 0 : value.hashCode());
+    return result;
   }
 
   @Override
   public boolean equals(Object obj) {
-    if (this == obj) {
+    if (this == obj)
       return true;
-    }
-    if (obj == null) {
+    if (obj == null)
       return false;
-    }
-    if (!(obj instanceof ISSN)) {
+    if (getClass() != obj.getClass())
       return false;
-    }
     ISSN other = (ISSN) obj;
-    return Objects.equals(alternateValues, other.alternateValues) && Objects.equals(value, other.value);
+    if (alternateValues == null) {
+      if (other.alternateValues != null)
+        return false;
+    } else if (!alternateValues.equals(other.alternateValues))
+      return false;
+    if (value == null) {
+      if (other.value != null)
+        return false;
+    } else if (!value.equals(other.value))
+      return false;
+    return true;
   }
 
+  
 }

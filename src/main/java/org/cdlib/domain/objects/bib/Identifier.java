@@ -20,5 +20,9 @@ public interface Identifier {
   
   @NotNull
   public List<String> getAlternateValues();
+  
+  // used to name the identifier in OpenURL and other contexts, for example "pmid"
+  @NotEmpty
+  public String getDescriptor();
 
 }
