@@ -63,6 +63,11 @@ public class ISSN implements Identifier {
   }
 
   @Override
+  public String toString() {
+    return JSON.serialize(this);
+  }
+
+  @Override
   public int hashCode() {
     return Objects.hash(alternateValues, value);
   }
@@ -81,42 +86,8 @@ public class ISSN implements Identifier {
     ISSN other = (ISSN) obj;
     return Objects.equals(alternateValues, other.alternateValues) && Objects.equals(value, other.value);
   }
-
-  @Override
-  public String toString() {
-    return JSON.serialize(this);
-  }
-
-  @Override
-  public int hashCode() {
-    final int prime = 31;
-    int result = 1;
-    result = prime * result + ((alternateValues == null) ? 0 : alternateValues.hashCode());
-    result = prime * result + ((value == null) ? 0 : value.hashCode());
-    return result;
-  }
-
-  @Override
-  public boolean equals(Object obj) {
-    if (this == obj)
-      return true;
-    if (obj == null)
-      return false;
-    if (getClass() != obj.getClass())
-      return false;
-    ISSN other = (ISSN) obj;
-    if (alternateValues == null) {
-      if (other.alternateValues != null)
-        return false;
-    } else if (!alternateValues.equals(other.alternateValues))
-      return false;
-    if (value == null) {
-      if (other.value != null)
-        return false;
-    } else if (!value.equals(other.value))
-      return false;
-    return true;
-  }
+  
+  
 
   
 }
