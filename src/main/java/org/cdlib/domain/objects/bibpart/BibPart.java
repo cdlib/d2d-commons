@@ -3,10 +3,12 @@ package org.cdlib.domain.objects.bibpart;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import org.cdlib.domain.objects.author.Author;
 import org.cdlib.domain.objects.bib.Bib;
 import org.cdlib.domain.objects.identifier.Identifier;
-import org.cdlib.util.JSON;;
+import org.cdlib.util.JSON;
 
 public class BibPart {
   
@@ -23,6 +25,7 @@ public class BibPart {
   
   public BibPart() {
     identifiers = new ArrayList<>();
+    container = new Bib();
   }
   
   public BibPart(BibPart source) {
@@ -34,14 +37,18 @@ public class BibPart {
     this.volume = source.volume;
     this.identifiers = deepCopy(identifiers);
   }
+  
+  @NotEmpty
   public Author getAuthor() {
     return author;
   }
   
+  @NotNull
   public Bib getContainer() {
     return container;
   }
   
+  @NotNull
   public List<Identifier> getIdentifiers() {
     return identifiers;
   }
@@ -62,6 +69,7 @@ public class BibPart {
     return seasonOfPublication;
   }
   
+  @NotEmpty
   public String getTitle() {
     return title;
   }
@@ -70,6 +78,7 @@ public class BibPart {
     return volume;
   }
 
+  @NotEmpty
   public String getYearOfPublication() {
     return yearOfPublication;
   }
