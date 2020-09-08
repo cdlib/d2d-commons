@@ -1,4 +1,4 @@
-package org.cdlib.domain.objects.article;
+package org.cdlib.domain.objects.bibpart;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +8,7 @@ import org.cdlib.domain.objects.bib.Bib;
 import org.cdlib.domain.objects.identifier.Identifier;
 import org.cdlib.util.JSON;;
 
-public class ArticleCitation {
+public class BibPart {
   
   private Author author;
   private Bib container;
@@ -21,11 +21,11 @@ public class ArticleCitation {
   private String volume;
   private String yearOfPublication;
   
-  public ArticleCitation() {
+  public BibPart() {
     identifiers = new ArrayList<>();
   }
   
-  public ArticleCitation(ArticleCitation source) {
+  public BibPart(BibPart source) {
     this.yearOfPublication = source.yearOfPublication;
     this.author = source.author;
     this.container = source.container;
@@ -37,9 +37,11 @@ public class ArticleCitation {
   public Author getAuthor() {
     return author;
   }
+  
   public Bib getContainer() {
     return container;
   }
+  
   public List<Identifier> getIdentifiers() {
     return identifiers;
   }

@@ -9,7 +9,7 @@ import java.util.Optional;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import org.apache.log4j.Logger;
-import org.cdlib.domain.objects.article.ArticleCitation;
+import org.cdlib.domain.objects.article.BibPart;
 import org.cdlib.domain.objects.author.Author;
 import org.cdlib.domain.objects.bib.Bib;
 import org.cdlib.domain.objects.bib.Seriality;
@@ -23,7 +23,7 @@ public class OpenUrl {
   private static final Logger logger = Logger.getLogger(OpenUrl.class);
   private static String VERSION = "url_ver=Z39.88-2004";
 
-  public static String encodedQueryFrom(ArticleCitation article) {
+  public static String encodedQueryFrom(BibPart article) {
     List<String> keyValuePairs = new ArrayList<>();
     keyValuePairs.add(VERSION);
     keyValuePair(article::getTitle, "rft.atitle").ifPresent(keyValuePairs::add);

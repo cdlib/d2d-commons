@@ -3,7 +3,7 @@ package org.cdlib.http;
 import static org.junit.Assert.assertEquals;
 import java.util.ArrayList;
 import java.util.List;
-import org.cdlib.domain.objects.article.ArticleCitation;
+import org.cdlib.domain.objects.article.BibPart;
 import org.cdlib.domain.objects.bib.Bib;
 import org.cdlib.domain.objects.bib.Seriality;
 import org.cdlib.domain.objects.bib.Title;
@@ -23,8 +23,8 @@ public class OpenUrlTest {
   private String EXPECTED_ARTICLE = "url_ver=Z39.88-2004&rft.atitle=Article+Title&rft.volume=2&rft.issue=1&rft.year=1968&rft.month=JAN&rft.ssn=spring&rft.pages=12-24";
   private String EXPECTED_MONOGRAPH = "url_ver=Z39.88-2004&rft.btitle=Monograph+Title&rft_id=urn%3AISBN%3A12345&rft.isbn=12345&rft_id=info%3Aoclcnum%2F34567&rft.oclcnum=34567";
   
-  private ArticleCitation stubArticle() {
-    ArticleCitation article = new ArticleCitation();
+  private BibPart stubArticle() {
+    BibPart article = new BibPart();
     article.setIssue("1");
     article.setVolume("2");
     article.setTitle("Article Title");
@@ -81,7 +81,7 @@ public class OpenUrlTest {
   
   @Test
   public void testJournalArticle() {
-     ArticleCitation stubArticle = stubArticle();
+     BibPart stubArticle = stubArticle();
      stubArticle.setContainer(stubSerial());
      EXPECTED_ARTICLE += "&rft.jtitle=Journal+of+Journals";
      assertEquals(EXPECTED_ARTICLE, OpenUrl.encodedQueryFrom(stubArticle));
@@ -90,7 +90,7 @@ public class OpenUrlTest {
   @Test
   public void testWithSerialIdentifier() {
     EXPECTED_ARTICLE += "&rft_id=urn%3AISSN%3A12345&rft.issn=12345&rft_id=info%3Adoi%2F34567&rft.doi=34567&rft.eissn=1111111&rft_id=info%3Apmid%2F2222222&rft.pmid=2222222";
-    ArticleCitation testArticle = stubArticle();
+    BibPart testArticle = stubArticle();
     testArticle.setIdentifiers(stubSerialIdentifiers());
     testArticle.setContainer(stubSerial());
     EXPECTED_ARTICLE += "&rft.jtitle=Journal+of+Journals";

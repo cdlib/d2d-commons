@@ -31,15 +31,15 @@ public class ArticleCitationTest {
     return result;
   }
   
-  private ArticleCitation stubArticleCitation() {
-    ArticleCitation result = new ArticleCitation();
+  private BibPart stubArticleCitation() {
+    BibPart result = new BibPart();
     result.setIdentifiers(stubIdentifiers());
     return result;
   }
   
   @Test
   public void testDeepCopyOfIdentifiers() {
-    ArticleCitation article = stubArticleCitation();
+    BibPart article = stubArticleCitation();
     assertFalse(stubIdentifiers == article.getIdentifiers());
     assertFalse(article.getIdentifiers().get(0) == stubIdentifiers.get(0));
     assertEquals(ISBN.class, article.getIdentifiers().get(0).getClass());
