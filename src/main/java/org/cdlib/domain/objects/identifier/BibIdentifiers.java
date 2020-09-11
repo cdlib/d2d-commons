@@ -14,11 +14,15 @@ import org.cdlib.util.JSON;
  * If any identifier is not null, then it must have a value 
  * and an authority.
  */
+@Deprecated
 public class BibIdentifiers {
 
   private ISBN isbn;
   private ISSN issn;
   private OclcNumber oclcNumber;
+  private LCCN lccn;
+  private EISSN eIssn;
+  private EISBN eIsbn;
 
   public BibIdentifiers() {
   }
@@ -27,6 +31,9 @@ public class BibIdentifiers {
     this.isbn = source.isbn;
     this.issn = source.issn;
     this.oclcNumber = source.oclcNumber;
+    this.lccn = source.lccn;
+    this.eIssn = source.eIssn;
+    this.eIsbn = source.eIsbn;
   }
   
   public List<Identifier> asList() {
@@ -39,6 +46,15 @@ public class BibIdentifiers {
     }
     if (oclcNumber != null) {
       ids.add(oclcNumber);
+    }
+    if (lccn != null) {
+      ids.add(lccn);
+    }
+    if (eIssn != null) {
+      ids.add(eIssn);
+    }
+    if (eIsbn != null) {
+      ids.add(eIsbn);
     }
     return ids;
   }
@@ -66,10 +82,26 @@ public class BibIdentifiers {
   public void setOclcNumber(OclcNumber oclcNumber) {
     this.oclcNumber = oclcNumber;
   }
+  
+  public LCCN getLccn() {
+    return lccn;
+  }
+
+  public EISSN geteIssn() {
+    return eIssn;
+  }
+
+  public void setLccn(LCCN lccn) {
+    this.lccn = lccn;
+  }
+
+  public void seteIssn(EISSN eIssn) {
+    this.eIssn = eIssn;
+  }
 
   @Override
   public int hashCode() {
-    return Objects.hash(isbn, issn, oclcNumber);
+    return Objects.hash(eIssn, isbn, issn, lccn, oclcNumber);
   }
 
   @Override
@@ -84,12 +116,21 @@ public class BibIdentifiers {
       return false;
     }
     BibIdentifiers other = (BibIdentifiers) obj;
-    return Objects.equals(isbn, other.isbn) && Objects.equals(issn, other.issn) && Objects.equals(oclcNumber, other.oclcNumber);
+    return Objects.equals(eIssn, other.eIssn) && Objects.equals(isbn, other.isbn) && Objects.equals(issn, other.issn) && Objects.equals(lccn, other.lccn)
+        && Objects.equals(oclcNumber, other.oclcNumber);
   }
-  
+
   @Override
   public String toString() {
     return JSON.serialize(this);
+  }
+
+  public EISBN geteIsbn() {
+    return eIsbn;
+  }
+
+  public void seteIsbn(EISBN eIsbn) {
+    this.eIsbn = eIsbn;
   }
 
  

@@ -1,4 +1,4 @@
-package org.cdlib.domain.objects.article;
+package org.cdlib.domain.objects.bib;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -11,7 +11,7 @@ import org.cdlib.domain.objects.identifier.Identifier;
 import org.junit.Before;
 import org.junit.Test;
 
-public class ArticleCitationTest {
+public class BibPartTest {
   
   private List<Identifier> stubIdentifiers;
   
@@ -42,7 +42,7 @@ public class ArticleCitationTest {
     BibPart article = stubArticleCitation();
     assertFalse(stubIdentifiers == article.getIdentifiers());
     assertFalse(article.getIdentifiers().get(0) == stubIdentifiers.get(0));
-    assertEquals(ISBN.class, article.getIdentifiers().get(0).getClass());
+    assertEquals(new ISBN("12345"), article.getIdentifiers().get(0));
   }
 
 }

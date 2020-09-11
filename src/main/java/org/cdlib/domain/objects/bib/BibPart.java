@@ -1,35 +1,34 @@
-package org.cdlib.domain.objects.bibpart;
+package org.cdlib.domain.objects.bib;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import org.cdlib.domain.objects.author.Author;
 import org.cdlib.domain.objects.bib.Bib;
 import org.cdlib.domain.objects.identifier.Identifier;
+import org.cdlib.domain.objects.meta.ResourceMeta;
 import org.cdlib.util.JSON;
 
 public class BibPart {
   
-  private Author author;
+  private String author;
   private Bib container;
   private List<Identifier> identifiers;
   private String issue;
-  private String monthOfPublication;
   private String pages;
-  private String seasonOfPublication;
   private String title;
   private String volume;
-  private String yearOfPublication;
+  private PublicationEvent publicationEvent;
+  private ResourceMeta resourceMeta;
   
   public BibPart() {
     identifiers = new ArrayList<>();
     container = new Bib();
+    publicationEvent = new PublicationEvent();
   }
   
   public BibPart(BibPart source) {
-    this.yearOfPublication = source.yearOfPublication;
     this.author = source.author;
     this.container = source.container;
     this.issue = source.issue;
@@ -39,7 +38,7 @@ public class BibPart {
   }
   
   @NotEmpty
-  public Author getAuthor() {
+  public String getAuthor() {
     return author;
   }
   
@@ -57,16 +56,8 @@ public class BibPart {
     return issue;
   }
   
-  public String getMonthOfPublication() {
-    return monthOfPublication;
-  }
-  
   public String getPages() {
     return pages;
-  }
-  
-  public String getSeasonOfPublication() {
-    return seasonOfPublication;
   }
   
   @NotEmpty
@@ -77,13 +68,8 @@ public class BibPart {
   public String getVolume() {
     return volume;
   }
-
-  @NotEmpty
-  public String getYearOfPublication() {
-    return yearOfPublication;
-  }
   
-  public void setAuthor(Author author) {
+  public void setAuthor(String author) {
     this.author = author;
   }
   
@@ -99,16 +85,8 @@ public class BibPart {
     this.issue = issue;
   }
   
-  public void setMonthOfPublication(String monthOfPublication) {
-    this.monthOfPublication = monthOfPublication;
-  }
-  
   public void setPages(String pageRange) {
     this.pages = pageRange;
-  }
-  
-  public void setSeasonOfPublication(String seasonOfPublication) {
-    this.seasonOfPublication = seasonOfPublication;
   }
   
   public void setTitle(String title) {
@@ -117,10 +95,6 @@ public class BibPart {
   
   public void setVolume(String volume) {
     this.volume = volume;
-  }
-  
-  public void setYearOfPublication(String articleYear) {
-    this.yearOfPublication = articleYear;
   }
   
   @Override
@@ -137,6 +111,14 @@ public class BibPart {
     return original.stream()
         .map(this::copyIdentifier)
         .collect(Collectors.toList());
+  }
+
+  public PublicationEvent getPublicationEvent() {
+    return publicationEvent;
+  }
+
+  public void setPublicationEvent(PublicationEvent publicationEvent) {
+    this.publicationEvent = publicationEvent;
   }
   
 }

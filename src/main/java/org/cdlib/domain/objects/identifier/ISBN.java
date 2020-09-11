@@ -3,7 +3,7 @@ package org.cdlib.domain.objects.identifier;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import static org.cdlib.http.OpenUrl.encodeValue;
+import static org.cdlib.http.OpenUrlDeriver.encodeValue;
 import org.cdlib.util.CollectionUtil;
 import org.cdlib.util.JSON;
 

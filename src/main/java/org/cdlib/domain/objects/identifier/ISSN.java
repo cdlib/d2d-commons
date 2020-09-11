@@ -1,6 +1,6 @@
 package org.cdlib.domain.objects.identifier;
 
-import static org.cdlib.http.OpenUrl.encodeValue;
+import static org.cdlib.http.OpenUrlDeriver.encodeValue;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
