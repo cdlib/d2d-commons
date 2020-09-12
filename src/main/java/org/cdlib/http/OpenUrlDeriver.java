@@ -31,6 +31,7 @@ public class OpenUrlDeriver {
   private static final Logger logger = Logger.getLogger(OpenUrlDeriver.class);
   private static String VERSION = "url_ver=Z39.88-2004";
 
+  // Throws an IllegalStateException if the bib is not valid
   public String encodedQueryFrom(Bib bib) {
     checkValid(bib);
     List<String> keyValuePairs = new ArrayList<>();
@@ -39,6 +40,7 @@ public class OpenUrlDeriver {
     return String.join("&", keyValuePairs);
   }
 
+  // Throws an IllegalStateException if the article is not valid
   public String encodedQueryFrom(BibPart article) {
     checkValid(article);
     List<String> keyValuePairs = new ArrayList<>();
@@ -133,7 +135,7 @@ public class OpenUrlDeriver {
     if (!violations.isEmpty()) {
       List<String> messages = new ArrayList<>();
       violations.forEach((violation) -> messages.add(violation.getMessage()));
-      throw new IllegalStateException(String.join(",", messages));
+      throw new IllegalStateException(String.join(", ", messages));
     }
   }
 
