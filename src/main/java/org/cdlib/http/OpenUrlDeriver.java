@@ -31,7 +31,9 @@ public class OpenUrlDeriver {
   private static final Logger logger = Logger.getLogger(OpenUrlDeriver.class);
   private static String VERSION = "url_ver=Z39.88-2004";
 
-  // Throws an IllegalStateException if the bib is not valid
+  /*
+   * Throws an IllegalStateException if the bib is not valid
+   */
   public String encodedQueryFrom(Bib bib) {
     checkValid(bib);
     List<String> keyValuePairs = new ArrayList<>();
@@ -40,7 +42,9 @@ public class OpenUrlDeriver {
     return String.join("&", keyValuePairs);
   }
 
-  // Throws an IllegalStateException if the article is not valid
+  /*
+   * Throws an IllegalStateException if the article is not valid
+   */
   public String encodedQueryFrom(BibPart article) {
     checkValid(article);
     List<String> keyValuePairs = new ArrayList<>();
@@ -85,7 +89,11 @@ public class OpenUrlDeriver {
     return Optional.empty();
   }
 
-  private static Optional<List<String>> keyValuePairsFrom(Bib bib, boolean isContainer) {
+  /*
+   * isContainer is true if the bib if the context is that the bib is the container of a BibPart
+   * isContainer is false if the bib is free-standing
+   */
+  private Optional<List<String>> keyValuePairsFrom(Bib bib, boolean isContainer) {
     List<String> keyValuePairs = new ArrayList<>();
     keyValuePair(sourceSupplier(bib.getResourceMeta()), "rfr_id").ifPresent(keyValuePairs::add);
     if (Seriality.MONOGRAPH.equals(bib.getSeriality())) {
@@ -114,14 +122,14 @@ public class OpenUrlDeriver {
     };
   }
 
-
   private static Optional<List<String>> keyValuePairsFrom(List<Identifier> identifiers) {
     return Optional.of(identifiers.stream()
                                   .flatMap((id) -> id.asEncodedOpenUrl().stream())
                                   .collect(Collectors.toList()));
   }
 
-  private static Optional<List<String>> keyValuePairsFrom(PublicationEvent pubEvent) {
+  private Optional<List<String>> keyValuePairsFrom(PublicationEvent pubEvent) {
+    checkValid(pubEvent);
     List<String> keyValuePairs = new ArrayList<>();
     keyValuePair(pubEvent::getYear, "rft.year").ifPresent(keyValuePairs::add);
     keyValuePair(pubEvent::getMonth, "rft.month").ifPresent(keyValuePairs::add);
