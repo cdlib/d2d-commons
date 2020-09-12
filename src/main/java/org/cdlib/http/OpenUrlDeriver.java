@@ -50,15 +50,11 @@ public class OpenUrlDeriver {
     List<String> keyValuePairs = new ArrayList<>();
     keyValuePairs.add(VERSION);
     keyValuePair(sourceSupplier(article.getResourceMeta()), "rfr_id").ifPresent(keyValuePairs::add);
-    keyValuePairs.add(keyValuePair(article::getTitle, "rft.atitle")
-                                                                   .orElseThrow(() -> new IllegalStateException("Bib part must have a title")));
-    keyValuePairs.add(keyValuePair(article::getAuthor, "rft.au")
-                                                                .orElseThrow(() -> new IllegalStateException("Bib part must have a title")));
+    keyValuePair(article::getTitle, "rft.atitle").ifPresent(keyValuePairs::add);
+    keyValuePair(article::getAuthor, "rft.au").ifPresent(keyValuePairs::add);
     keyValuePair(article::getVolume, "rft.volume").ifPresent(keyValuePairs::add);
     keyValuePair(article::getIssue, "rft.issue").ifPresent(keyValuePairs::add);
-
     keyValuePairsFrom(article.getPublicationEvent()).ifPresent(keyValuePairs::addAll);
-
     keyValuePair(article::getPages, "rft.pages").ifPresent(keyValuePairs::add);
     keyValuePairsFrom(article.getIdentifiers()).ifPresent(keyValuePairs::addAll);
     keyValuePairsFrom(article.getContainer(), true).ifPresent(keyValuePairs::addAll);
