@@ -41,7 +41,6 @@ public class OpenUrlDeriver {
     keyValuePair(sourceSupplier(bib.getResourceMeta()), "rfr_id").ifPresent(keyValuePairs::add);
     if (Seriality.MONOGRAPH.equals(bib.getSeriality())) {
       keyValuePair(() -> bib.getTitle().getMainTitle(), "rft.btitle").ifPresent(keyValuePairs::add);
-
     } else {
       keyValuePair(() -> bib.getTitle().getMainTitle(), "rft.jtitle").ifPresent(keyValuePairs::add);
     }
