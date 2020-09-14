@@ -17,15 +17,18 @@ import org.cdlib.domain.objects.identifier.ISSN;
 import org.cdlib.domain.objects.identifier.Identifier;
 import org.cdlib.domain.objects.identifier.LCCN;
 import org.cdlib.domain.objects.identifier.OclcNumber;
+import org.cdlib.domain.objects.identifier.PMID;
 import org.cdlib.domain.objects.meta.ResourceMeta;
 import org.junit.Test;
 
 @SuppressWarnings("deprecation")
 public class OpenUrlTest {
   
-  private static final String EXPECTED_ARTICLE = "url_ver=Z39.88-2004&rfr_id=google&rft.atitle=Article+Title&rft.au=Smith%2C+Harriet&rft.volume=2&rft.issue=1&rft.year=2019&rft.month=May&rft.ssn=Spring&rft.date=May+2019&rft.pages=12-24&rft_id=info%3Adoi%2F34567&rft.doi=34567&rft.eissn=1111111&rft.jtitle=Journal+of+Journals&rft_id=urn%3AISSN%3A12345&rft.issn=12345&rft.eissn=1111111";
-  private static final String EXPECTED_MONOGRAPH = "url_ver=Z39.88-2004&rfr_id=google&rft.btitle=Monograph+Title&rft.au=Jones%2C+John&rft.year=2019&rft.date=2019&rft_id=urn%3AISBN%3A12345&rft.isbn=12345&rft_id=info%3Aoclcnum%2F34567&rft.oclcnum=34567&rft_id=info%3Alccn%2F00001111111&rft.lccn=00001111111&rft.eisbn=1111111111111";
-  private static final String EXPECTED_CHAPTER = "url_ver=Z39.88-2004&rfr_id=google&rft.atitle=Article+Title&rft.au=Smith%2C+Harriet&rft.year=2019&rft.month=May&rft.ssn=Spring&rft.date=May+2019&rft.pages=12-24&rft_id=info%3Adoi%2F34567&rft.doi=34567&rft.eissn=1111111&rft.btitle=Proceedings+of+the+International+Society+of+International+Societies&rft.year=2019&rft.date=2019&rft_id=urn%3AISBN%3A12345&rft.isbn=12345&rft_id=info%3Aoclcnum%2F34567&rft.oclcnum=34567&rft_id=info%3Alccn%2F00001111111&rft.lccn=00001111111&rft.eisbn=1111111111111";
+  private static final String EXPECTED_ARTICLE = "url_ver=Z39.88-2004&rfr_id=google&rft.atitle=Article+Title&rft.au=Smith%2C+Harriet&rft.volume=2&rft.issue=1&rft.pages=12-24&rft_id=info%3Adoi%2F34567&rft.doi=34567&rft_id=info%3Apmid%2F1111111&rft.pmid=1111111&rft.jtitle=Journal+of+Journals&rft_id=urn%3AISSN%3A12345&rft.issn=12345&rft.eissn=1111111&rft.year=2019&rft.month=May&rft.ssn=Spring&rft.date=May+2019&rft.place=New+York&rft.publisher=Academic+Books";
+  private static final String EXPECTED_MONOGRAPH = "url_ver=Z39.88-2004&rfr_id=google&rft.btitle=Monograph+Title&rft.au=Jones%2C+John&rft.year=2019&rft.date=2019&rft.place=New+York&rft.publisher=Academic+Books&rft_id=urn%3AISBN%3A12345&rft.isbn=12345&rft_id=info%3Aoclcnum%2F34567&rft.oclcnum=34567&rft_id=info%3Alccn%2F00001111111&rft.lccn=00001111111&rft.eisbn=1111111111111";
+  private static final String EXPECTED_CHAPTER = "url_ver=Z39.88-2004&rfr_id=google&rft.atitle=Article+Title&rft.au=Smith%2C+Harriet&rft.pages=12-24&rft_id=info%3Adoi%2F34567&rft.doi=34567&rft_id=info%3Apmid%2F1111111&rft.pmid=1111111&rft.btitle=Proceedings+of+the+International+Society+of+International+Societies&rft.year=2019&rft.date=2019&rft.place=New+York&rft.publisher=Academic+Books&rft_id=urn%3AISBN%3A12345&rft.isbn=12345&rft_id=info%3Aoclcnum%2F34567&rft.oclcnum=34567&rft_id=info%3Alccn%2F00001111111&rft.lccn=00001111111&rft.eisbn=1111111111111";
+  private static final String EXPECTED_FREESTANDING = "url_ver=Z39.88-2004&rfr_id=google&rft.atitle=Article+Title&rft.au=Smith%2C+Harriet&rft.volume=2&rft.issue=1&rft.pages=12-24&rft_id=info%3Adoi%2F34567&rft.doi=34567&rft_id=info%3Apmid%2F1111111&rft.pmid=1111111&rft.year=2019&rft.month=May&rft.ssn=Spring&rft.date=May+2019&rft.place=New+York&rft.publisher=Academic+Books";
+  
   private static final OpenUrlDeriver openUrlDeriver = new OpenUrlDeriver();
   
   // The monograph openurl is derived entirely from the one object,
@@ -94,7 +97,7 @@ public class OpenUrlTest {
   private List<Identifier> stubArticleIdentifiers() {
     List<Identifier> testIdentifiers = new ArrayList<>();
     testIdentifiers.add(new DOI("34567"));
-    testIdentifiers.add(new EISSN("1111111"));
+    testIdentifiers.add(new PMID("1111111"));
     return testIdentifiers;
   }
   
@@ -173,6 +176,29 @@ public class OpenUrlTest {
     bib.setSeriality(Seriality.MONOGRAPH);
     bib.setPublicationEvent(monoPubEvent());
     return bib;
+  }
+  
+  @Test(expected = IllegalStateException.class)
+  public void testBookChapterInvalidBib() {
+     assertEquals(EXPECTED_CHAPTER, openUrlDeriver.encodedQueryFrom(stubChapterBadBib()));
+  }
+  
+  private BibPart stubChapterBadBib() {
+    BibPart chapter = stubChapter();
+    chapter.getContainer().setSeriality(null);
+    return chapter;
+  }
+  
+  // The free-standing article will derive all data from the BibPart
+  @Test
+  public void testFreestandingArticle() {
+     assertEquals(EXPECTED_FREESTANDING, openUrlDeriver.encodedQueryFrom(freeStanding()));
+  }
+  
+  private BibPart freeStanding() {
+    BibPart freeStanding = stubArticle();
+    freeStanding.setContainer(null);
+    return freeStanding;
   }
   
 

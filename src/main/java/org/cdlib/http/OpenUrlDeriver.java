@@ -38,7 +38,16 @@ public class OpenUrlDeriver {
     checkValid(bib);
     List<String> keyValuePairs = new ArrayList<>();
     keyValuePairs.add(VERSION);
-    keyValuePairsFrom(bib, false).ifPresent(keyValuePairs::addAll);
+    keyValuePair(sourceSupplier(bib.getResourceMeta()), "rfr_id").ifPresent(keyValuePairs::add);
+    if (Seriality.MONOGRAPH.equals(bib.getSeriality())) {
+      keyValuePair(() -> bib.getTitle().getMainTitle(), "rft.btitle").ifPresent(keyValuePairs::add);
+
+    } else {
+      keyValuePair(() -> bib.getTitle().getMainTitle(), "rft.jtitle").ifPresent(keyValuePairs::add);
+    }
+    keyValuePair(() -> bib.getAuthor(), "rft.au").ifPresent(keyValuePairs::add);
+    keyValuePairsFrom(bib.getPublicationEvent()).ifPresent(keyValuePairs::addAll);
+    keyValuePairsFrom(bib.getIdentifiersAsList()).ifPresent(keyValuePairs::addAll);
     return String.join("&", keyValuePairs);
   }
 
@@ -54,11 +63,30 @@ public class OpenUrlDeriver {
     keyValuePair(article::getAuthor, "rft.au").ifPresent(keyValuePairs::add);
     keyValuePair(article::getVolume, "rft.volume").ifPresent(keyValuePairs::add);
     keyValuePair(article::getIssue, "rft.issue").ifPresent(keyValuePairs::add);
-    keyValuePairsFrom(article.getPublicationEvent()).ifPresent(keyValuePairs::addAll);
     keyValuePair(article::getPages, "rft.pages").ifPresent(keyValuePairs::add);
     keyValuePairsFrom(article.getIdentifiers()).ifPresent(keyValuePairs::addAll);
-    keyValuePairsFrom(article.getContainer(), true).ifPresent(keyValuePairs::addAll);
+    
+    if (!isFreeStanding(article)) {
+      checkValid(article.getContainer());
+      keyValuePairsFromContainer(article.getContainer()).ifPresent(keyValuePairs::addAll);
+    }
+    
+    if (isFreeStanding(article) || isSerialPart(article)) {
+      keyValuePairsFrom(article.getPublicationEvent()).ifPresent(keyValuePairs::addAll);
+    }
+    
     return String.join("&", keyValuePairs);
+  }
+
+  /*
+   * BibPart with no container (an article published outside any journal or monograph)
+   */
+  private boolean isFreeStanding(BibPart article) {
+    return article.getContainer() == null;
+  }
+
+  private boolean isSerialPart(BibPart bibPart) {
+    return !bibPart.getContainer().getSeriality().equals(Seriality.MONOGRAPH);
   }
 
   /*
@@ -85,18 +113,11 @@ public class OpenUrlDeriver {
     return Optional.empty();
   }
 
-  /*
-   * isContainer is true if the bib if the context is that the bib is the container of a BibPart
-   * isContainer is false if the bib is free-standing
-   */
-  private Optional<List<String>> keyValuePairsFrom(Bib bib, boolean isContainer) {
+  private Optional<List<String>> keyValuePairsFromContainer(Bib bib) {
     List<String> keyValuePairs = new ArrayList<>();
     keyValuePair(sourceSupplier(bib.getResourceMeta()), "rfr_id").ifPresent(keyValuePairs::add);
     if (Seriality.MONOGRAPH.equals(bib.getSeriality())) {
       keyValuePair(() -> bib.getTitle().getMainTitle(), "rft.btitle").ifPresent(keyValuePairs::add);
-      if (!isContainer) {
-        keyValuePair(() -> bib.getAuthor(), "rft.au").ifPresent(keyValuePairs::add);
-      }
       keyValuePairsFrom(bib.getPublicationEvent()).ifPresent(keyValuePairs::addAll);
     } else {
       keyValuePair(() -> bib.getTitle().getMainTitle(), "rft.jtitle").ifPresent(keyValuePairs::add);
@@ -125,12 +146,13 @@ public class OpenUrlDeriver {
   }
 
   private Optional<List<String>> keyValuePairsFrom(PublicationEvent pubEvent) {
-    checkValid(pubEvent);
     List<String> keyValuePairs = new ArrayList<>();
     keyValuePair(pubEvent::getYear, "rft.year").ifPresent(keyValuePairs::add);
     keyValuePair(pubEvent::getMonth, "rft.month").ifPresent(keyValuePairs::add);
     keyValuePair(pubEvent::getSeason, "rft.ssn").ifPresent(keyValuePairs::add);
     keyValuePair(pubEvent::getDate, "rft.date").ifPresent(keyValuePairs::add);
+    keyValuePair(pubEvent::getPlace, "rft.place").ifPresent(keyValuePairs::add);
+    keyValuePair(pubEvent::getPublisher, "rft.publisher").ifPresent(keyValuePairs::add);
     return Optional.of(keyValuePairs);
   }
 

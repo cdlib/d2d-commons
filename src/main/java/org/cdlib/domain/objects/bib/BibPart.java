@@ -27,6 +27,7 @@ public class BibPart {
     identifiers = new ArrayList<>();
     container = new Bib();
     publicationEvent = new PublicationEvent();
+    resourceMeta = new ResourceMeta();
   }
   
   public BibPart(BibPart source) {
@@ -44,7 +45,6 @@ public class BibPart {
     return author;
   }
   
-  @NotNull
   public Bib getContainer() {
     return container;
   }
@@ -62,10 +62,12 @@ public class BibPart {
     return pages;
   }
   
+  @NotNull
   public PublicationEvent getPublicationEvent() {
     return publicationEvent;
   }
   
+  @NotNull
   public ResourceMeta getResourceMeta() {
     return resourceMeta;
   }
