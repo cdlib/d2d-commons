@@ -30,12 +30,12 @@ public class PublicationEvent {
     return date;
   }
 
-  @NotEmpty
+  @NotEmpty(message = "PublicationEvent must have place.")
   public String getPlace() {
     return place;
   }
 
-  @NotEmpty
+  @NotEmpty (message = "PublicationEvent must have publisher.")
   public String getPublisher() {
     return publisher;
   }
@@ -44,7 +44,7 @@ public class PublicationEvent {
     return season;
   }
 
-  @NotEmpty
+  @NotEmpty(message = "PublicationEvent must have year.")
   public String getYear() {
     if (DateUtil.looksLikeBibYear(year)) {
       return year;

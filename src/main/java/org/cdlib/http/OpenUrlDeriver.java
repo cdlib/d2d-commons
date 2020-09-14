@@ -49,6 +49,19 @@ public class OpenUrlDeriver {
     keyValuePairsFrom(bib.getIdentifiersAsList()).ifPresent(keyValuePairs::addAll);
     return String.join("&", keyValuePairs);
   }
+  
+  private static Supplier<String> sourceSupplier(ResourceMeta meta) {
+    return () -> {
+      Object value = meta.getProperties().get("source");
+      if (value == null) {
+        return null;
+      }
+      if (value.toString().trim().isEmpty()) {
+        return null;
+      }
+      return value.toString();
+    };
+  }
 
   /*
    * Throws an IllegalStateException if the article is not valid
@@ -123,19 +136,6 @@ public class OpenUrlDeriver {
     }
     keyValuePairsFrom(bib.getIdentifiersAsList()).ifPresent(keyValuePairs::addAll);
     return Optional.of(keyValuePairs);
-  }
-
-  private static Supplier<String> sourceSupplier(ResourceMeta meta) {
-    return () -> {
-      Object value = meta.getProperties().get("source");
-      if (value == null) {
-        return null;
-      }
-      if (value.toString().trim().isEmpty()) {
-        return null;
-      }
-      return value.toString();
-    };
   }
 
   private static Optional<List<String>> keyValuePairsFrom(List<Identifier> identifiers) {

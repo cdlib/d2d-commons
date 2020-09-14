@@ -49,7 +49,7 @@ public class BibPart {
     return container;
   }
   
-  @NotNull
+  @NotNull (message = "BibPart identifiers must not be null.")
   public List<Identifier> getIdentifiers() {
     return identifiers;
   }
@@ -62,17 +62,17 @@ public class BibPart {
     return pages;
   }
   
-  @NotNull
+  @NotNull (message = "BibPart PublicationEvent must not be null.")
   public PublicationEvent getPublicationEvent() {
     return publicationEvent;
   }
   
-  @NotNull
+  @NotNull (message = "BibPart ResourceMeta must not be null.")
   public ResourceMeta getResourceMeta() {
     return resourceMeta;
   }
   
-  @NotEmpty
+  @NotEmpty (message = "BibPart title must not be null.")
   public String getTitle() {
     return title;
   }

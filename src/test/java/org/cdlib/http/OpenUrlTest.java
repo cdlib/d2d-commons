@@ -72,6 +72,20 @@ public class OpenUrlTest {
     return result;
   }
   
+  private PublicationEvent invalidPubEvent() {
+    PublicationEvent invalid = monoPubEvent();
+    invalid.setYear(null);
+    invalid.setDate(null);
+    return invalid;
+  }
+  
+  @Test(expected = IllegalStateException.class)
+  public void testInvalidPubEvent() {
+    Bib invalidBib = stubMonograph();
+    invalidBib.setPublicationEvent(invalidPubEvent());
+    openUrlDeriver.encodedQueryFrom(invalidBib);
+  }
+  
   // The journal article should have the publication info of the article
   // and the author of the article
   // and it should include identifiers and titles from both levels

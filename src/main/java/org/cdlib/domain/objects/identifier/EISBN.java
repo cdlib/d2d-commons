@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import static org.cdlib.http.OpenUrlDeriver.encodeValue;
-import org.cdlib.util.CollectionUtil;
 import org.cdlib.util.JSON;
 
 public class EISBN implements Identifier {

@@ -10,17 +10,19 @@ import javax.validation.constraints.NotNull;
  */
 public interface Identifier {
   
-  @NotEmpty
+  @NotEmpty (message = "Identifier value must not be null.")
   public String getValue();
   
-  @NotEmpty
+  @NotEmpty (message = "Identifier authority must not be null.")
   public String getAuthority();
   
-  @NotNull
+  @NotNull (message = "Identifier alternate values must not be null.")
   public List<String> getAlternateValues();
   
-  // Multiple ways that the field value pair may be expressed in an openurl
-  @NotEmpty
+  /* 
+   * Multiple ways that the field value pair may be expressed in an openurl 
+   */
+  @NotEmpty (message = "Identifier encoded open URL required.")
   public List<String> asEncodedOpenUrl();
 
 }
