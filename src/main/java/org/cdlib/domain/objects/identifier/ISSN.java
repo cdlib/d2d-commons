@@ -1,11 +1,10 @@
-package org.cdlib.domain.objects.bib;
+package org.cdlib.domain.objects.identifier;
 
+import static org.cdlib.http.OpenUrlDeriver.encodeValue;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import org.cdlib.util.CollectionUtil;
+import java.util.stream.Collectors;
 import org.cdlib.util.JSON;
 
 /**
@@ -16,7 +15,6 @@ import org.cdlib.util.JSON;
 public class ISSN implements Identifier {
 
   private static final IdAuthority AUTHORITY = IdAuthority.ISSN;
-  private static final String DESCRIPTOR = "issn";
   private String value;
   private List<String> alternateValues = new ArrayList<String>();
 
@@ -35,11 +33,6 @@ public class ISSN implements Identifier {
   public String getAuthority() {
     return AUTHORITY.getUri();
   }
-  
-  @Override
-  public String getDescriptor() {
-    return DESCRIPTOR;
-  }
 
   @Override
   public String getValue() {
@@ -52,7 +45,17 @@ public class ISSN implements Identifier {
 
   @Override
   public List<String> getAlternateValues() {
-    return CollectionUtil.dedupedList(alternateValues);
+    return alternateValues.stream()
+        .distinct()
+        .collect(Collectors.toList());
+  }
+  
+  @Override
+  public List<String> asEncodedOpenUrl() {
+    List<String> result = new ArrayList<>();
+    encodeValue("urn:ISSN:" + value).ifPresent((encoded) -> result.add("rft_id=" + encoded));
+    encodeValue(value).ifPresent((encoded) -> result.add("rft.issn=" + encoded));
+    return result;
   }
 
   public void setAlternateValues(List<String> values) {
@@ -66,34 +69,25 @@ public class ISSN implements Identifier {
 
   @Override
   public int hashCode() {
-    final int prime = 31;
-    int result = 1;
-    result = prime * result + ((alternateValues == null) ? 0 : alternateValues.hashCode());
-    result = prime * result + ((value == null) ? 0 : value.hashCode());
-    return result;
+    return Objects.hash(alternateValues, value);
   }
 
   @Override
   public boolean equals(Object obj) {
-    if (this == obj)
+    if (this == obj) {
       return true;
-    if (obj == null)
+    }
+    if (obj == null) {
       return false;
-    if (getClass() != obj.getClass())
+    }
+    if (!(obj instanceof ISSN)) {
       return false;
+    }
     ISSN other = (ISSN) obj;
-    if (alternateValues == null) {
-      if (other.alternateValues != null)
-        return false;
-    } else if (!alternateValues.equals(other.alternateValues))
-      return false;
-    if (value == null) {
-      if (other.value != null)
-        return false;
-    } else if (!value.equals(other.value))
-      return false;
-    return true;
+    return Objects.equals(alternateValues, other.alternateValues) && Objects.equals(value, other.value);
   }
+  
+  
 
   
 }

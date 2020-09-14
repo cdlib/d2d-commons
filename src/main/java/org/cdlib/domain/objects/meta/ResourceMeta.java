@@ -17,10 +17,10 @@ import org.cdlib.util.JSON;
  */
 public class ResourceMeta {
 
-  @NotNull
+  @NotNull (message = "ResourceMeta exceptions must not be null.")
   private List<ResourceException> exceptions;
   
-  @NotNull
+  @NotNull (message = "ResourceMeta properties must not be null.")
   private Map<String, Object> properties;
 
   public ResourceMeta() {

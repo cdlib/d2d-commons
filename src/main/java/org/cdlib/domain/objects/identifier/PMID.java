@@ -1,37 +1,40 @@
-package org.cdlib.domain.objects.bib;
+package org.cdlib.domain.objects.identifier;
 
+import static org.cdlib.http.OpenUrlDeriver.encodeValue;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import org.cdlib.util.CollectionUtil;
 import org.cdlib.util.JSON;
 
-public class DOI implements Identifier {
+public class PMID implements Identifier {
 
-  private static final IdAuthority AUTHORITY = IdAuthority.IDF;
-  private static final String DESCRIPTOR = "doi";
+  private static final IdAuthority AUTHORITY = IdAuthority.NLM;
   private List<String> alternateValues = new ArrayList<String>();
   private String value;
   
-  public DOI() {}
+  public PMID() {}
   
-  public DOI(String value) {
+  public PMID(String value) {
     this.value = value;
   }
   
-  public DOI(DOI source) {
+  public PMID(PMID source) {
     this.value = source.value;
     this.alternateValues = source.alternateValues;
+  }
+  
+  @Override
+  public List<String> asEncodedOpenUrl() {
+    List<String> result = new ArrayList<>();
+    encodeValue("info:pmid/" + value).ifPresent((encoded) -> result.add("rft_id=" + encoded));
+    encodeValue(value).ifPresent((encoded) -> result.add("rft.pmid=" + encoded));
+    return result;
   }
 
   @Override
   public String getAuthority() {
     return AUTHORITY.getUri();
-  }
-  
-  @Override
-  public String getDescriptor() {
-    return DESCRIPTOR;
   }
 
   public String getValue() {
@@ -64,10 +67,10 @@ public class DOI implements Identifier {
     if (obj == null) {
       return false;
     }
-    if (!(obj instanceof DOI)) {
+    if (!(obj instanceof PMID)) {
       return false;
     }
-    DOI other = (DOI) obj;
+    PMID other = (PMID) obj;
     return Objects.equals(alternateValues, other.alternateValues) && Objects.equals(value, other.value);
   }
 
@@ -75,5 +78,7 @@ public class DOI implements Identifier {
   public String toString() {
     return JSON.serialize(this);
   }
+
+
 
 }

@@ -40,6 +40,7 @@ public final class JSON {
     return json;
   }
 
+  @SuppressWarnings("rawtypes")
   private static void checkDeserialize(Class clazz) {
     if (!objectMapper.canDeserialize(objectMapper.constructType(clazz))) {
       throw new JSONConversionException("json cannot be deserialized to object type");

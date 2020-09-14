@@ -1,4 +1,4 @@
-package org.cdlib.domain.objects.bib;
+package org.cdlib.domain.objects.identifier;
 
 /*
  * Controlled vocabulary of bibliographic
