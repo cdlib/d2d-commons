@@ -1,5 +1,6 @@
-package org.cdlib.domain.objects.bib;
+package org.cdlib.domain.objects.identifier;
 
+import static org.cdlib.http.OpenUrlDeriver.encodeValue;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -12,10 +13,8 @@ import org.cdlib.util.JSON;
 public class OclcNumber implements Identifier {
 
   private static final IdAuthority AUTHORITY = IdAuthority.OCLC;
-  private static final String DESCRIPTOR = "oclcnum";
   private List<String> altValues = new ArrayList<>();
   
-  @NotNull
   @NotEmpty
   @OCLCNumber(message = "OCLC number must be in valid OCLC format.")
   private String value;
@@ -39,15 +38,18 @@ public class OclcNumber implements Identifier {
   public @NotNull String getAuthority() {
     return AUTHORITY.getUri();
   }
-  
-  @Override
-  public String getDescriptor() {
-    return DESCRIPTOR;
-  }
 
   @Override
   public String getValue() {
     return value;
+  }
+  
+  @Override
+  public List<String> asEncodedOpenUrl() {
+    List<String> result = new ArrayList<>();
+    encodeValue("info:oclcnum/" + value).ifPresent((encoded) -> result.add("rft_id=" + encoded));
+    encodeValue(value).ifPresent((encoded) -> result.add("rft.oclcnum=" + encoded));
+    return result;
   }
 
   public void setAlternateValues(List<String> altValues) {

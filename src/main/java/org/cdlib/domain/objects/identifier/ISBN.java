@@ -1,16 +1,15 @@
-package org.cdlib.domain.objects.bib;
+package org.cdlib.domain.objects.identifier;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import javax.validation.constraints.NotEmpty;
+import static org.cdlib.http.OpenUrlDeriver.encodeValue;
 import org.cdlib.util.CollectionUtil;
 import org.cdlib.util.JSON;
 
 public class ISBN implements Identifier {
 
   private static final IdAuthority AUTHORITY = IdAuthority.ISBN;
-  private static final String DESCRIPTOR = "isbn";
   private List<String> alternateValues = new ArrayList<String>();
   private String value;
   
@@ -31,8 +30,11 @@ public class ISBN implements Identifier {
   }
   
   @Override
-  public String getDescriptor() {
-    return DESCRIPTOR;
+  public List<String> asEncodedOpenUrl() {
+    List<String> result = new ArrayList<>();
+    encodeValue("urn:ISBN:" + value).ifPresent((encoded) -> result.add("rft_id=" + encoded));
+    encodeValue(value).ifPresent((encoded) -> result.add("rft.isbn=" + encoded));
+    return result;
   }
 
   @Override
@@ -52,7 +54,7 @@ public class ISBN implements Identifier {
   public void setAlternateValues(List<String> values) {
     this.alternateValues = new ArrayList<String>(values);
   }
-
+  
   @Override
   public int hashCode() {
     return Objects.hash(alternateValues, value);

@@ -5,7 +5,6 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import org.cdlib.util.DeserializationException;
 import org.marc4j.MarcException;
@@ -88,7 +87,10 @@ public class MarcRecordHelper {
 
   private Optional<char[]> fromSegment(String source, int beginIndex, int endIndex) {
     if (beginIndex < 0 || beginIndex >= endIndex) {
-      throw new IllegalArgumentException("Begin and end index cannot logically specify a string segment.");
+      throw new IllegalArgumentException("Begin and end index must logically specify a string segment.");
+    }
+    if (source == null || source.isEmpty()) {
+      return Optional.empty();
     }
     String segment = "";
     if (beginIndex + 1 > source.length() || endIndex + 1 > source.length()) {

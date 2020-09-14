@@ -1,15 +1,13 @@
-package org.cdlib.domain.objects.bib;
+package org.cdlib.domain.objects.identifier;
 
+import static org.cdlib.http.OpenUrlDeriver.encodeValue;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 
 public class LCCN implements Identifier {
   
   private static final IdAuthority AUTHORITY = IdAuthority.LOC;
-  private static final String DESCRIPTOR = "lccn";
   private String value;
   private List<String> alternateValues = new ArrayList<>();
   
@@ -27,11 +25,6 @@ public class LCCN implements Identifier {
   public String getAuthority() {
     return AUTHORITY.getUri();
   }
-  
-  @Override
-  public String getDescriptor() {
-    return DESCRIPTOR;
-  }
 
   @Override
   public String getValue() {
@@ -46,9 +39,18 @@ public class LCCN implements Identifier {
   public List<String> getAlternateValues() {
     return alternateValues;
   }
+  
+  
+  @Override
+  public List<String> asEncodedOpenUrl() {
+    List<String> result = new ArrayList<>();
+    encodeValue("info:lccn/" + value).ifPresent((encoded) -> result.add("rft_id=" + encoded));
+    encodeValue(value).ifPresent((encoded) -> result.add("rft.lccn=" + encoded));
+    return result;
+  }
 
-  public void setAlternateValues(List<String> alternateValues) {
-    this.alternateValues = alternateValues;
+  public void setAlternateValues(List<String> values) {
+    this.alternateValues = new ArrayList<String>(values);
   }
 
   @Override

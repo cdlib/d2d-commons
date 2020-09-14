@@ -127,6 +127,9 @@ public final class DateUtil {
    * various separator chars)
    */
   public static String extractYear(String date) {
+    if (date == null) {
+      return "";
+    }
     date = date.trim();
     if (date.length() < 4) {
       return "";
@@ -168,6 +171,9 @@ public final class DateUtil {
    * @return true if the String resembles a year according to the criteria
    */
   public static boolean looksLikeBibYear(String s) {
+    if (s == null) {
+      return false;
+    }
     if (s.length() == 4 && (StringUtil.isNumeric(s))) {
       if (Integer.valueOf(s) >= LBOUND && Integer.valueOf(s) <= UBOUND) {
         return true;

@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Objects;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import org.cdlib.domain.objects.identifier.BibIdentifiers;
+import org.cdlib.domain.objects.identifier.Identifier;
 import org.cdlib.domain.objects.link.Link;
 import org.cdlib.domain.objects.meta.ResourceMeta;
 import org.cdlib.util.JSON;
@@ -111,8 +113,13 @@ public class Bib {
     return edition;
   }
 
+  @Deprecated
   public BibIdentifiers getIdentifiers() {
     return identifiers;
+  }
+  
+  public List<Identifier> getIdentifiersAsList() {
+    return identifiers.asList();
   }
 
   public String getLanguage() {
