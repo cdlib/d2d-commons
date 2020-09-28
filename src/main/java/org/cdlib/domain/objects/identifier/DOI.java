@@ -12,6 +12,7 @@ public class DOI implements Identifier {
   private static final IdAuthority AUTHORITY = IdAuthority.IDF;
   private List<String> alternateValues = new ArrayList<String>();
   private String value;
+  private String type ="doi";
 
   public DOI() {}
 
@@ -48,6 +49,11 @@ public class DOI implements Identifier {
   @Override
   public List<String> getAlternateValues() {
     return alternateValues.stream().distinct().collect(Collectors.toList());
+  }
+  
+  @Override
+  public String getType() {
+    return type;
   }
 
   public void setAlternateValues(List<String> values) {

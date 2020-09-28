@@ -4,8 +4,10 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import java.util.Arrays;
 import java.util.List;
+import org.cdlib.util.JSON;
 import org.junit.Before;
 import org.junit.Test;
+import com.fasterxml.jackson.core.type.TypeReference;
 
 public class IdentifiersTest {
   
@@ -74,6 +76,14 @@ public class IdentifiersTest {
     assertEquals(pmid2, pmid1);
     pmid1.setAlternateValues(altValues);
     assertFalse(pmid1.getAlternateValues() == altValues);
+  }
+  
+  @Test
+  public void testPmidSerialization() {
+    Identifier pmid = new PMID();
+    String json = JSON.serialize(pmid);
+    Identifier result = JSON.deserialize(json, PMID.class);
+    assertEquals(pmid, result);
   }
   
 

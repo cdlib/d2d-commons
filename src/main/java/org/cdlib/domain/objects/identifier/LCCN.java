@@ -10,6 +10,7 @@ public class LCCN implements Identifier {
   private static final IdAuthority AUTHORITY = IdAuthority.LOC;
   private String value;
   private List<String> alternateValues = new ArrayList<>();
+  private String type = "lccn";
   
   public LCCN() {}
 
@@ -29,6 +30,11 @@ public class LCCN implements Identifier {
   @Override
   public String getValue() {
     return value;
+  }
+  
+  @Override
+  public String getType() {
+    return type;
   }
 
   public void setValue(String value) {

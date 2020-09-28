@@ -12,6 +12,7 @@ public class ISBN implements Identifier {
   private static final IdAuthority AUTHORITY = IdAuthority.ISBN;
   private List<String> alternateValues = new ArrayList<String>();
   private String value;
+  private String type = "isbn";
   
   public ISBN() {}
   
@@ -40,6 +41,11 @@ public class ISBN implements Identifier {
   @Override
   public String getValue() {
     return value;
+  }
+  
+  @Override
+  public String getType() {
+    return type;
   }
   
   public void setValue(String value) {

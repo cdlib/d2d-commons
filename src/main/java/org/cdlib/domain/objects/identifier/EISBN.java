@@ -13,6 +13,9 @@ public class EISBN implements Identifier {
   private List<String> alternateValues = new ArrayList<String>();
   private String value;
   
+  // This is unfortunately required by Jackson serialization
+  private String type = "eisbn";
+  
   public EISBN() {}
   
   public EISBN(String value) {
@@ -41,6 +44,15 @@ public class EISBN implements Identifier {
     return value;
   }
   
+  @Override
+  public String getType() {
+    return type;
+  }
+
+  public void setType(String type) {
+    this.type = type;
+  }
+
   public void setValue(String value) {
     this.value = value;
   }
