@@ -12,6 +12,7 @@ public class PMID implements Identifier {
   private static final IdAuthority AUTHORITY = IdAuthority.NLM;
   private List<String> alternateValues = new ArrayList<String>();
   private String value;
+  private String type = "pmid";
   
   public PMID() {}
   
@@ -37,8 +38,14 @@ public class PMID implements Identifier {
     return AUTHORITY.getUri();
   }
 
+  @Override
   public String getValue() {
     return value;
+  }
+  
+  @Override
+  public String getType() {
+    return type;
   }
   
   public void setValue(String value) {

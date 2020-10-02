@@ -17,6 +17,7 @@ public class ISSN implements Identifier {
   private static final IdAuthority AUTHORITY = IdAuthority.ISSN;
   private String value;
   private List<String> alternateValues = new ArrayList<String>();
+  private String type = "issn";
 
   public ISSN() {}
 
@@ -37,6 +38,11 @@ public class ISSN implements Identifier {
   @Override
   public String getValue() {
     return value;
+  }
+  
+  @Override
+  public String getType() {
+    return type;
   }
 
   public void setValue(String value) {

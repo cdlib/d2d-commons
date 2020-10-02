@@ -14,6 +14,7 @@ public class OclcNumber implements Identifier {
 
   private static final IdAuthority AUTHORITY = IdAuthority.OCLC;
   private List<String> altValues = new ArrayList<>();
+  private String type = "oclcn";
   
   @NotEmpty
   @OCLCNumber(message = "OCLC number must be in valid OCLC format.")
@@ -42,6 +43,11 @@ public class OclcNumber implements Identifier {
   @Override
   public String getValue() {
     return value;
+  }
+  
+  @Override
+  public String getType() {
+    return type;
   }
   
   @Override
