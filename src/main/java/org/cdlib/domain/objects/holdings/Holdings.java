@@ -11,13 +11,12 @@ import org.cdlib.domain.objects.meta.ResourceMeta;
 import org.cdlib.util.JSON;
 
 /**
- * Summarized list of lending candidates, as Items, and the Bib for which they
- * are relevant.
+ * Summarized list of lending candidates, as Items, and the Bib for which they are relevant.
  * 
- * The meaning of Bib is the Bib requested for which relevant holdings are gathered;
- * the actual held items may reference a different Bib record (hence the individual items 
- * have OCLC numbers that differ from the Bib), because the provider of the Holdings 
- * may determine that these other items are close enough to fulfill the request.
+ * The meaning of Bib is the Bib requested for which relevant holdings are gathered; the actual held
+ * items may reference a different Bib record (hence the individual items have OCLC numbers that
+ * differ from the Bib), because the provider of the Holdings may determine that these other items
+ * are close enough to fulfill the request.
  * 
  * The heldItems and linksToContent collections are guaranteed not to be null.
  */
@@ -30,17 +29,16 @@ public class Holdings {
   @Valid
   @NotNull(message = "A list of holdings is required.")
   private List<Item> heldItems;
-  
+
   /*
-   * links to online resources that could fulfill 
-   * a request for this Bib
+   * links to online resources that could fulfill a request for this Bib
    */
   @Valid
   @NotNull
   private List<Link> linksToContent;
-  
+
   @Valid
-  @NotNull(message = "Resource metadata is requird.")
+  @NotNull(message = "Resource metadata is required.")
   private ResourceMeta resourceMeta;
 
   public Holdings() {
@@ -50,19 +48,12 @@ public class Holdings {
   }
 
   public Holdings(Holdings source) {
+    this();
     if (source.bib != null) {
       this.bib = new Bib(source.bib);
     }
-    if (source.heldItems != null) {
-      this.heldItems.addAll(source.heldItems);
-    } else {
-      heldItems = new ArrayList<>();
-    }
-    if (source.linksToContent != null) {
-      this.linksToContent.addAll(source.linksToContent);
-    } else {
-      linksToContent = new ArrayList<>();
-    }
+    this.heldItems.addAll(source.heldItems);
+    this.linksToContent.addAll(source.linksToContent);
   }
 
   public Holdings(Bib bib, List<Item> heldItems, ResourceMeta resourceMeta) {
@@ -121,9 +112,9 @@ public class Holdings {
       return false;
     }
     Holdings other = (Holdings) obj;
-    return Objects.equals(bib, other.bib) 
-        && Objects.equals(heldItems, other.heldItems) 
-        && Objects.equals(linksToContent, other.linksToContent) 
+    return Objects.equals(bib, other.bib)
+        && Objects.equals(heldItems, other.heldItems)
+        && Objects.equals(linksToContent, other.linksToContent)
         && Objects.equals(resourceMeta, other.resourceMeta);
   }
 
