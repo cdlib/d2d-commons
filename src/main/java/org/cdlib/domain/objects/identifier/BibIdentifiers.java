@@ -14,7 +14,6 @@ import org.cdlib.util.JSON;
  * If any identifier is not null, then it must have a value 
  * and an authority.
  */
-@Deprecated
 public class BibIdentifiers {
 
   private ISBN isbn;
