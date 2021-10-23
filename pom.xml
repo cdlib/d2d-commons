@@ -5,7 +5,7 @@
 	<groupId>org.cdlib</groupId>
 	<artifactId>d2d-commons</artifactId>
 	<packaging>jar</packaging>
-	<version>1.6.2</version>
+	<version>1.6.3</version>
 	<name>D2D Commons</name>
 
 	<!-- comment -->
