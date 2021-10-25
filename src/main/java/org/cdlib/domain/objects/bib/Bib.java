@@ -76,6 +76,9 @@ public class Bib {
     title = new Title();
   }
   
+  /*
+   * TODO: Lots of mutable objects in here :(
+   */
   public Bib(Bib source) {
     this.author = source.author;
     this.carrier = source.carrier;
