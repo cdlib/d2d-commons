@@ -13,12 +13,13 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class HttpClientFacadeImpl implements HttpClientFacade {
 
   @SuppressWarnings("unused")
-  private static final Logger LOGGER = Logger.getLogger(HttpClientFacadeImpl.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(HttpClientFacadeImpl.class);
   private static final int DEFAULT_TIMEOUT = 20000;
   private static final ContentType DEFAULT_CONTENT_TYPE = ContentType.APPLICATION_FORM_URLENCODED;
 

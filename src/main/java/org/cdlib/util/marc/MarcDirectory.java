@@ -2,7 +2,8 @@ package org.cdlib.util.marc;
 
 import java.util.Enumeration;
 import java.util.Vector;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
   * Class that implements a MARC record directory.
@@ -16,7 +17,7 @@ public class MarcDirectory
 	/**
 	 * log4j Logger for this class.
 	 */
-    private static Logger log = Logger.getLogger(MarcDirectory.class);
+    private static Logger log = LoggerFactory.getLogger(MarcDirectory.class);
 
 	/**
 	 * CVS header string.

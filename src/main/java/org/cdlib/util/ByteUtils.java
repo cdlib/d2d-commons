@@ -1,6 +1,5 @@
 package org.cdlib.util;
 
-import org.apache.log4j.Logger;
 
 /**
  * Provides a variety of utility methods for operating on data
@@ -13,7 +12,6 @@ import org.apache.log4j.Logger;
  */
 public class ByteUtils
 {
-    private static Logger log = Logger.getLogger(ByteUtils.class);
 
     /**
      * Contructor declared private to prevent instantiation.

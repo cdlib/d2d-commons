@@ -4,7 +4,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.cdlib.util.string.StringUtil;
 
 /**
@@ -23,7 +24,7 @@ public class MarcStream implements MarcConstants
 	/**
 	 * log4j Logger for this class.
 	 */
-    private static Logger log = Logger.getLogger(MarcStream.class);
+    private static Logger log = LoggerFactory.getLogger(MarcStream.class);
 
 	/**
 	 * CVS header string.

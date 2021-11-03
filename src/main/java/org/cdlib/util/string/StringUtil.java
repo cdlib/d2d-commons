@@ -7,7 +7,8 @@ import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.regexp.RE;
 import org.apache.regexp.RESyntaxException;
 import org.cdlib.util.HexUtils;
@@ -25,7 +26,7 @@ public class StringUtil
 	/**
 	 * log4j Logger for this class.
 	 */
-    private static final Logger log = Logger.getLogger(StringUtil.class);
+    private static final Logger log = LoggerFactory.getLogger(StringUtil.class);
 
 	/**
 	 * CVS header string.

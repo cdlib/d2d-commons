@@ -13,7 +13,8 @@ import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.cdlib.domain.objects.bib.Bib;
 import org.cdlib.domain.objects.bib.BibPart;
 import org.cdlib.domain.objects.bib.PublicationEvent;
@@ -28,7 +29,7 @@ public class OpenUrlDeriver {
 
   private ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
   private Validator validator = (Validator) factory.getValidator();
-  private static final Logger logger = Logger.getLogger(OpenUrlDeriver.class);
+  private static final Logger logger = LoggerFactory.getLogger(OpenUrlDeriver.class);
   private static String VERSION = "url_ver=Z39.88-2004";
 
   /*

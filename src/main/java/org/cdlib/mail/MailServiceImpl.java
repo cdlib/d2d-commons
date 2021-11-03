@@ -1,6 +1,7 @@
 package org.cdlib.mail;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 //import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
@@ -9,7 +10,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 public class MailServiceImpl implements MailService {
 
     private JavaMailSender mailSender;
-    private static final Logger LOGGER = Logger.getLogger(MailServiceImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(MailServiceImpl.class);
 
     public void setMailSender(JavaMailSender mailSender) {
         this.mailSender = mailSender;

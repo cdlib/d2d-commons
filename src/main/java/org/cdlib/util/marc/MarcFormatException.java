@@ -1,6 +1,7 @@
 package org.cdlib.util.marc;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Excption class for invalid MARC format.
@@ -13,7 +14,7 @@ public class MarcFormatException extends MarcException
 	/**
 	 * log4j Logger for this class.
 	 */
-    private static Logger log = Logger.getLogger(MarcFormatException.class);
+    private static Logger log = LoggerFactory.getLogger(MarcFormatException.class);
 
 	/**
 	 * CVS header string.

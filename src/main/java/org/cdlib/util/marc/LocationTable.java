@@ -9,7 +9,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.TreeSet;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Container class to hold the location table used to validate
@@ -24,7 +25,7 @@ public class LocationTable
 	/**
 	 * log4j Logger for this class.
 	 */
-    private static Logger log = Logger.getLogger(LocationTable.class);
+    private static Logger log = LoggerFactory.getLogger(LocationTable.class);
 
 	/**
 	 * CVS header string.

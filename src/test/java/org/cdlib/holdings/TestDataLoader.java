@@ -9,7 +9,8 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Loads an XML file from disk with a set of holdings records
@@ -29,7 +30,7 @@ public class TestDataLoader {
     private Logger mLogger;
 
     public TestDataLoader() {
-        mLogger = Logger.getLogger(TestDataLoader.class);
+        mLogger = LoggerFactory.getLogger(TestDataLoader.class);
     }
 
     /*
@@ -84,7 +85,7 @@ public class TestDataLoader {
         l.add(item2);
         theList.testHoldingsList = l;
 
-        Logger logger = Logger.getLogger(TestDataLoader.class);
+        Logger logger = LoggerFactory.getLogger(TestDataLoader.class);
 
         try {
             JAXBContext jc = JAXBContext.newInstance(TestHoldingsList.class, TestHoldingsItem.class);

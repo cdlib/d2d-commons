@@ -1,6 +1,7 @@
 package org.cdlib.util.marc;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Excption class used to indicate an invalid parser state.
@@ -13,7 +14,7 @@ public class MarcInvalidStateException extends MarcException
 	/**
 	 * log4j Logger for this class.
 	 */
-    private static Logger log = Logger.getLogger(MarcInvalidStateException.class);
+    private static Logger log = LoggerFactory.getLogger(MarcInvalidStateException.class);
 
 	/**
 	 * CVS header string.

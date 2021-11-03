@@ -1,6 +1,7 @@
 package org.cdlib.util.marc;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Base class for MARC leader and fixed length fields.
@@ -15,7 +16,7 @@ public class FixedLengthData implements Comparable
  	/**
 	 * log4j Logger for this class.
 	 */
-   private static Logger log = Logger.getLogger(FixedLengthData.class);
+   private static Logger log = LoggerFactory.getLogger(FixedLengthData.class);
 
 	/**
 	 * CVS header string.

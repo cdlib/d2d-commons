@@ -9,7 +9,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.TreeSet;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.cdlib.util.marc.SharedPrint;
 
 /**
@@ -24,7 +25,7 @@ public class SharedPrintTable
 	/**
 	 * log4j Logger for this class.
 	 */
-    private static Logger log = Logger.getLogger(SharedPrintTable.class);
+    private static Logger log = LoggerFactory.getLogger(SharedPrintTable.class);
 
 	/**
 	 * CVS header string.

@@ -11,7 +11,8 @@ import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.util.Assert;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
@@ -23,7 +24,7 @@ public class XPathFacade {
   private final XPath xpath;
   private final DocumentBuilder builder;
   private final Document document;
-  private static final Logger LOG = Logger.getLogger(XPathFacade.class);
+  private static final Logger LOG = LoggerFactory.getLogger(XPathFacade.class);
 
   public XPathFacade(String xml) {
     LOG.debug("XPathHelper got xml: " + xml);

@@ -1,6 +1,7 @@
 package org.cdlib.util.string;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -113,7 +114,7 @@ public class F
 	/**
 	 * log4j Logger for this class.
 	 */
-    private static Logger log = Logger.getLogger(F.class);
+    private static Logger log = LoggerFactory.getLogger(F.class);
 
 	/**
 	 * CVS header string.

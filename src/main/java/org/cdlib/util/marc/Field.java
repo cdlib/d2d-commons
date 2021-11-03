@@ -1,7 +1,8 @@
 package org.cdlib.util.marc;
 
-import org.apache.log4j.Logger;
 import org.cdlib.util.string.StringUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Abstract representation of a marc field or subfield.
@@ -17,7 +18,7 @@ public abstract class Field implements Comparable
 	/**
 	 * log4j Logger for this class.
 	 */
-    private static Logger log = Logger.getLogger(Field.class);
+    private static Logger log = LoggerFactory.getLogger(Field.class);
 
 	/**
 	 * CVS header string.

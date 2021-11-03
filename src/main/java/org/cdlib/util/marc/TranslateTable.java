@@ -5,7 +5,8 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.regexp.RE;
 
 /**
@@ -23,7 +24,7 @@ public class TranslateTable
 	/**
 	 * log4j Logger for this class.
 	 */
-    private static Logger log = Logger.getLogger(TranslateTable.class);
+    private static Logger log = LoggerFactory.getLogger(TranslateTable.class);
 
 	/**
 	 * CVS header string.

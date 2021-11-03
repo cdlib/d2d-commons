@@ -4,7 +4,8 @@ import java.util.Enumeration;
 import java.util.NoSuchElementException;
 import java.util.Vector;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * A container class used to hold a collection of <code>Field</code> objects
@@ -22,7 +23,7 @@ public class FieldList implements Enumeration
 	/**
 	 * log4j Logger for this class.
 	 */
-    private static Logger log = Logger.getLogger(FieldList.class);
+    private static Logger log = LoggerFactory.getLogger(FieldList.class);
 
 	/**
 	 * CVS header string.

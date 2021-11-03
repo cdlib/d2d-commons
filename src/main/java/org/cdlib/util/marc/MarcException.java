@@ -1,6 +1,7 @@
 package org.cdlib.util.marc;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Class representing a MARC processing Exception.
@@ -14,7 +15,7 @@ public class MarcException extends RuntimeException
 	/**
 	 * log4j Logger for this class.
 	 */
-    private static Logger log = Logger.getLogger(MarcException.class);
+    private static Logger log = LoggerFactory.getLogger(MarcException.class);
 
 	/**
 	 * CVS header string.

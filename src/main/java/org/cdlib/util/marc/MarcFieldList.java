@@ -1,6 +1,7 @@
 package org.cdlib.util.marc;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.cdlib.util.string.StringDisplay;
 import org.cdlib.util.string.StringUtil;
 
@@ -16,7 +17,7 @@ public class MarcFieldList extends FieldList
  	/**
 	 * log4j Logger for this class.
 	 */
-	private static Logger log = Logger.getLogger(MarcFieldList.class);
+	private static Logger log = LoggerFactory.getLogger(MarcFieldList.class);
 
 	/**
 	 * CVS header string.

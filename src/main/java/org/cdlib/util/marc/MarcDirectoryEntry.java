@@ -7,7 +7,8 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Class that implements a MARC directory entry
@@ -21,7 +22,7 @@ public class MarcDirectoryEntry extends FixedLengthData
 	/**
 	 * log4j Logger for this class.
 	 */
-    private static Logger log = Logger.getLogger(MarcDirectoryEntry.class);
+    private static Logger log = LoggerFactory.getLogger(MarcDirectoryEntry.class);
 
 	/**
 	 * CVS header string.

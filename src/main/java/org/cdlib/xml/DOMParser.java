@@ -5,7 +5,8 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -25,7 +26,7 @@ import org.w3c.dom.Text;
 
 public class DOMParser {
 
-    private static Logger LOGGER = Logger.getLogger(DOMParser.class);
+    private static Logger LOGGER = LoggerFactory.getLogger(DOMParser.class);
 
     public DocumentBuilder db = null;
 
@@ -223,7 +224,7 @@ public class DOMParser {
             Element top = doc.getDocumentElement();
             return top;
         } catch (Exception ex) {
-            LOGGER.error(ex);
+            LOGGER.error(ex.getMessage());
             ex.printStackTrace();
         }
         return null;
@@ -240,7 +241,7 @@ public class DOMParser {
         } catch (java.io.IOException ex) {
             LOGGER.debug("DOMParser error:" + ex.toString());
         } catch (Exception ex) {
-            LOGGER.error(ex);
+            LOGGER.error(ex.getMessage());
             ex.printStackTrace();
         }
         return null;

@@ -1,7 +1,8 @@
 package org.cdlib.holdings;
 
 import org.junit.Before;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -36,7 +37,7 @@ public class HoldingsParserTest {
 
     @Before
     public void setUp() {
-        this.mLogger = Logger.getLogger(HoldingsParserTest.class);
+        this.mLogger = LoggerFactory.getLogger(HoldingsParserTest.class);
     }
 
     /*

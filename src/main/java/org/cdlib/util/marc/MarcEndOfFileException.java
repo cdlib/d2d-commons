@@ -1,6 +1,7 @@
 package org.cdlib.util.marc;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Exception class used to unequivocally indicate end of file.
@@ -13,7 +14,7 @@ public class MarcEndOfFileException extends MarcException
 	/**
 	 * log4j Logger for this class.
 	 */
-    private static Logger log = Logger.getLogger(MarcEndOfFileException.class);
+    private static Logger log = LoggerFactory.getLogger(MarcEndOfFileException.class);
 
 	/**
 	 * CVS header string.

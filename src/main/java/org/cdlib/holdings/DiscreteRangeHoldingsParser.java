@@ -37,7 +37,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+
 
 /**
  * Implementation of HoldingsParser that identifies discrete ranges of holdings years. This enables
@@ -53,7 +56,7 @@ import org.apache.log4j.Logger;
 public class DiscreteRangeHoldingsParser implements HoldingsParser {
 
   private final List<Integer> yearsHeld = new ArrayList<>();
-  private static final Logger logger = Logger.getLogger(DiscreteRangeHoldingsParser.class);
+  private static final Logger logger = LoggerFactory.getLogger(DiscreteRangeHoldingsParser.class);
   private final String holdings;
 
   /**

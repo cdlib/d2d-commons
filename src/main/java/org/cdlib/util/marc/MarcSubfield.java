@@ -1,6 +1,7 @@
 package org.cdlib.util.marc;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import org.cdlib.util.HexUtils;
 import org.cdlib.util.string.StringDisplay;
@@ -22,7 +23,7 @@ public class MarcSubfield extends Field implements Comparable
 	/**
 	 * log4j Logger for this class.
 	 */
-    private static Logger log = Logger.getLogger(MarcSubfield.class);
+    private static Logger log = LoggerFactory.getLogger(MarcSubfield.class);
 
 	/**
 	 * CVS header string.

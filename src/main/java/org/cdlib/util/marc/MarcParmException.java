@@ -1,6 +1,7 @@
 package org.cdlib.util.marc;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Exception class used to indicate invalid parameters were passed to a
@@ -14,7 +15,7 @@ public class MarcParmException extends MarcException
 	/**
 	 * log4j Logger for this class.
 	 */
-    private static Logger log = Logger.getLogger(MarcParmException.class);
+    private static Logger log = LoggerFactory.getLogger(MarcParmException.class);
 
 	/**
 	 * CVS header string.

@@ -2,7 +2,8 @@ package org.cdlib.util.marc;
 
 import java.util.Vector;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import org.cdlib.util.string.StringDisplay;
 
@@ -18,7 +19,7 @@ import org.cdlib.util.string.StringDisplay;
  */
 public class MarcToXML
 {
-    private static Logger log = Logger.getLogger(Field.class);
+    private static Logger log = LoggerFactory.getLogger(Field.class);
 
     //====================================================
     //       VARIABLES

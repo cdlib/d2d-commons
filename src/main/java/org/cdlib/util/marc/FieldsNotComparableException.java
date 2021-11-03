@@ -1,6 +1,7 @@
 package org.cdlib.util.marc;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Excption class used to indicate two fields are not comparable.
@@ -15,7 +16,7 @@ public class FieldsNotComparableException extends MarcException
 	/**
 	 * log4j Logger for this class.
 	 */
-    private static Logger log = Logger.getLogger(FieldsNotComparableException.class);
+    private static Logger log = LoggerFactory.getLogger(FieldsNotComparableException.class);
 
 	/**
 	 * CVS header string.

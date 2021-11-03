@@ -1,6 +1,7 @@
 package org.cdlib.util.string;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * A utility class with two static methods to hex print a <code>String</code>.
@@ -14,7 +15,7 @@ public class StringDisplay
 	/**
 	 * log4j Logger for this class.
 	 */
-    private static Logger log = Logger.getLogger(StringDisplay.class);
+    private static Logger log = LoggerFactory.getLogger(StringDisplay.class);
 
 	/**
 	 * CVS header string.

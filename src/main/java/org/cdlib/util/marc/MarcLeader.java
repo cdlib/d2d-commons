@@ -1,7 +1,8 @@
 package org.cdlib.util.marc;
 
 import java.util.HashMap;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.cdlib.util.string.StringUtil;
 
 /**
@@ -16,7 +17,7 @@ public class MarcLeader extends FixedLengthData
 	/**
 	 * log4j Logger for this class.
 	 */
-    private static Logger log = Logger.getLogger(MarcLeader.class);
+    private static Logger log = LoggerFactory.getLogger(MarcLeader.class);
 
 	/**
 	 * CVS header string.

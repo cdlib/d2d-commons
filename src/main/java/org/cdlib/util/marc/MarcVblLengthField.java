@@ -5,7 +5,8 @@ import java.util.StringTokenizer;
 import java.util.TreeMap;
 import java.util.Vector;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import org.cdlib.util.HexUtils;
 import org.cdlib.util.string.StringDisplay;
@@ -24,7 +25,7 @@ public class MarcVblLengthField extends Field
  	/**
 	 * log4j Logger for this class.
 	 */
-   private static Logger log = Logger.getLogger(MarcVblLengthField.class);
+   private static Logger log = LoggerFactory.getLogger(MarcVblLengthField.class);
 
 	/**
 	 * CVS header string.
