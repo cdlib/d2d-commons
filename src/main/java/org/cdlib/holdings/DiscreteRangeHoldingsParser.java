@@ -372,44 +372,6 @@ public class DiscreteRangeHoldingsParser implements HoldingsParser {
     }
     return list;
   }
-  
-  /*
-   * Turns a two digit year to a four digit year by prepending the first two chars of the earlier year
-   * to the later year.
-   * 
-   * For example, for the expression 1994/96 it prepends 19 to 96 so that the last year becomes 1996.
-   * 
-   * This works because two-digit years are only allowed when they have a four-digit year to the left,
-   * for example 1996/98.
-   * 
-   * If the second year ends up being less than the first year, there may be an occurrence of
-   * something like 1999/01. In this case we attempt to fix it by adding 100 to the second year after
-   * prepending 19 to get [1999, 2001]
-   */
-
-  static Integer toFourDigitYear(Integer firstYear, Integer lastYear) {
-    String firstYearString = firstYear.toString();
-    String lastYearString = lastYear.toString();
-    if (firstYearString.length() != 4) {
-      throw new IllegalArgumentException("First argument must be a four-digit integer.");
-    }
-    if (lastYearString.length() > 2) {
-      throw new IllegalArgumentException("Second argument must be a length of one or two.");
-    }
-
-    // Replace the last x digits of the first year with the last year to get a candidate return value
-    String left = firstYearString.substring(0, 4 - lastYearString.length());
-    String fourDLastYearString = left + lastYearString;
-    if (Integer.parseInt(fourDLastYearString) < Integer.parseInt(firstYearString)) {
-      int centuryAdjust = lastYearString.length() == 1 ? 10 : 100;
-      Integer fourDLastYear = Integer.parseInt(fourDLastYearString) + centuryAdjust;
-      fourDLastYearString = fourDLastYear.toString();
-      logger.debug("Increased year by 100 in converting 2-digit year.\nOriginal values are "
-          + firstYearString + " and " + lastYearString
-          + ". Read as " + firstYearString + " and " + fourDLastYearString + ".");
-    }
-    return Integer.parseInt(fourDLastYearString);
-  }
 
   /*
    * Turns a two digit year to a four digit year by prepending the first two chars of the earlier year

@@ -17,18 +17,6 @@ public class DateConversionTest {
   }
 
   @Test
-  public void testDateConversion() {
-
-    Integer result = DiscreteRangeHoldingsParser.toFourDigitYear(1991, 2);
-    // System.out.println(result);
-    assertTrue(result.equals(1992));
-
-    result = DiscreteRangeHoldingsParser.toFourDigitYear(1999, 1);
-    // System.out.println(result);
-    assertTrue(result.equals(2001));
-  }
-
-  @Test
   public void testExp() {
     String holdings = " 1.1 1995/6 ";
     DiscreteRangeHoldingsParser hp = new DiscreteRangeHoldingsParser(holdings);

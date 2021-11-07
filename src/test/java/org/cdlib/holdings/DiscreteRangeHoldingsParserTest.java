@@ -424,18 +424,6 @@ public class DiscreteRangeHoldingsParserTest {
   }
   
   @Test
-  public void testDateConversion() {
-
-    Integer result = DiscreteRangeHoldingsParser.toFourDigitYear(1991, 2);
-    //System.out.println(result);
-    assertTrue(result.equals(1992));
-    
-    result = DiscreteRangeHoldingsParser.toFourDigitYear(1999, 1);
-    //System.out.println(result);
-    assertTrue(result.equals(2001));
-  }
-  
-  @Test
   public void testMergeArrays() {
     Integer[] a1 = new Integer[]{1, 2, 3, 4};
     Integer[] a2 = new Integer[]{5, 6, 7, 8};
