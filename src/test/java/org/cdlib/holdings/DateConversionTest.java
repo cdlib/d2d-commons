@@ -3,7 +3,6 @@ package org.cdlib.holdings;
 import java.util.Arrays;
 import java.util.List;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 /**
@@ -21,14 +20,10 @@ public class DateConversionTest {
     String holdings = " 1.1 1995/6 ";
     DiscreteRangeHoldingsParser hp = new DiscreteRangeHoldingsParser(holdings);
     List<Integer> years = hp.getYears();
-    for (int i : years) {
-      // System.out.println(i);
-    }
     years.addAll(hp.getYearRanges(Holdings.DOUBLED_2D_YEAR_PAT.matcher(holdings), holdings));
     Integer[] expectArray = new Integer[]{1995, 1996};
     List<Integer> expectList = Arrays.asList(expectArray);
     years = hp.removeDuplicateYears(years);
-    //System.out.println("For holdings = " + holdings + " Expecting " + expectList + "; got " + years);
     assertEquals(expectList, years);
   }
   
@@ -38,14 +33,36 @@ public class DateConversionTest {
     DiscreteRangeHoldingsParser hp = new DiscreteRangeHoldingsParser(holdings);
     List<Integer> years = hp.getYears();
     assertEquals(2, years.size());
-    for (int i : years) {
-      // System.out.println(i);
-    }
     years.addAll(hp.getYearRanges(Holdings.DOUBLED_2D_YEAR_PAT.matcher(holdings), holdings));
     Integer[] expectArray = new Integer[]{1984, 1985};
     List<Integer> expectList = Arrays.asList(expectArray);
     years = hp.removeDuplicateYears(years);
-    //System.out.println("For holdings = " + holdings + " Expecting " + expectList + "; got " + years);
+    assertEquals(expectList, years);
+  }
+  
+  @Test
+  public void testExp2() {
+    String holdings = " 1.1 1999/01 ";
+    DiscreteRangeHoldingsParser hp = new DiscreteRangeHoldingsParser(holdings);
+    List<Integer> years = hp.getYears();
+    assertEquals(3, years.size());
+    years.addAll(hp.getYearRanges(Holdings.DOUBLED_2D_YEAR_PAT.matcher(holdings), holdings));
+    Integer[] expectArray = new Integer[]{1999, 2000, 2001};
+    List<Integer> expectList = Arrays.asList(expectArray);
+    years = hp.removeDuplicateYears(years);
+    assertEquals(expectList, years);
+  }
+  
+  @Test
+  public void testExp3() {
+    String holdings = " 1.1 1999/1 ";
+    DiscreteRangeHoldingsParser hp = new DiscreteRangeHoldingsParser(holdings);
+    List<Integer> years = hp.getYears();
+    assertEquals(3, years.size());
+    years.addAll(hp.getYearRanges(Holdings.DOUBLED_2D_YEAR_PAT.matcher(holdings), holdings));
+    Integer[] expectArray = new Integer[]{1999, 2000, 2001};
+    List<Integer> expectList = Arrays.asList(expectArray);
+    years = hp.removeDuplicateYears(years);
     assertEquals(expectList, years);
   }
 }
